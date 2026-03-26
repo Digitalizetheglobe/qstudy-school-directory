@@ -34,7 +34,7 @@ export default function Blog() {
               <CircleHelp size={14} /> FAQs
             </div>
             <h2 style={{ fontSize: '2rem', fontWeight: '800', letterSpacing: '-0.02em' }}>
-              Frequently Asked <span className="text-blue-800">Questions</span>
+              Frequently Asked <span className="text-blue-800-solid">Questions</span>
             </h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

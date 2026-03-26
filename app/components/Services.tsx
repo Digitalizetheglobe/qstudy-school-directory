@@ -48,7 +48,7 @@ export default function Services() {
             <Settings size={14} /> Detailed Services
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-            How We <span className="text-blue-800">Support You</span>
+            How We <span className="text-blue-800-solid">Support You</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>
             Four core pillars of support - delivered by experts who&apos;ve been through the journey themselves.

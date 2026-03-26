@@ -28,7 +28,7 @@ export default function ServicesHighlight() {
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '20px', letterSpacing: '-0.02em' }}>
             Every Service You Need,{' '}
-            <span className="text-blue-800">Under One Roof</span>
+            <span className="text-blue-800-solid">Under One Roof</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.75', marginBottom: '36px' }}>
             From the moment you decide to study abroad to the day you land, QStudy World is with you every step of the way. Our end-to-end support ensures a smooth, stress-free journey.

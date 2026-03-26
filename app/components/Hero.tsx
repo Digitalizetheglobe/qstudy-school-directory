@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { ArrowUpRight, ArrowRight, Globe as GlobeIcon } from 'lucide-react'
 
 // Must be client-only — Three.js cannot run on the server
 const Globe3D = dynamic(
@@ -55,19 +56,19 @@ export default function Hero() {
 
         {/* Left: Text */}
         <div className="animate-fade-up" style={{ opacity: 0 }}>
-          <div className="section-label">
-            <span>🌍</span> Global Education Platform
-          </div>
+          {/* <div className="section-label">
+            <GlobeIcon size={14} /> Global Education Platform
+          </div> */}
           <h1 style={{ fontSize: 'clamp(2.4rem, 5vw, 3.8rem)', fontWeight: '800', lineHeight: '1.15', marginBottom: '24px', letterSpacing: '-0.02em' }}>
             Find &amp; Apply to{' '}
-            <span className="text-blue-800">Schools Worldwide</span>
+            <span className="text-blue-800-solid">Schools Worldwide</span>
           </h1>
           <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', maxWidth: '480px', marginBottom: '40px', lineHeight: '1.75' }}>
             Explore schools, courses, scholarships, and services - all in one powerful platform built for ambitious students like you.
           </p>
 
           {/* Stats */}
-          <div style={{ display: 'flex', gap: '32px', marginBottom: '40px', flexWrap: 'wrap' }}>
+          {/* <div style={{ display: 'flex', gap: '32px', marginBottom: '40px', flexWrap: 'wrap' }}>
             {[
               { value: '5,000+', label: 'Schools Listed' },
               { value: '120+', label: 'Countries' },
@@ -78,17 +79,43 @@ export default function Hero() {
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: '500' }}>{stat.label}</div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <Link href="#explorer" className="btn-primary" style={{ fontSize: '1rem', padding: '14px 32px' }}>
-              <span>🔍</span>
-              <span>Global School Directory</span>
-            </Link>
-            <Link href="#cta" className="btn-outline" style={{ fontSize: '1rem', padding: '14px 32px' }}>
-              <span>✈</span>
-              <span>Apply Now</span>
-            </Link>
+            <button 
+              className="qs-cta" 
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect()
+                e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+                e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`)
+              }}
+              onClick={() => window.location.href = '#explorer'}
+              style={{ fontSize: '1rem', padding: '7px 8px 7px 18px' }}
+            >
+              <span className="qs-cta-ripple" />
+              <span className="qs-cta-label">Global School Directory</span>
+              <span className="qs-cta-icon-wrap">
+                <span className="arrow-default"><ArrowUpRight size={14} strokeWidth={3} /></span>
+                <span className="arrow-hover"><ArrowRight size={14} strokeWidth={3} /></span>
+              </span>
+            </button>
+            <button 
+              className="qs-cta" 
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect()
+                e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+                e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`)
+              }}
+              onClick={() => window.location.href = '#cta'}
+              style={{ fontSize: '1rem', padding: '7px 8px 7px 18px' }}
+            >
+              <span className="qs-cta-ripple" />
+              <span className="qs-cta-label">✈ Apply Now</span>
+              <span className="qs-cta-icon-wrap">
+                <span className="arrow-default"><ArrowUpRight size={14} strokeWidth={3} /></span>
+                <span className="arrow-hover"><ArrowRight size={14} strokeWidth={3} /></span>
+              </span>
+            </button>
           </div>
         </div>
 
@@ -107,7 +134,7 @@ export default function Hero() {
               ambientIntensity: 0.8,
               pointLightIntensity: 1.8,
             }}
-            className="!h-[650px]"
+            className="h-[650px]!"
             onMarkerClick={(marker) => console.log('Clicked:', marker.label)}
           />
 

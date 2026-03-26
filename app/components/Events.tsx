@@ -43,7 +43,7 @@ export default function Events() {
             <MicVocal size={14} /> Events & Webinars
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-            Stay Connected. <span className="text-blue-800">Stay Informed.</span>
+            Stay Connected. <span className="text-blue-800-solid">Stay Informed.</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>
             Join thousands of students at our events to get the latest insights, meet advisors, and take your next step.

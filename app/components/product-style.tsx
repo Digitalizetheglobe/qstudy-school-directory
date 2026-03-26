@@ -72,7 +72,7 @@ const ProductStyle: React.FC = () => {
           <Globe size={14} /> What We Cover
         </div>
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-          Three Pillars of <span className="text-blue-800">Global Education</span>
+          Three Pillars of <span className="text-blue-800-solid">Global Education</span>
         </h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto' }}>
           Whether you&apos;re searching for a full-time school, a language programme, or a life-changing summer experience - we have it all.

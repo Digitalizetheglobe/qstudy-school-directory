@@ -26,7 +26,7 @@ export default function Dashboard() {
             <LayoutDashboard size={14} /> Student Dashboard
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-            Your Personal <span className="text-blue-800">Student Dashboard</span>
+            Your Personal <span className="text-blue-800-solid">Student Dashboard</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>
             A powerful command center for your international education journey - track everything in one place.

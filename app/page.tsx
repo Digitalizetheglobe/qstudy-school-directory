@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import ThreeAreas from './components/ThreeAreas'
+import InternationalBanner from './components/InternationalBanner'
+// import ThreeAreas from './components/ThreeAreas'
 import Features from './components/Features'
 import Explorer from './components/Explorer'
 import SchoolDetail from './components/SchoolDetail'

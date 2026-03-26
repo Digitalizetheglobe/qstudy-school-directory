@@ -107,7 +107,7 @@ export default function Features() {
               color: 'var(--text-primary)',
             }}>
               One Platform.<br />
-              <span className="text-blue-800">Every Opportunity.</span>
+              <span className="text-blue-800-solid">Every Opportunity.</span>
             </h2>
             <Link href="/explorer">
               <button className="btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}>

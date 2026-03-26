@@ -116,7 +116,7 @@ export default function Explorer() {
             <Search size={14} /> Directory Explorer
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-            Find Your Perfect <span className="text-blue-800">Programme</span>
+            Find Your Perfect <span className="text-blue-800-solid">Programme</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>
             Browse schools, language programmes, and summer camps from one unified directory.

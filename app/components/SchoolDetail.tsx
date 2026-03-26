@@ -69,7 +69,7 @@ export default function SchoolDetail() {
             <School size={14} /> School Details
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-            Everything You Need <span className="text-blue-800">to Know</span>
+            Everything You Need <span className="text-blue-800-solid">to Know</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>
             Deep-dive into every aspect of a school before you commit.
