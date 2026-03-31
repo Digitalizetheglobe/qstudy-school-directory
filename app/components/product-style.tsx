@@ -71,11 +71,11 @@ const areas: AreaData[] = [
 const ProductStyle = ({ onApplyNowClick: _onApplyNowClick }: ProductStyleProps) => {
   return (
     <section className={styles.section}>
-      <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
         <div className="section-label" style={{ justifyContent: 'center' }}>
           <Globe size={14} /> What We Cover
         </div>
-        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
+        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '6px', letterSpacing: '-0.02em' }}>
           Three Pillars of <span className="text-blue-800-solid">Global Education</span>
         </h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto' }}>
