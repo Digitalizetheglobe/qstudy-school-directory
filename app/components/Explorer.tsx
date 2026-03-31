@@ -52,10 +52,14 @@ const summerCamps = [
 
 const INITIAL_LIMIT = 6
 
+interface ExplorerProps {
+  onApplyNowClick?: () => void
+}
+
 /* ─────────────────────────────────────────────
    COMPONENT
 ───────────────────────────────────────────── */
-export default function Explorer() {
+export default function Explorer({ onApplyNowClick: _onApplyNowClick }: ExplorerProps) {
   const [activeTab, setActiveTab] = useState<'schools' | 'language' | 'summer'>('schools')
   const [schoolType, setSchoolType] = useState('All Types')
   const [country, setCountry] = useState('All Countries')

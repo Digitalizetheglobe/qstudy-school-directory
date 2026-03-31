@@ -19,6 +19,10 @@ interface AreaData {
   image: string;
 }
 
+interface ProductStyleProps {
+  onApplyNowClick?: () => void;
+}
+
 const areas: AreaData[] = [
   {
     id: 1,
@@ -64,7 +68,7 @@ const areas: AreaData[] = [
   },
 ];
 
-const ProductStyle: React.FC = () => {
+const ProductStyle = ({ onApplyNowClick: _onApplyNowClick }: ProductStyleProps) => {
   return (
     <section className={styles.section}>
       <div style={{ textAlign: 'center', marginBottom: '64px' }}>

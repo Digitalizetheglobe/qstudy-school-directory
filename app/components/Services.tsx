@@ -38,7 +38,11 @@ const services = [
   },
 ]
 
-export default function Services() {
+interface ServicesProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Services({ onApplyNowClick: _onApplyNowClick }: ServicesProps) {
   return (
     <section id="services-detail" style={{ padding: '100px 24px', background: 'var(--surface-2)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>

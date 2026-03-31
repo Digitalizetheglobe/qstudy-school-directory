@@ -56,7 +56,11 @@ const tabs = [
   },
 ]
 
-export default function SchoolDetail() {
+interface SchoolDetailProps {
+  onApplyNowClick?: () => void
+}
+
+export default function SchoolDetail({ onApplyNowClick: _onApplyNowClick }: SchoolDetailProps) {
   const [active, setActive] = useState('overview')
   const current = tabs.find(t => t.id === active)!
 

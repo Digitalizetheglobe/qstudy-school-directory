@@ -39,7 +39,11 @@ const ctaCards = [
   },
 ]
 
-export default function CTA() {
+interface CTAProps {
+  onApplyNowClick?: () => void
+}
+
+export default function CTA({ onApplyNowClick: _onApplyNowClick }: CTAProps) {
   return (
     <section id="cta" style={{
       padding: '100px 24px',

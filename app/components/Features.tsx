@@ -44,7 +44,11 @@ const cards = [
   },
 ]
 
-export default function Features() {
+interface FeaturesProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Features({ onApplyNowClick: _onApplyNowClick }: FeaturesProps) {
   return (
     <section
       id="features"

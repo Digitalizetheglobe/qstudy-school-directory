@@ -8,7 +8,11 @@ const features = [
   { icon: LayoutDashboard, title: 'Progress Analytics', desc: 'Visualize your application journey with intuitive dashboards and completion scores.' },
 ]
 
-export default function Dashboard() {
+interface DashboardProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: DashboardProps) {
   return (
     <section id="dashboard" style={{ padding: '100px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
       {/* Background glow */}

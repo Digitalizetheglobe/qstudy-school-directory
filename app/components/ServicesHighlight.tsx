@@ -10,7 +10,11 @@ const serviceHighlights = [
   { icon: CreditCard, label: 'Fee Guidance' },
 ]
 
-export default function ServicesHighlight() {
+interface ServicesHighlightProps {
+  onApplyNowClick?: () => void
+}
+
+export default function ServicesHighlight({ onApplyNowClick: _onApplyNowClick }: ServicesHighlightProps) {
   return (
     <section id="services" style={{ padding: '100px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
       <div style={{

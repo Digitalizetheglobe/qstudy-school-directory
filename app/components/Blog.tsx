@@ -18,7 +18,11 @@ const faqs = [
   { q: 'What support do you provide after I get admitted?', a: 'Post-admission we assist with accommodation, travel booking, pre-departure orientation, and airport reception services at select destinations.' },
 ]
 
-export default function Blog() {
+interface BlogProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (

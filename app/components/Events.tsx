@@ -33,7 +33,11 @@ const events = [
   },
 ]
 
-export default function Events() {
+interface EventsProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Events({ onApplyNowClick: _onApplyNowClick }: EventsProps) {
   return (
     <section id="events" style={{ padding: '100px 24px', background: 'var(--surface)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
