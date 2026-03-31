@@ -135,7 +135,7 @@ const ProductStyle: React.FC = () => {
                     {area.tag}
                   </span>
 
-                  <h2 className={styles.productHeading} style={{ color: 'var(--text-primary)' }}>
+                  <h2 className={styles.productHeading} style={{ color: 'black' }}>
                     {area.title}
                   </h2>
 

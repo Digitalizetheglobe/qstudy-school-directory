@@ -32,7 +32,11 @@ const globeMarkers = [
   { lat: 24.4539, lng: 54.3773, src: 'https://assets.aceternity.com/avatars/4.webp', label: 'Abu Dhabi' },
 ]
 
-export default function Hero() {
+interface HeroProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Hero({ onApplyNowClick }: HeroProps) {
   return (
     <section
       id="home"
