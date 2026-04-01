@@ -16,7 +16,7 @@ interface ServicesHighlightProps {
 
 export default function ServicesHighlight({ onApplyNowClick: _onApplyNowClick }: ServicesHighlightProps) {
   return (
-    <section id="services" style={{ padding: '100px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
+    <section id="services" style={{ padding: '40px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
       <div style={{
         position: 'absolute', bottom: '-100px', left: '-100px',
         width: '400px', height: '400px',

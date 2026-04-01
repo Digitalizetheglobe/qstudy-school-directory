@@ -14,7 +14,7 @@ interface DashboardProps {
 
 export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: DashboardProps) {
   return (
-    <section id="dashboard" style={{ padding: '100px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
+    <section id="dashboard" style={{ padding: '60px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
       {/* Background glow */}
       <div style={{
         position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
@@ -25,11 +25,11 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
 
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>
             <LayoutDashboard size={14} /> Student Dashboard
           </div>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '10px', letterSpacing: '-0.02em' }}>
             Your Personal <span className="text-blue-800-solid">Student Dashboard</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>

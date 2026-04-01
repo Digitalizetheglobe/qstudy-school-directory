@@ -44,10 +44,10 @@ interface ServicesProps {
 
 export default function Services({ onApplyNowClick: _onApplyNowClick }: ServicesProps) {
   return (
-    <section id="services-detail" style={{ padding: '100px 24px', background: 'var(--surface-2)' }}>
+    <section id="services-detail" style={{ padding: '40px 24px', background: 'var(--surface-2)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>
             <Settings size={14} /> Detailed Services
           </div>
@@ -66,7 +66,12 @@ export default function Services({ onApplyNowClick: _onApplyNowClick }: Services
               <div
                 key={s.title}
                 className="glass-card animate-fade-up"
-                style={{ padding: '36px 28px', opacity: 0, animationDelay: `${i * 0.1}s`, position: 'relative', overflow: 'hidden' }}
+                style={{
+                  padding: '36px 28px', opacity: 0,
+                  animationDelay: `${i * 0.1}s`,
+                  position: 'relative', overflow: 'hidden',
+                  display: 'flex', flexDirection: 'column',
+                }}
               >
                 {/* Top gradient bar */}
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: `linear-gradient(90deg, ${s.color}, transparent)` }} />
@@ -94,7 +99,7 @@ export default function Services({ onApplyNowClick: _onApplyNowClick }: Services
                   ))}
                 </ul>
 
-                <button className={`service-btn service-btn-${colorName}`}>
+                <button className={`service-btn service-btn-${colorName}`} style={{ marginTop: 'auto' }}>
                   Learn More →
                 </button>
               </div>

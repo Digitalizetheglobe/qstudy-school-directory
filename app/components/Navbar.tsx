@@ -21,7 +21,11 @@ const LANGUAGES = [
   { code: 'ES', flag: '🇪🇸', label: 'Español' },
 ]
 
-export default function Navbar() {
+interface NavbarProps {
+  onApplyNowClick?: () => void
+}
+
+export default function Navbar({ onApplyNowClick }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
   const [activeLang, setActiveLang] = useState(LANGUAGES[0])
@@ -239,7 +243,7 @@ export default function Navbar() {
               </div>
 
               {/* Apply Now — desktop */}
-              <button className="qs-cta qs-cta-desktop" onMouseMove={handleMouseMove} aria-label="Apply Now">
+              <button className="qs-cta qs-cta-desktop" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Apply Now">
                 <span className="qs-cta-ripple" />
                 <span className="qs-cta-label">Apply Now</span>
                 <span className="qs-cta-icon-wrap">
@@ -296,7 +300,7 @@ export default function Navbar() {
 
               {/* Apply Now — mobile */}
               <div style={{ paddingTop: '14px', borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: '6px' }}>
-                <button className="qs-cta qs-cta-mobile" onMouseMove={handleMouseMove} aria-label="Apply Now">
+                <button className="qs-cta qs-cta-mobile" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Apply Now">
                   <span className="qs-cta-ripple" />
                   <span className="qs-cta-label">Apply Now</span>
                   <span className="qs-cta-icon-wrap">

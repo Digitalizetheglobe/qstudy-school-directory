@@ -18,7 +18,7 @@
    Sticky Scroll Container
 ───────────────────────────────────────────── */
 .stickyContainer {
-  height: calc((460px + 48px) * 3); /* 3 cards */
+  height: calc((360px + 48px) * 3); /* 3 cards */
   position: relative;
   padding: 0 10px;
   max-width: 100%;
@@ -157,6 +157,7 @@
   justify-content: center;
   gap: 16px;
   padding: 40px 44px 40px 44px;
+  background: #1e1864;
 }
 
 /* Category label */
@@ -179,7 +180,7 @@
 .contentText {
   font-size: 0.92rem;
   line-height: 1.75;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.80);
   margin: 0;
 }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 
 interface ContactFormProps {
@@ -14,14 +14,25 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
     email: '',
     mobile: '',
     message: '',
-    callbackConsent: false
+    callbackConsent: false,
   })
+  const [mounted, setMounted] = useState(false)
+
+  // Animate in
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => setMounted(true), 10)
+      document.body.style.overflow = 'hidden'
+    } else {
+      setMounted(false)
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
     console.log('Form submitted:', formData)
-    // You can add actual form submission logic here
     onClose()
   }
 
@@ -29,221 +40,203 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
     const { name, value, type } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
     }))
   }
 
   if (!isOpen) return null
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '13px 16px',
+    background: 'transparent',
+    border: '1.5px solid rgba(255,255,255,0.25)',
+    borderRadius: '8px',
+    fontSize: '0.9rem',
+    color: '#ffffff',
+    outline: 'none',
+    boxSizing: 'border-box',
+    transition: 'border-color 0.2s ease',
+  }
+
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 9999,
-      padding: '20px'
-    }}>
-      <div style={{
-        background: 'white',
-        borderRadius: '12px',
-        padding: '32px',
-        maxWidth: '500px',
-        width: '100%',
-        position: 'relative',
-        maxHeight: '90vh',
-        overflowY: 'auto'
-      }}>
+    /* ── Backdrop ── */
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0,
+        background: 'rgba(0,0,0,0.55)',
+        backdropFilter: 'blur(3px)',
+        zIndex: 9998,
+        display: 'flex',
+        justifyContent: 'flex-end',
+      }}
+    >
+      {/* ── Panel ── */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          width: '100%',
+          maxWidth: '460px',
+          height: '100%',
+          background: 'linear-gradient(160deg, #1e1b4b 0%, #0f0f2a 100%)',
+          borderLeft: '1px solid rgba(255,255,255,0.08)',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '48px 40px 40px',
+          overflowY: 'auto',
+          transform: mounted ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
+          position: 'relative',
+          boxShadow: '-24px 0 60px rgba(0,0,0,0.4)',
+          colorScheme: 'dark',
+        }}
+      >
+        <style>{`
+          .qs-modal-input::placeholder { color: rgba(255,255,255,0.3) !important; }
+          .qs-modal-input { color: #ffffff !important; background: transparent !important; }
+        `}</style>
         {/* Close button */}
         <button
           onClick={onClose}
           style={{
             position: 'absolute',
-            top: '16px',
-            right: '16px',
-            background: 'none',
-            border: 'none',
+            top: '20px',
+            right: '20px',
+            width: '36px',
+            height: '36px',
+            borderRadius: '8px',
+            background: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.12)',
             cursor: 'pointer',
-            padding: '4px'
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            transition: 'background 0.2s ease',
           }}
+          onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
+          onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
         >
-          <X size={24} color="#666" />
+          <X size={18} />
         </button>
 
-        <h2 style={{
-          fontSize: '24px',
-          fontWeight: '600',
-          marginBottom: '24px',
-          color: '#333'
-        }}>
-          Get in Touch
-        </h2>
+        {/* Heading */}
+       
 
-        <form onSubmit={handleSubmit}>
+        {/* Form */}
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
+
           {/* First Name */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              color: '#555'
-            }}>
-              First Name*
+          <div>
+            <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+              First Name *
             </label>
             <input
               type="text"
               name="firstName"
+              placeholder="e.g. Aanya"
               value={formData.firstName}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
+              className="qs-modal-input"
+              style={inputStyle}
+              onFocus={e => (e.target.style.borderColor = '#818CF8')}
+              onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.25)')}
             />
           </div>
 
           {/* Email */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              color: '#555'
-            }}>
-              Mail Id*
+          <div>
+            <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+              Mail Id *
             </label>
             <input
               type="email"
               name="email"
+              placeholder="you@example.com"
               value={formData.email}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
+              className="qs-modal-input"
+              style={inputStyle}
+              onFocus={e => (e.target.style.borderColor = '#818CF8')}
+              onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.25)')}
             />
           </div>
 
           {/* Mobile */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              color: '#555'
-            }}>
-              Mobile No*
+          <div>
+            <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+              Mobile No *
             </label>
             <input
               type="tel"
               name="mobile"
+              placeholder="+91 98765 43210"
               value={formData.mobile}
               onChange={handleChange}
               required
-              style={{
-                width: '100%',
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
+              className="qs-modal-input"
+              style={inputStyle}
+              onFocus={e => (e.target.style.borderColor = '#818CF8')}
+              onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.25)')}
             />
           </div>
 
           {/* Message */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              color: '#555'
-            }}>
-              Message Here*
+          <div>
+            <label style={{ display: 'block', marginBottom: '6px', fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+              Message Here *
             </label>
             <textarea
               name="message"
+              placeholder="Tell us about your goals, destination preference, budget..."
               value={formData.message}
               onChange={handleChange}
               required
-              rows={4}
-              style={{
-                width: '100%',
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box',
-                resize: 'vertical'
-              }}
+              rows={2}
+              className="qs-modal-input"
+              style={{ ...inputStyle, resize: 'vertical', minHeight: '110px' }}
+              onFocus={e => (e.target.style.borderColor = '#818CF8')}
+              onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.25)')}
             />
           </div>
 
           {/* Checkbox */}
-          <div style={{ marginBottom: '24px' }}>
-            <label style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '8px',
-              fontSize: '13px',
-              color: '#666',
-              cursor: 'pointer'
-            }}>
-              <input
-                type="checkbox"
-                name="callbackConsent"
-                checked={formData.callbackConsent}
-                onChange={handleChange}
-                style={{
-                  marginTop: '2px'
-                }}
-              />
-              Please check the box to confirm interest in call back for your inquiry.
-            </label>
-          </div>
+          <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.82rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
+            <input
+              type="checkbox"
+              name="callbackConsent"
+              checked={formData.callbackConsent}
+              onChange={handleChange}
+              style={{ marginTop: '2px', accentColor: '#4F46E5', width: '15px', height: '15px', flexShrink: 0 }}
+            />
+            Please check to confirm your interest in a callback for your inquiry.
+          </label>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
             style={{
+              marginTop: '8px',
               width: '100%',
               padding: '14px',
-              background: '#4F46E5',
+              background: 'linear-gradient(135deg, #4F46E5, #06B6D4)',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
-              fontSize: '16px',
-              fontWeight: '600',
+              borderRadius: '10px',
+              fontSize: '0.92rem',
+              fontWeight: '800',
               cursor: 'pointer',
-              transition: 'background 0.2s ease'
+              letterSpacing: '1px',
+              textTransform: 'uppercase',
+              transition: 'opacity 0.2s ease, transform 0.2s ease',
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = '#3730A3'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = '#4F46E5'
-            }}
+            onMouseOver={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseOut={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
-            SEND MESSAGE
+            Send Message →
           </button>
         </form>
       </div>

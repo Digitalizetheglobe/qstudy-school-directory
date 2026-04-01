@@ -53,7 +53,7 @@ export default function Features({ onApplyNowClick: _onApplyNowClick }: Features
     <section
       id="features"
       style={{
-        padding: '100px 24px',
+        padding: '40px 24px',
         background: 'var(--surface)',
         position: 'relative',
         overflow: 'hidden',

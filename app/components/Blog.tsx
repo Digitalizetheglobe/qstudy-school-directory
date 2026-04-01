@@ -23,17 +23,17 @@ interface BlogProps {
 }
 
 export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
 
   return (
-    <section id="blog" style={{ padding: '100px 24px', background: 'var(--surface-2)' }}>
+    <section id="blog" style={{ padding: '40px 24px', background: 'var(--surface-2)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         {/* Blog Header */}
 
 
         {/* FAQ */}
         <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <div className="section-label" style={{ justifyContent: 'center' }}>
               <CircleHelp size={14} /> FAQs
             </div>
@@ -41,7 +41,7 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
               Frequently Asked <span className="text-blue-800-solid">Questions</span>
             </h2>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {faqs.map((faq, i) => (
               <div
                 key={i}

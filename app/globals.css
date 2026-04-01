@@ -450,15 +450,19 @@ body {
 
 /* ── Service Card Button ── */
 .service-btn {
-  margin-top: 24px;
+  margin-top: 20px;
   width: 100%;
-  padding: 10px;
+  padding: 11px 16px;
   border-radius: 10px;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .service-btn-indigo {
@@ -470,7 +474,7 @@ body {
 .service-btn-cyan {
   background: #06B6D418;
   border-color: #06B6D430;
-  color: #06B6D4;
+  color: #4f46E5;
 }
 
 .service-btn-green {

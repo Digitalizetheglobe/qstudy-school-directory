@@ -111,15 +111,15 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   ]
 
   return (
-    <section id="explorer" style={{ padding: '100px 24px', background: 'var(--background)', position: 'relative' }}>
+    <section id="explorer" style={{ padding: '40px 24px', background: 'var(--background)', position: 'relative' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>
             <Search size={14} /> Directory Explorer
           </div>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '10px', letterSpacing: '-0.02em' }}>
             Find Your Perfect <span className="text-blue-800-solid">Programme</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>
@@ -147,19 +147,24 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: '0.85rem',
-                fontWeight: '700',
+                fontWeight: '800',
                 transition: 'all 0.25s ease',
-                background: activeTab === tab.id ? 'linear-gradient(135deg,#4F46E5,#06B6D4)' : 'transparent',
+                background: activeTab === tab.id ? '#4f46E5' : 'transparent',
                 color: activeTab === tab.id ? 'white' : 'var(--text-secondary)',
                 whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
               }}
             >
-              <tab.icon size={14} style={{ marginRight: '6px', verticalAlign: 'text-bottom' }} />
+              <tab.icon size={14} />
               {tab.label}
               <span style={{
-                marginLeft: '6px', fontSize: '0.72rem',
+                fontSize: '0.72rem',
                 background: activeTab === tab.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.07)',
                 borderRadius: '50px', padding: '1px 7px',
+                lineHeight: 1.6,
               }}>{tab.count}</span>
             </button>
           ))}
@@ -215,7 +220,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
               <div style={{ display: 'flex', gap: '6px' }}>
                 {(['grid', 'list'] as const).map(v => (
                   <button key={v} onClick={() => setView(v)} style={{
-                    background: view === v ? 'linear-gradient(135deg,#4F46E5,#06B6D4)' : 'rgba(255,255,255,0.05)',
+                    background: view === v ? '#4f46E5' : 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.08)',
                     borderRadius: '8px', padding: '7px 13px',
                     color: 'var(--text-primary)', cursor: 'pointer', fontSize: '0.78rem', fontWeight: '600',
@@ -275,7 +280,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--gold)' }}>{item.fees}</span>
                       <button style={{
-                        background: 'linear-gradient(135deg,#4F46E5,#06B6D4)',
+                        background: '#4f46E5',
                         border: 'none', borderRadius: '8px', padding: '5px 12px',
                         color: 'white', fontSize: '0.72rem', fontWeight: '600', cursor: 'pointer',
                       }}>
@@ -295,7 +300,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '8px',
                     padding: '11px 30px',
-                    background: showAll ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg,#4F46E5,#06B6D4)',
+                    background: showAll ? 'rgba(255,255,255,0.05)' : '#4f46E5',
                     border: showAll ? '1px solid rgba(255,255,255,0.12)' : 'none',
                     borderRadius: '50px', color: 'white',
                     fontWeight: '700', fontSize: '0.88rem', cursor: 'pointer',

@@ -23,7 +23,7 @@ export default function Page() {
 
   return (
     <>
-      <Navbar />
+      <Navbar onApplyNowClick={() => setIsContactFormOpen(true)} />
       <main>
         <Hero onApplyNowClick={() => setIsContactFormOpen(true)} />
         

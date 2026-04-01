@@ -39,14 +39,14 @@ interface EventsProps {
 
 export default function Events({ onApplyNowClick: _onApplyNowClick }: EventsProps) {
   return (
-    <section id="events" style={{ padding: '100px 24px', background: 'var(--surface)' }}>
+    <section id="events" style={{ padding: '40px 24px', background: 'var(--surface)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>
             <MicVocal size={14} /> Events & Webinars
           </div>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: '800', marginBottom: '10px', letterSpacing: '-0.02em' }}>
             Stay Connected. <span className="text-blue-800-solid">Stay Informed.</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '560px', margin: '0 auto' }}>
@@ -94,7 +94,7 @@ export default function Events({ onApplyNowClick: _onApplyNowClick }: EventsProp
               <p style={{ fontSize: '0.87rem', color: 'var(--text-secondary)', lineHeight: '1.65', marginBottom: '24px' }}>{ev.desc}</p>
               <button style={{
                 width: '100%', padding: '10px',
-                background: 'linear-gradient(135deg,#4F46E5,#06B6D4)',
+                background: '#4F46E5',
                 border: 'none', borderRadius: '10px',
                 color: 'white', fontWeight: '700', fontSize: '0.85rem',
                 cursor: 'pointer',

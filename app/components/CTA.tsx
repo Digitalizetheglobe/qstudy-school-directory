@@ -46,7 +46,7 @@ interface CTAProps {
 export default function CTA({ onApplyNowClick: _onApplyNowClick }: CTAProps) {
   return (
     <section id="cta" style={{
-      padding: '100px 24px',
+      padding: '40px 24px',
       background: 'linear-gradient(135deg, #0f0f1a 0%, #1e1b4b 50%, #0c4a6e 100%)',
       position: 'relative',
       overflow: 'hidden',
@@ -67,11 +67,11 @@ export default function CTA({ onApplyNowClick: _onApplyNowClick }: CTAProps) {
         <div className="section-label" style={{ justifyContent: 'center', marginBottom: '24px' }}>
           <span>🚀</span> Get Started Today
         </div>
-        <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: '800', marginBottom: '20px', lineHeight: '1.15', letterSpacing: '-0.02em' }}>
+        <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: '800', marginBottom: '10px', lineHeight: '1.15', letterSpacing: '-0.02em' }}>
           Start Your Global Education{' '}
           <span className="text-blue-800-solid">Journey Today!</span>
         </h2>
-        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '560px', margin: '0 auto 64px', lineHeight: '1.75' }}>
+        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '560px', margin: '0 auto 20px', lineHeight: '1.75' }}>
           Join over 50,000 students who&apos;ve found their dream school through QStudy World. Your future starts with a single click.
         </p>
 

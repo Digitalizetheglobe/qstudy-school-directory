@@ -31,8 +31,8 @@ const areas: AreaData[] = [
     title: 'International, Boarding & Grammar Schools',
     desc: 'Discover world-class schools across every category - from elite boarding schools in the UK to grammar schools in Europe and international schools worldwide.',
     tags: ['International Schools', 'Boarding Schools', 'Grammar Schools'],
-    color: '#4F46E5',
-    bg: '#EEF0FD',
+    color: '#7974c7ff',
+    bg: '#1e1864',
     border: 'rgba(79,70,229,0.25)',
     count: '3,200+ Schools',
     image: '/schools-boarding.png',
@@ -46,7 +46,7 @@ const areas: AreaData[] = [
     desc: 'Immersive language education programs at accredited schools across Europe, Canada, Australia, and beyond. Study the language, live the culture.',
     tags: ['English (ESL)', 'French', 'German', 'Spanish', 'Mandarin'],
     color: '#06B6D4',
-    bg: '#E0F7FA',
+    bg: '#1e1864',
     border: 'rgba(6,182,212,0.25)',
     count: '800+ Language Schools',
     image: '/language-school.png',
@@ -60,7 +60,7 @@ const areas: AreaData[] = [
     desc: 'Short-term educational adventures for students of all ages - summer camps, academic study trips, cultural exchanges, and sports programmes worldwide.',
     tags: ['Summer Camps', 'Study Trips', 'Cultural Exchange', 'Sports Camps'],
     color: '#F59E0B',
-    bg: '#FEF9EE',
+    bg: '#1e1864',
     border: 'rgba(245,158,11,0.25)',
     count: '500+ Programmes',
     image: '/summer-camp.png',
@@ -104,7 +104,7 @@ const ProductStyle = ({ onApplyNowClick: _onApplyNowClick }: ProductStyleProps) 
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: `linear-gradient(to top, ${area.color}CC 0%, ${area.color}44 40%, transparent 70%)`,
+                    background: `linear-gradient(to top, ${area.color}CC 0%, ${area.color}44 40%, transparent 90%)`,
                   }} />
                   {/* Floating icon + count badge */}
                   <div style={{
@@ -135,11 +135,11 @@ const ProductStyle = ({ onApplyNowClick: _onApplyNowClick }: ProductStyleProps) 
                 {/* Right: Content */}
                 <div className={styles.productContent}>
                   {/* Category pill */}
-                  <span className={styles.categoryPill} style={{ color: area.color }}>
+                  <span className={styles.categoryPill} style={{ color: '#ffffff' }}>
                     {area.tag}
                   </span>
 
-                  <h2 className={styles.productHeading} style={{ color: 'black' }}>
+                  <h2 className={styles.productHeading} style={{ color: '#ffffff' }}>
                     {area.title}
                   </h2>
 
@@ -151,7 +151,7 @@ const ProductStyle = ({ onApplyNowClick: _onApplyNowClick }: ProductStyleProps) 
                       <span
                         key={t}
                         className={styles.subTag}
-                        style={{ background: `${area.color}10`, border: `1px solid ${area.color}24`, color: area.color }}
+                        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: '#ffffff' }}
                       >
                         {t}
                       </span>
@@ -160,10 +160,10 @@ const ProductStyle = ({ onApplyNowClick: _onApplyNowClick }: ProductStyleProps) 
 
                   {/* Footer */}
                   <div className={styles.cardFooter}>
-                    <span className={styles.countText} style={{ color: area.color }}>
+                    <span className={styles.countText} style={{ color: '#ffffff' }}>
                       {area.count}
                     </span>
-                    <a href={area.href} className={styles.exploreLink} style={{ color: area.color, borderColor: `${area.color}44` }}>
+                    <a href={area.href} className={styles.exploreLink} style={{ color: '#ffffff', borderColor: 'rgba(255,255,255,0.25)' }}>
                       Explore <ArrowRight size={14} />
                     </a>
                   </div>
