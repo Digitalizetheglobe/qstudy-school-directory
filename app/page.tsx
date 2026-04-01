@@ -7,6 +7,7 @@ import InternationalBanner from './components/InternationalBanner'
 import ContactForm from './components/ContactForm'
 // import ThreeAreas from './components/ThreeAreas'
 import Features from './components/Features'
+import FeaturesMob from './components/FeaturesMob'
 import Explorer from './components/Explorer'
 import SchoolDetail from './components/SchoolDetail'
 import ServicesHighlight from './components/ServicesHighlight'
@@ -30,6 +31,7 @@ export default function Page() {
         <ProductStyle onApplyNowClick={() => setIsContactFormOpen(true)} />
         {/* <ThreeAreas /> */}
         <Features onApplyNowClick={() => setIsContactFormOpen(true)} />
+        <FeaturesMob onApplyNowClick={() => setIsContactFormOpen(true)} />
         <Explorer onApplyNowClick={() => setIsContactFormOpen(true)} />
         <SchoolDetail onApplyNowClick={() => setIsContactFormOpen(true)} />
         <ServicesHighlight onApplyNowClick={() => setIsContactFormOpen(true)} />

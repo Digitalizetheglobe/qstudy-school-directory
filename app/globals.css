@@ -710,6 +710,14 @@ body {
   transform: translateY(-2px);
 }
 
+/* ── Features visibility (desktop vs mobile) ── */
+#features     { display: block; }
+#features-mob { display: none; }
+@media (max-width: 768px) {
+  #features     { display: none; }
+  #features-mob { display: block; }
+}
+
 /* ── Section Labels ── */
 .section-label {
   display: inline-flex;

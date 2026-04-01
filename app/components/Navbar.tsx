@@ -175,12 +175,12 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
 
             {/* Logo */}
             <a href="#home" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '9px', flexShrink: 0 }}>
-              <div style={{
+              {/* <div style={{
                 width: 36, height: 36, borderRadius: '10px',
                 background: 'linear-gradient(135deg,#4F46E5,#06B6D4)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '16px', fontWeight: '800', color: '#fff',
-              }}>Q</div>
+              }}>Q</div> */}
               <span style={{ fontSize: '1.05rem', fontWeight: '700', color: '#fff', letterSpacing: '-0.01em' }}>
                 QStudy <span className="qs-logo-accent">World</span>
               </span>

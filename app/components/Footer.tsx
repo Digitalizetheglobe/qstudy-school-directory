@@ -33,12 +33,39 @@ export default function Footer() {
         background: 'var(--surface)',
         borderTop: '1px solid var(--border)',
         padding: '72px 24px 32px',
-        position: 'relative',   // ← needed for absolute child
+        position: 'relative',
         overflow: 'hidden',
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .ft-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 32px !important;
+          }
+          .ft-brand {
+            grid-column: 1 / -1;
+          }
+          .ft-bottom {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center;
+          }
+          .ft-bottom-links {
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 14px !important;
+          }
+          .ft-map { opacity: 0.2 !important; }
+        }
+        @media (max-width: 480px) {
+          .ft-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
       {/* ── World Map Background ── */}
-      <div style={{
+      <div className="ft-map" style={{
         position: 'absolute',
         inset: 0,
         opacity: 0.5,
@@ -99,10 +126,10 @@ export default function Footer() {
       {/* ── Footer Content (above map) ── */}
       <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '56px' }}>
+        <div className="ft-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '56px' }}>
 
           {/* Brand */}
-          <div>
+          <div className="ft-brand">
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
               <div style={{
                 width: 40, height: 40,
@@ -155,7 +182,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div style={{
+        <div className="ft-bottom" style={{
           borderTop: '1px solid var(--border)',
           paddingTop: '24px',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px',
@@ -163,7 +190,7 @@ export default function Footer() {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
             © 2025 QStudy World. All rights reserved.
           </p>
-          <div style={{ display: 'flex', gap: '24px' }}>
+          <div className="ft-bottom-links" style={{ display: 'flex', gap: '24px' }}>
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(l => (
               <Link key={l} href="#" className="footer-nav-link">{l}</Link>
             ))}

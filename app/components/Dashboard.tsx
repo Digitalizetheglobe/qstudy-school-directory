@@ -15,6 +15,28 @@ interface DashboardProps {
 export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: DashboardProps) {
   return (
     <section id="dashboard" style={{ padding: '60px 24px', background: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .db-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .db-image-wrap { order: -1; }
+          /* Keep floating badges inside card on mobile */
+          .db-badge-top {
+            top: 10px !important;
+            right: 10px !important;
+          }
+          .db-badge-bottom {
+            bottom: 10px !important;
+            left: 10px !important;
+          }
+          .db-cta {
+            align-self: stretch !important;
+            justify-content: center;
+          }
+        }
+      `}</style>
       {/* Background glow */}
       <div style={{
         position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
@@ -38,9 +60,9 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
         </div>
 
         {/* Two-column */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '60px', alignItems: 'center' }}>
+        <div className="db-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '60px', alignItems: 'center' }}>
           {/* Left: Dashboard Image */}
-          <div style={{ position: 'relative' }} className="animate-fade-up" >
+          <div className="db-image-wrap" style={{ position: 'relative' }}>
             <div style={{
               borderRadius: '24px', overflow: 'hidden',
               border: '1px solid rgba(79,70,229,0.2)',
@@ -54,8 +76,8 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />
             </div>
-            {/* Floating stat */}
-            <div style={{
+            {/* Floating stat — top right */}
+            <div className="db-badge-top" style={{
               position: 'absolute', top: '-16px', right: '-16px',
               background: 'rgba(15,15,26,0.95)', backdropFilter: 'blur(12px)',
               border: '1px solid rgba(79,70,229,0.3)',
@@ -65,7 +87,8 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
               <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Applications Sent</div>
               <div style={{ fontSize: '1.8rem', fontWeight: '800', lineHeight: 1 }} className="text-blue-800-blue">12</div>
             </div>
-            <div style={{
+            {/* Floating stat — bottom left */}
+            <div className="db-badge-bottom" style={{
               position: 'absolute', bottom: '-16px', left: '20px',
               background: 'rgba(15,15,26,0.95)', backdropFilter: 'blur(12px)',
               border: '1px solid rgba(16,185,129,0.3)',
@@ -107,7 +130,7 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
                 </div>
               </div>
             ))}
-            <a href="#cta" className="btn-primary" style={{ alignSelf: 'flex-start', marginTop: '8px' }}>
+            <a href="#cta" className="btn-primary db-cta" style={{ alignSelf: 'flex-start', marginTop: '8px' }}>
               <Rocket size={16} />
               <span>Start Your Dashboard</span>
             </a>

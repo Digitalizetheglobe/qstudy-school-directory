@@ -50,15 +50,21 @@ interface FeaturesProps {
 
 export default function Features({ onApplyNowClick: _onApplyNowClick }: FeaturesProps) {
   return (
-    <section
-      id="features"
-      style={{
-        padding: '40px 24px',
-        background: 'var(--surface)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          #features { display: none !important; }
+        }
+      `}</style>
+      <section
+        id="features"
+        style={{
+          padding: '40px 24px',
+          background: 'var(--surface)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
       {/* Ambient background glows */}
       <div style={{
         position: 'absolute', top: '-120px', left: '-120px',
@@ -196,6 +202,7 @@ export default function Features({ onApplyNowClick: _onApplyNowClick }: Features
         </div>
       </div>
     </section>
+    </>
   )
 }
 

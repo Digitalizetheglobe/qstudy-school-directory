@@ -112,6 +112,37 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
 
   return (
     <section id="explorer" style={{ padding: '40px 24px', background: 'var(--background)', position: 'relative' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          /* Tab bar: scrollable row */
+          .explorer-tabs {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start !important;
+            flex-wrap: nowrap !important;
+            scrollbar-width: none;
+            max-width: 100% !important;
+            margin: 0 0 24px !important;
+          }
+          .explorer-tabs::-webkit-scrollbar { display: none; }
+          .explorer-tabs button { flex-shrink: 0; padding: 9px 14px !important; font-size: 0.8rem !important; }
+
+          /* Main layout: single column */
+          .explorer-layout {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+
+          /* Hide the image, show filters inline */
+          .explorer-image { display: none !important; }
+          .explorer-sidebar { position: static !important; }
+
+          /* Cards: single column on mobile */
+          .explorer-grid-wrap[data-view='grid'] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
         {/* Header */}
@@ -128,7 +159,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
         </div>
 
         {/* ── Category Tabs ── */}
-        <div style={{
+        <div className="explorer-tabs" style={{
           display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap',
           marginBottom: '48px', padding: '6px',
           background: 'rgba(255,255,255,0.03)',
@@ -171,11 +202,11 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
         </div>
 
         {/* ── Main Layout ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 4fr', gap: '32px', alignItems: 'start' }}>
+        <div className="explorer-layout" style={{ display: 'grid', gridTemplateColumns: '2fr 4fr', gap: '32px', alignItems: 'start' }}>
 
           {/* Left: Image + Filters */}
-          <div style={{ position: 'sticky', top: '100px', alignSelf: 'start' }}>
-            <div style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: 'var(--shadow-card)' }}>
+          <div className="explorer-sidebar" style={{ position: 'sticky', top: '100px', alignSelf: 'start' }}>
+            <div className="explorer-image" style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: 'var(--shadow-card)' }}>
               <Image src="/student-search.png" alt="Student searching for schools" width={500} height={320} style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
 
@@ -234,12 +265,16 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
             </div>
 
             {/* Cards grid/list */}
-            <div style={{
-              display: view === 'grid' ? 'grid' : 'flex',
-              flexDirection: view === 'list' ? 'column' : undefined,
-              gridTemplateColumns: view === 'grid' ? 'repeat(auto-fill, minmax(240px, 1fr))' : undefined,
-              gap: '14px',
-            }}>
+            <div
+              className="explorer-grid-wrap"
+              data-view={view}
+              style={{
+                display: view === 'grid' ? 'grid' : 'flex',
+                flexDirection: view === 'list' ? 'column' : undefined,
+                gridTemplateColumns: view === 'grid' ? 'repeat(auto-fill, minmax(240px, 1fr))' : undefined,
+                gap: '14px',
+              }}
+            >
               {visible.map((item: any) => (
                 <div key={item.name} className="glass-card" style={{
                   padding: '18px',
