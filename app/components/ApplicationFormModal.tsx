@@ -11,13 +11,48 @@ interface ApplicationFormModalProps {
 
 export default function ApplicationFormModal({ item, onClose }: ApplicationFormModalProps) {
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  
+  const [formData, setFormData] = useState({
+    firstName: '',
+    email: '',
+    mobile: '',
+    message: ''
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => {
-      onClose()
-    }, 2500)
+    setIsSubmitting(true)
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.firstName,
+          email: formData.email,
+          phone: formData.mobile,
+          message: formData.message,
+        })
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        setSubmitted(true)
+        setTimeout(() => {
+          onClose()
+        }, 2500)
+      } else {
+        alert(data.message || 'Failed to submit application.')
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const inputStyle = {
@@ -81,34 +116,34 @@ export default function ApplicationFormModal({ item, onClose }: ApplicationFormM
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
                   <label style={labelStyle}>Full Name</label>
-                  <input type="text" required placeholder="John Doe" style={inputStyle} 
+                  <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required placeholder="John Doe" style={inputStyle} 
                     onFocus={e => e.currentTarget.style.borderColor = 'var(--primary)'}
                     onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
                   />
                 </div>
                 <div>
                   <label style={labelStyle}>Email Address</label>
-                  <input type="email" required placeholder="john@example.com" style={inputStyle} 
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="john@example.com" style={inputStyle} 
                     onFocus={e => e.currentTarget.style.borderColor = 'var(--primary)'}
                     onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
                   />
                 </div>
                 <div>
                   <label style={labelStyle}>Phone Number</label>
-                  <input type="tel" required placeholder="+1 234 567 890" style={inputStyle} 
+                  <input type="tel" name="mobile" value={formData.mobile} onChange={handleChange} required placeholder="+1 234 567 890" style={inputStyle} 
                     onFocus={e => e.currentTarget.style.borderColor = 'var(--primary)'}
                     onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
                   />
                 </div>
                 <div>
                   <label style={labelStyle}>Questions / Message (Optional)</label>
-                  <textarea rows={3} placeholder="Tell us about your interests..." style={{ ...inputStyle, resize: 'none' }} 
+                  <textarea name="message" value={formData.message} onChange={handleChange} rows={3} placeholder="Tell us about your interests..." style={{ ...inputStyle, resize: 'none' }} 
                     onFocus={e => e.currentTarget.style.borderColor = 'var(--primary)'}
                     onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
                   />
                 </div>
-                <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '14px', fontSize: '1rem', borderRadius: '12px', marginTop: '8px' }}>
-                  <span>Submit Application</span>
+                <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '14px', fontSize: '1rem', borderRadius: '12px', marginTop: '8px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>
+                  <span>{isSubmitting ? 'Submitting...' : 'Submit Application'}</span>
                 </button>
               </form>
             </>

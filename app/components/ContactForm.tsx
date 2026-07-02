@@ -17,12 +17,15 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
     callbackConsent: false,
   })
   const [mounted, setMounted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   // Animate in
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => setMounted(true), 10)
       document.body.style.overflow = 'hidden'
+      setSubmitStatus('idle')
     } else {
       setMounted(false)
       document.body.style.overflow = ''
@@ -30,10 +33,41 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    onClose()
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.firstName,
+          email: formData.email,
+          phone: formData.mobile,
+          message: formData.message,
+        })
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        setSubmitStatus('success')
+        setTimeout(() => {
+          onClose()
+          setFormData({ firstName: '', email: '', mobile: '', message: '', callbackConsent: false })
+          setSubmitStatus('idle')
+        }, 2500)
+      } else {
+        setSubmitStatus('error')
+        alert(data.message || 'Failed to send message.')
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      alert('An error occurred. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -218,25 +252,27 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
           {/* Submit */}
           <button
             type="submit"
+            disabled={isSubmitting || submitStatus === 'success'}
             style={{
               marginTop: '8px',
               width: '100%',
               padding: '14px',
-              background: 'linear-gradient(135deg, #4F46E5, #06B6D4)',
+              background: submitStatus === 'success' ? '#10B981' : 'linear-gradient(135deg, #4F46E5, #06B6D4)',
               color: 'white',
               border: 'none',
               borderRadius: '10px',
               fontSize: '0.92rem',
               fontWeight: '800',
-              cursor: 'pointer',
+              cursor: (isSubmitting || submitStatus === 'success') ? 'not-allowed' : 'pointer',
               letterSpacing: '1px',
               textTransform: 'uppercase',
-              transition: 'opacity 0.2s ease, transform 0.2s ease',
+              transition: 'all 0.2s ease',
+              opacity: (isSubmitting || submitStatus === 'success') ? 0.8 : 1,
             }}
-            onMouseOver={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-            onMouseOut={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
+            onMouseOver={e => { if (!isSubmitting && submitStatus !== 'success') { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
+            onMouseOut={e => { if (!isSubmitting && submitStatus !== 'success') { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' } }}
           >
-            Send Message →
+            {submitStatus === 'success' ? 'Message Sent! ✓' : isSubmitting ? 'Sending...' : 'Send Message →'}
           </button>
         </form>
       </div>
