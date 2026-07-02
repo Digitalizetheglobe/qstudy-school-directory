@@ -76,7 +76,7 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />
             </div>
-            {/* Floating stat — top right */}
+            {/* Floating stat - top right */}
             <div className="db-badge-top" style={{
               position: 'absolute', top: '-16px', right: '-16px',
               background: 'rgba(15,15,26,0.95)', backdropFilter: 'blur(12px)',
@@ -87,7 +87,7 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
               <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Applications Sent</div>
               <div style={{ fontSize: '1.8rem', fontWeight: '800', lineHeight: 1 }} className="text-blue-800-blue">12</div>
             </div>
-            {/* Floating stat — bottom left */}
+            {/* Floating stat - bottom left */}
             <div className="db-badge-bottom" style={{
               position: 'absolute', bottom: '-16px', left: '20px',
               background: 'rgba(15,15,26,0.95)', backdropFilter: 'blur(12px)',

@@ -65,143 +65,143 @@ export default function Features({ onApplyNowClick: _onApplyNowClick }: Features
           overflow: 'hidden',
         }}
       >
-      {/* Ambient background glows */}
-      <div style={{
-        position: 'absolute', top: '-120px', left: '-120px',
-        width: '480px', height: '480px',
-        background: 'radial-gradient(circle, rgba(79,70,229,0.07) 0%, transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute', bottom: '-100px', right: '-100px',
-        width: '400px', height: '400px',
-        background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)',
-        borderRadius: '50%', pointerEvents: 'none',
-      }} />
-
-      <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-
-        {/* ── 3-column grid ── */}
+        {/* Ambient background glows */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '20px',
-        }}>
+          position: 'absolute', top: '-120px', left: '-120px',
+          width: '480px', height: '480px',
+          background: 'radial-gradient(circle, rgba(79,70,229,0.07) 0%, transparent 70%)',
+          borderRadius: '50%', pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-100px', right: '-100px',
+          width: '400px', height: '400px',
+          background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)',
+          borderRadius: '50%', pointerEvents: 'none',
+        }} />
 
-          {/* ── TOP LEFT ── */}
-          <FeatureCard card={cards[0]} />
+        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
-          {/* ── TOP CENTER — Heading + CTA ── */}
+          {/* ── 3-column grid ── */}
           <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            padding: '40px 28px',
-            // background: 'var(--gradient-card)',
-            // border: '1px solid var(--border)',
-            // borderRadius: '20px',
-            // backdropFilter: 'blur(20px)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '20px',
           }}>
-            <div className="section-label" style={{ justifyContent: 'center', marginBottom: '20px' }}>
-              <Globe size={14} /> Why Choose Us
-            </div>
-            <h2 style={{
-              fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)',
-              fontWeight: '800',
-              lineHeight: '1.2',
-              marginBottom: '14px',
-              textTransform: 'uppercase',
-              letterSpacing: '-0.01em',
-              color: 'var(--text-primary)',
+
+            {/* ── TOP LEFT ── */}
+            <FeatureCard card={cards[0]} />
+
+            {/* ── TOP CENTER - Heading + CTA ── */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              padding: '40px 28px',
+              // background: 'var(--gradient-card)',
+              // border: '1px solid var(--border)',
+              // borderRadius: '20px',
+              // backdropFilter: 'blur(20px)',
             }}>
-              One Platform.<br />
-              <span className="text-blue-800-solid">Every Opportunity.</span>
-            </h2>
-            <Link href="/explorer">
-              <button className="btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}>
-                <span>Explore Schools</span>
-                <ArrowUpRight size={15} />
-              </button>
-            </Link>
-          </div>
-
-          {/* ── TOP RIGHT ── */}
-          <FeatureCard card={cards[1]} />
-
-          {/* ── BOTTOM LEFT ── */}
-          <FeatureCard card={cards[2]} />
-
-          {/* ── BOTTOM CENTER ── */}
-          <FeatureCard card={cards[3]} />
-
-          {/* ── BOTTOM RIGHT — Image card ── */}
-          <div
-            style={{
-              borderRadius: '20px',
-              overflow: 'hidden',
-              position: 'relative',
-              cursor: 'pointer',
-              minHeight: '220px',
-              background: '#0a0a14',
-              border: '1px solid var(--border)',
-              transition: 'all 0.3s ease',
-            }}
-            className="glass-card"
-          >
-            {/* Background image */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              backgroundImage: `url('/global-reach.png')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              opacity: 1.35,
-              transition: 'opacity 0.4s ease, transform 0.4s ease',
-            }} />
-            {/* Gradient overlay */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(10,10,20,0.95) 0%, rgba(10,10,20,0.5) 60%, transparent 100%)',
-            }} />
-            {/* Content */}
-            <div style={{
-              position: 'relative', zIndex: 1,
-              padding: '28px',
-              height: '100%',
-              display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-            }}>
-              <div style={{
-                width: '44px', height: '44px',
-                background: 'rgba(79,70,229,0.2)',
-                border: '1px solid rgba(79,70,229,0.4)',
-                borderRadius: '12px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: '16px',
-              }}>
-                <Globe style={{ width: '22px', height: '22px', color: '#818CF8' }} strokeWidth={2} />
+              <div className="section-label" style={{ justifyContent: 'center', marginBottom: '20px' }}>
+                <Globe size={14} /> Why Choose Us
               </div>
-              <p style={{ fontSize: '0.7rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px', color: '#818CF8', marginBottom: '6px' }}>
-                Global Reach
-              </p>
-              <div style={{
-                fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+              <h2 style={{
+                fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)',
                 fontWeight: '800',
-                lineHeight: 1,
-                marginBottom: '6px',
+                lineHeight: '1.2',
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '-0.01em',
+                color: 'var(--text-primary)',
               }}>
-                <span className="text-blue-800-blue">120+</span>
-                <span style={{ color: 'var(--text-primary)', marginLeft: '6px' }}>Countries</span>
-              </div>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                Schools & programmes spanning 6 continents
-              </p>
+                One Platform.<br />
+                <span className="text-blue-800-solid">Every Opportunity.</span>
+              </h2>
+              <Link href="/explorer">
+                <button className="btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}>
+                  <span>Explore Schools</span>
+                  <ArrowUpRight size={15} />
+                </button>
+              </Link>
             </div>
-          </div>
 
+            {/* ── TOP RIGHT ── */}
+            <FeatureCard card={cards[1]} />
+
+            {/* ── BOTTOM LEFT ── */}
+            <FeatureCard card={cards[2]} />
+
+            {/* ── BOTTOM CENTER ── */}
+            <FeatureCard card={cards[3]} />
+
+            {/* ── BOTTOM RIGHT - Image card ── */}
+            <div
+              style={{
+                borderRadius: '20px',
+                overflow: 'hidden',
+                position: 'relative',
+                cursor: 'pointer',
+                minHeight: '220px',
+                background: '#0a0a14',
+                border: '1px solid var(--border)',
+                transition: 'all 0.3s ease',
+              }}
+              className="glass-card"
+            >
+              {/* Background image */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                backgroundImage: `url('/global-reach.png')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 1.35,
+                transition: 'opacity 0.4s ease, transform 0.4s ease',
+              }} />
+              {/* Gradient overlay */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(10,10,20,0.95) 0%, rgba(10,10,20,0.5) 60%, transparent 100%)',
+              }} />
+              {/* Content */}
+              <div style={{
+                position: 'relative', zIndex: 1,
+                padding: '28px',
+                height: '100%',
+                display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+              }}>
+                <div style={{
+                  width: '44px', height: '44px',
+                  background: 'rgba(79,70,229,0.2)',
+                  border: '1px solid rgba(79,70,229,0.4)',
+                  borderRadius: '12px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '16px',
+                }}>
+                  <Globe style={{ width: '22px', height: '22px', color: '#818CF8' }} strokeWidth={2} />
+                </div>
+                <p style={{ fontSize: '0.7rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '2px', color: '#818CF8', marginBottom: '6px' }}>
+                  Global Reach
+                </p>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+                  fontWeight: '800',
+                  lineHeight: 1,
+                  marginBottom: '6px',
+                }}>
+                  <span className="text-blue-800-blue">120+</span>
+                  <span style={{ color: 'var(--text-primary)', marginLeft: '6px' }}>Countries</span>
+                </div>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                  Schools & programmes spanning 6 continents
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </>
   )
 }

@@ -7,24 +7,10 @@ import { ArrowDown, ArrowUp, BookOpenText, Grid3X3, List, School, Search, Slider
 /* ─────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────── */
-const schools = [
-  { name: 'Eton College', location: '🇬🇧 Windsor, UK', type: 'Boarding School', stream: 'General', fees: '£48,501/yr', highlights: ['World-Famous Alumni', 'All-Boys Boarding', 'Top UK School'], emoji: '🎩' },
-  { name: 'Harrow School', location: '🇬🇧 London, UK', type: 'Boarding School', stream: 'General', fees: '£45,735/yr', highlights: ['Founded 1572', 'Global Alumni', 'Boarding Excellence'], emoji: '🏆' },
-  { name: 'St Paul\'s School', location: '🇬🇧 London, UK', type: 'Grammar School', stream: 'Sciences', fees: '£29,400/yr', highlights: ['Top Grammar UK', 'Oxbridge Results', 'STEM Excellence'], emoji: '📐' },
-  { name: 'TASIS England', location: '🇬🇧 Surrey, UK', type: 'International School', stream: 'IB Diploma', fees: '£42,000/yr', highlights: ['IB World School', 'US Curriculum', 'Boarding Option'], emoji: '🌍' },
-  { name: 'Institut Le Rosey', location: '🇨🇭 Rolle, Switzerland', type: 'Boarding School', stream: 'General', fees: 'CHF 130,000/yr', highlights: ['Most Expensive School', 'Bi-Campus', 'Royal Alumni'], emoji: '👑' },
-  { name: 'United World College', location: '🇨🇦 Victoria, Canada', type: 'International School', stream: 'IB Diploma', fees: 'Need-based', highlights: ['Scholarship Mission', 'IB Only', 'Global Community'], emoji: '🤝' },
-  { name: 'Gordonstoun School', location: '🇬🇧 Elgin, Scotland', type: 'Boarding School', stream: 'General', fees: '£39,465/yr', highlights: ['Outdoor Learning', 'Royal Connections', 'Leadership Focus'], emoji: '🏔️' },
-  { name: 'The American School Paris', location: '🇫🇷 Paris, France', type: 'International School', stream: 'IB Diploma', fees: '€38,000/yr', highlights: ['IB & AP', 'Since 1946', 'Expat Community'], emoji: '🗼' },
-  { name: 'King\'s College School', location: '🇬🇧 Wimbledon, UK', type: 'Grammar School', stream: 'Humanities', fees: '£24,900/yr', highlights: ['Top 10 UK', 'Choristers', 'Oxbridge Track'], emoji: '📚' },
-  { name: 'Nord Anglia International', location: '🇭🇰 Hong Kong', type: 'International School', stream: 'IB Diploma', fees: 'HK$185,000/yr', highlights: ['Arts by Juilliard', 'Sport by IMG', 'STEM by MIT'], emoji: '🎭' },
-  { name: 'Millfield School', location: '🇬🇧 Somerset, UK', type: 'Boarding School', stream: 'Sport & Arts', fees: '£43,650/yr', highlights: ['Olympic Athletes', 'Arts & Sport Focus', 'Top Boarding'], emoji: '🏊' },
-  { name: 'Deutsche Schule', location: '🇩🇪 Berlin, Germany', type: 'International School', stream: 'German Abitur', fees: '€8,400/yr', highlights: ['Trilingual', 'EU Recognition', 'Low Fees'], emoji: '🇩🇪' },
-  { name: 'The Perse School', location: '🇬🇧 Cambridge, UK', type: 'Grammar School', stream: 'Sciences', fees: '£22,890/yr', highlights: ['Cambridge Setting', 'STEM Focus', 'Selective Entry'], emoji: '🔬' },
-  { name: 'Collège Champittet', location: '🇨🇭 Lausanne, Switzerland', type: 'Boarding School', stream: 'IB Diploma', fees: 'CHF 85,000/yr', highlights: ['Swiss Excellence', 'Bilingual', 'Lake Views'], emoji: '🏔️' },
-  { name: 'GEMS Wellington Academy', location: '🇦🇪 Dubai, UAE', type: 'International School', stream: 'British Curriculum', fees: 'AED 85,000/yr', highlights: ['British Curriculum', 'Award-Winning', 'KHDA Outstanding'], emoji: '🏙️' },
-  { name: 'Singapore American School', location: '🇸🇬 Singapore', type: 'International School', stream: 'AP / IB', fees: 'S$55,000/yr', highlights: ['Largest Int\'l School', 'AP & IB', 'Top Rated'], emoji: '🌴' },
-]
+import schoolsData from '../data/schoolsData.json'
+import SchoolModal from './SchoolModal'
+
+const schools = schoolsData;
 
 const languageSchools = [
   { name: 'British Study Centres', location: '🇬🇧 Oxford, UK', language: 'English (ESL)', level: 'All Levels', fees: '£350/week', highlights: ['Central Oxford', 'Oxford Uni Affiliation', 'Cultural Trips'], emoji: '🎓' },
@@ -67,19 +53,34 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   const [campType, setCampType] = useState('All Types')
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [showAll, setShowAll] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<any>(null)
 
   // Reset showAll when tab/filter changes
   const handleTab = (t: typeof activeTab) => { setActiveTab(t); setShowAll(false) }
 
-  const schoolTypes = ['All Types', 'International School', 'Boarding School', 'Grammar School']
-  const schoolCountries = ['All Countries', 'UK', 'Switzerland', 'France', 'Canada', 'Germany', 'UAE', 'Singapore', 'Hong Kong']
+  // Dynamically generate filter options from actual data
+  const dynamicSchoolTypes = Array.from(new Set(schools.map((s: any) => s.type).filter(Boolean))).sort() as string[]
+  const schoolTypes = ['All Types', ...dynamicSchoolTypes]
+
+  const getCountry = (loc: string) => {
+    if (!loc) return ''
+    // Handle flags if any are in the string, or just split by comma
+    const parts = loc.split(',')
+    const lastPart = parts[parts.length - 1].trim()
+    // Remove emojis if present to get clean country name for filtering
+    return lastPart.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').trim()
+  }
+  
+  const dynamicCountries = Array.from(new Set(schools.map((s: any) => getCountry(s.location)).filter(Boolean))).sort() as string[]
+  const schoolCountries = ['All Countries', ...dynamicCountries]
+
   const languages = ['All Languages', 'English (ESL)', 'French', 'German', 'Spanish', 'Mandarin', 'Japanese']
   const campTypes = ['All Types', 'Academic', 'Language + Fun', 'Sports Camp', 'STEM Camp', 'Cultural Exchange', 'Adventure', 'Summer Camp']
 
   // Filtering
-  const filteredSchools = schools.filter(s =>
+  const filteredSchools = schools.filter((s: any) =>
     (schoolType === 'All Types' || s.type === schoolType) &&
-    (country === 'All Countries' || s.location.includes(country))
+    (country === 'All Countries' || getCountry(s.location) === country)
   )
   const filteredLang = languageSchools.filter(s =>
     language === 'All Languages' || s.language === language
@@ -220,21 +221,21 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                 {activeTab === 'schools' && (
                   <>
                     <select value={schoolType} onChange={e => { setSchoolType(e.target.value); setShowAll(false) }} style={selectStyle}>
-                      {schoolTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                      {schoolTypes.map(t => <option key={t} value={t} style={{ background: '#1e1b4b', color: 'white' }}>{t}</option>)}
                     </select>
                     <select value={country} onChange={e => { setCountry(e.target.value); setShowAll(false) }} style={selectStyle}>
-                      {schoolCountries.map(c => <option key={c} value={c}>{c}</option>)}
+                      {schoolCountries.map(c => <option key={c} value={c} style={{ background: '#1e1b4b', color: 'white' }}>{c}</option>)}
                     </select>
                   </>
                 )}
                 {activeTab === 'language' && (
                   <select value={language} onChange={e => { setLanguage(e.target.value); setShowAll(false) }} style={selectStyle}>
-                    {languages.map(l => <option key={l} value={l}>{l}</option>)}
+                    {languages.map(l => <option key={l} value={l} style={{ background: '#1e1b4b', color: 'white' }}>{l}</option>)}
                   </select>
                 )}
                 {activeTab === 'summer' && (
                   <select value={campType} onChange={e => { setCampType(e.target.value); setShowAll(false) }} style={selectStyle}>
-                    {campTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                    {campTypes.map(t => <option key={t} value={t} style={{ background: '#1e1b4b', color: 'white' }}>{t}</option>)}
                   </select>
                 )}
               </div>
@@ -283,16 +284,33 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                   gap: view === 'list' ? '14px' : undefined,
                 }}>
                   {/* Icon */}
-                  <div style={{
-                    width: view === 'list' ? '44px' : '48px',
-                    height: view === 'list' ? '44px' : '48px',
-                    minWidth: '44px',
-                    background: 'linear-gradient(135deg, rgba(79,70,229,0.2), rgba(6,182,212,0.2))',
-                    borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '22px', marginBottom: view === 'grid' ? '12px' : 0,
-                  }}>
-                    {item.emoji}
-                  </div>
+                  {item.image ? (
+                    <div style={{
+                      width: view === 'list' ? '44px' : '48px',
+                      height: view === 'list' ? '44px' : '48px',
+                      minWidth: '44px',
+                      marginBottom: view === 'grid' ? '12px' : 0,
+                      position: 'relative'
+                    }}>
+                      <Image 
+                        src={encodeURI(item.image)} 
+                        alt={item.name} 
+                        fill
+                        style={{ objectFit: 'contain', borderRadius: '8px', background: 'white', padding: '4px' }} 
+                      />
+                    </div>
+                  ) : (
+                    <div style={{
+                      width: view === 'list' ? '44px' : '48px',
+                      height: view === 'list' ? '44px' : '48px',
+                      minWidth: '44px',
+                      background: 'linear-gradient(135deg, rgba(79,70,229,0.2), rgba(6,182,212,0.2))',
+                      borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '22px', marginBottom: view === 'grid' ? '12px' : 0,
+                    }}>
+                      {item.emoji}
+                    </div>
+                  )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <h4 style={{ fontWeight: '700', fontSize: '0.9rem', marginBottom: '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</h4>
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: view === 'grid' ? '8px' : '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -314,11 +332,13 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                     )}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--gold)' }}>{item.fees}</span>
-                      <button style={{
-                        background: '#4f46E5',
-                        border: 'none', borderRadius: '8px', padding: '5px 12px',
-                        color: 'white', fontSize: '0.72rem', fontWeight: '600', cursor: 'pointer',
-                      }}>
+                      <button 
+                        onClick={() => setSelectedItem(item)}
+                        style={{
+                          background: '#4f46E5',
+                          border: 'none', borderRadius: '8px', padding: '5px 12px',
+                          color: 'white', fontSize: '0.72rem', fontWeight: '600', cursor: 'pointer',
+                        }}>
                         View →
                       </button>
                     </div>
@@ -351,6 +371,9 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
           </div>
         </div>
       </div>
+      
+      {/* School Details Modal */}
+      <SchoolModal item={selectedItem} onClose={() => setSelectedItem(null)} onApplyNowClick={_onApplyNowClick} />
     </section>
   )
 }

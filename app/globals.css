@@ -20,7 +20,7 @@
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Light Mode — matched to qstudyworld.com palette ── */
+/* ── Light Mode - matched to qstudyworld.com palette ── */
 [data-theme="light"] {
   --primary: #27437D;
   --primary-dark: #1B2F57;
@@ -41,7 +41,7 @@
 }
 
 /* ────────────────────────────────────────────────
-   LIGHT MODE — Component-level overrides
+   LIGHT MODE - Component-level overrides
    Targets all hardcoded dark-only rgba/hex values
 ──────────────────────────────────────────────── */
 

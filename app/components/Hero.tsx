@@ -30,7 +30,7 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
         }}
       />
 
-      {/* Dark gradient overlay — heavier on bottom-left, lighter top-right (like NSLC) */}
+      {/* Dark gradient overlay - heavier on bottom-left, lighter top-right (like NSLC) */}
       <div
         style={{
           position: 'absolute',
@@ -105,7 +105,7 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
               backgroundClip: 'text',
             }}
           > */}
-            Schools Worldwide
+          Schools Worldwide
           {/* </span> */}
         </h1>
 

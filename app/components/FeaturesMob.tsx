@@ -7,7 +7,7 @@ const cards = [
     icon: <Building2 size={24} strokeWidth={1.8} />,
     label: 'Schools',
     title: 'Browse Schools',
-    desc: 'Thousands of institutions across 120+ countries in one place.',
+    desc: 'Thousands of institutions across 120+ countries — in one place.',
     accent: '#4F46E5',
     accentBg: 'rgba(79,70,229,0.15)',
     accentBorder: 'rgba(79,70,229,0.3)',

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { ArrowUpRight, ArrowRight, Globe as GlobeIcon } from 'lucide-react'
 
-// Must be client-only — Three.js cannot run on the server
+// Must be client-only - Three.js cannot run on the server
 const Globe3D = dynamic(
   () => import('@/app/components/ui/3d-globe').then(m => m.Globe3D),
   { ssr: false }
@@ -86,8 +86,8 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
           </div> */}
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <button 
-              className="qs-cta" 
+            <button
+              className="qs-cta"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect()
                 e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
@@ -103,8 +103,8 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
                 <span className="arrow-hover"><ArrowRight size={14} strokeWidth={3} /></span>
               </span>
             </button>
-            <button 
-              className="qs-cta" 
+            <button
+              className="qs-cta"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect()
                 e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
@@ -142,7 +142,7 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
             onMarkerClick={(marker) => console.log('Clicked:', marker.label)}
           />
 
-          {/* Floating badge — Application Approved */}
+          {/* Floating badge - Application Approved */}
           {/* <div style={{
             position: 'absolute', bottom: '32px', left: '0px',
             background: 'rgba(15,15,26,0.9)', backdropFilter: 'blur(12px)',

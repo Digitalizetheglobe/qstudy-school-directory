@@ -98,10 +98,6 @@ export default function Services({ onApplyNowClick: _onApplyNowClick }: Services
                     </li>
                   ))}
                 </ul>
-
-                <button className={`service-btn service-btn-${colorName}`} style={{ marginTop: 'auto' }}>
-                  Learn More →
-                </button>
               </div>
             )
           })}

@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QStudy World — Find & Apply to Schools Worldwide",
+  title: "QStudy World - Find & Apply to Schools Worldwide",
   description:
-    "Explore 5,000+ schools across 120+ countries. Apply for courses, find scholarships, and get end-to-end student support — all on QStudy World.",
+    "Explore 5,000+ schools across 120+ countries. Apply for courses, find scholarships, and get end-to-end student support - all on QStudy World.",
   keywords: "study abroad, international schools, scholarships, student visa, education platform",
   openGraph: {
-    title: "QStudy World — Global School Directory",
+    title: "QStudy World - Global School Directory",
     description: "Your one-stop platform to find, apply, and succeed at schools worldwide.",
     type: "website",
   },

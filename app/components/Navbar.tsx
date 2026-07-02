@@ -5,12 +5,12 @@ import { ArrowRight, ArrowUpRight, Check, ChevronDown, ChevronRight, Menu, Moon,
 import { useTheme } from './ThemeProvider'
 
 const navLinks = [
-  { label: 'Home',            href: '#home' },
+  { label: 'Home', href: '#home' },
   { label: 'Explore Schools', href: '#explorer' },
-  { label: 'Services',        href: '#services' },
-  { label: 'Events',          href: '#events' },
-  { label: 'Blog',            href: '#blog' },
-  { label: 'Contact',         href: '#contact' },
+  { label: 'Services', href: '#services' },
+  { label: 'Events', href: '#events' },
+  { label: 'Blog', href: '#blog' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 const LANGUAGES = [
@@ -196,12 +196,12 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
             {/* Right cluster */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
 
-              {/* Search — desktop */}
+              {/* Search - desktop */}
               {/* <button className="qs-icon-btn qs-search-btn" aria-label="Search">
                 <SearchIcon />
               </button> */}
 
-              {/* Theme toggle — desktop */}
+              {/* Theme toggle - desktop */}
               <button
                 className="qs-icon-btn qs-search-btn"
                 onClick={toggle}
@@ -211,8 +211,8 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
 
-              {/* Language switcher — desktop */}
-              <div className="qs-lang-wrap qs-lang-desktop">
+              {/* Language switcher - desktop */}
+              {/* <div className="qs-lang-wrap qs-lang-desktop">
                 <button
                   className="qs-lang-btn"
                   onClick={() => setLangOpen(o => !o)}
@@ -240,9 +240,9 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                     ))}
                   </div>
                 )}
-              </div>
+              </div> */}
 
-              {/* Apply Now — desktop */}
+              {/* Apply Now - desktop */}
               <button className="qs-cta qs-cta-desktop" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Apply Now">
                 <span className="qs-cta-ripple" />
                 <span className="qs-cta-label">Apply Now</span>
@@ -252,7 +252,7 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 </span>
               </button>
 
-              {/* Hamburger — mobile */}
+              {/* Hamburger - mobile */}
               <button className="qs-icon-btn qs-hamburger" onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu" aria-expanded={menuOpen}>
                 {menuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -268,7 +268,7 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 </a>
               ))}
 
-              {/* Theme toggle — mobile */}
+              {/* Theme toggle - mobile */}
               <button
                 onClick={toggle}
                 style={{
@@ -284,7 +284,7 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
               </button>
 
-              {/* Language chips — mobile */}
+              {/* Language chips - mobile */}
               <div className="qs-mobile-lang-row">
                 {LANGUAGES.map(lang => (
                   <button
@@ -298,7 +298,7 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 ))}
               </div>
 
-              {/* Apply Now — mobile */}
+              {/* Apply Now - mobile */}
               <div style={{ paddingTop: '14px', borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: '6px' }}>
                 <button className="qs-cta qs-cta-mobile" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Apply Now">
                   <span className="qs-cta-ripple" />
