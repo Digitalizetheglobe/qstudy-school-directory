@@ -286,27 +286,27 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                   {/* Icon */}
                   {item.image ? (
                     <div style={{
-                      width: view === 'list' ? '44px' : '48px',
-                      height: view === 'list' ? '44px' : '48px',
-                      minWidth: '44px',
-                      marginBottom: view === 'grid' ? '12px' : 0,
+                      width: view === 'list' ? '64px' : '80px',
+                      height: view === 'list' ? '64px' : '80px',
+                      minWidth: view === 'list' ? '64px' : '80px',
+                      marginBottom: view === 'grid' ? '16px' : 0,
                       position: 'relative'
                     }}>
                       <Image 
                         src={encodeURI(item.image)} 
                         alt={item.name} 
                         fill
-                        style={{ objectFit: 'contain', borderRadius: '8px', background: 'white', padding: '4px' }} 
+                        style={{ objectFit: 'contain', borderRadius: '12px', background: 'white', padding: '6px' }} 
                       />
                     </div>
                   ) : (
                     <div style={{
-                      width: view === 'list' ? '44px' : '48px',
-                      height: view === 'list' ? '44px' : '48px',
-                      minWidth: '44px',
+                      width: view === 'list' ? '64px' : '80px',
+                      height: view === 'list' ? '64px' : '80px',
+                      minWidth: view === 'list' ? '64px' : '80px',
                       background: 'linear-gradient(135deg, rgba(79,70,229,0.2), rgba(6,182,212,0.2))',
                       borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '22px', marginBottom: view === 'grid' ? '12px' : 0,
+                      fontSize: view === 'list' ? '32px' : '40px', marginBottom: view === 'grid' ? '16px' : 0,
                     }}>
                       {item.emoji}
                     </div>

@@ -3,7 +3,31 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'motion/react'
-import { X, MapPin, DollarSign, CheckCircle2 } from 'lucide-react'
+import { X, MapPin, DollarSign, CheckCircle2, BookOpen, Clock, Calendar, Users, Home, Activity, Info } from 'lucide-react'
+
+const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) => {
+  return (
+    <div style={{ marginBottom: '24px', background: 'rgba(255,255,255,0.02)', padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+      <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
+        {Icon && <Icon size={18} color="var(--primary)" />}
+        {title}
+      </h3>
+      <div style={{ display: 'grid', gridTemplateColumns: fullWidth ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const DetailItem = ({ label, value }: { label: string, value: any }) => {
+  const displayValue = (!value || value === '') ? '-' : value;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{label}</span>
+      <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: '500' }}>{displayValue}</span>
+    </div>
+  );
+};
 
 interface SchoolModalProps {
   item: any
@@ -25,6 +49,34 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
     }
     return () => { document.body.style.overflow = 'unset' }
   }, [item])
+
+  const formatFee = (val: any, location: string) => {
+    if (!val || val === '-' || val === '') return val;
+    // Check if the value is purely a number or numeric string
+    const num = Number(val);
+    if (!isNaN(num)) {
+      let currencyCode = 'USD';
+      const loc = (location || '').toLowerCase();
+      if (loc.includes('malaysia')) currencyCode = 'MYR';
+      else if (loc.includes('india')) currencyCode = 'INR';
+      else if (loc.includes('uk') || loc.includes('united kingdom')) currencyCode = 'GBP';
+      else if (loc.includes('canada')) currencyCode = 'CAD';
+      else if (loc.includes('australia')) currencyCode = 'AUD';
+      else if (loc.includes('switzerland')) currencyCode = 'CHF';
+
+      // Format as currency
+      const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 }).format(num);
+      
+      // If it's INR, you might want to call it "Rupees", MYR -> "RM", etc for clarity.
+      let currencySuffix = currencyCode;
+      if (currencyCode === 'INR') currencySuffix = 'Rupees';
+      else if (currencyCode === 'MYR') currencySuffix = 'RM';
+
+      return `${formatted} ${currencySuffix}`;
+    }
+    // If it's a string that already has text (e.g. "Contact for fees"), return as is
+    return val;
+  };
 
   return (
     <AnimatePresence>
@@ -129,47 +181,83 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '32px' }}>
-               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                 <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <DollarSign size={14} color="var(--gold)" />
-                    Estimated Fees
-                 </p>
-                 <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-primary)' }}>
-                   {item.fees}
-                 </div>
-               </div>
-               {item.duration && (
-                 <div style={{ background: 'rgba(255,255,255,0.03)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                   <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Duration</p>
-                   <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-primary)' }}>
-                     {item.duration}
-                   </div>
-                 </div>
-               )}
-               {item.stream && (
-                 <div style={{ background: 'rgba(255,255,255,0.03)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                   <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Stream / Curriculum</p>
-                   <div style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--text-primary)' }}>
-                     {item.stream}
-                   </div>
-                 </div>
-               )}
-            </div>
+            {/* Details Sections */}
+            <div style={{ marginBottom: '32px' }}>
+              <DetailSection title="School Info" icon={Info}>
+                <DetailItem label="Full Name" value={item.fullName || item.name} />
+                <DetailItem label="Establishment Since" value={item.establishmentSince} />
+                <DetailItem label="Campus Info" value={item.campusDescription} />
+                <DetailItem label="Total Campuses" value={item.totalCampuses} />
+                <DetailItem label="Address / Location" value={item.fullAddress || item.location} />
+                <DetailItem label="Type of School" value={item.schoolType || item.type} />
+                <DetailItem label="Levels Served" value={item.levelsServed || item.level} />
+                <DetailItem label="Operational Model" value={item.operationalModel} />
+                <DetailItem label="Curriculum / Programme" value={item.curriculum || item.stream} />
+                <DetailItem label="Language of Instruction" value={item.languageOfInstruction || item.language} />
+                <DetailItem label="Other Languages" value={item.otherLanguages} />
+                <DetailItem label="Categories / Gender" value={item.genderCategory} />
+                <DetailItem label="Ages Enrolled" value={item.agesEnrolled || item.ageRange} />
+              </DetailSection>
 
-            <div style={{ marginBottom: '36px', background: 'rgba(0,0,0,0.2)', padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.03)' }}>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CheckCircle2 size={16} color="var(--primary)" />
-                Programme Highlights
-              </h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {item.highlights?.map((h: string, idx: number) => (
-                  <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                    <span style={{ color: 'var(--primary)', marginTop: '6px', fontSize: '10px' }}>■</span>
-                    {h}
-                  </li>
-                ))}
-              </ul>
+              <DetailSection title="Fees (Estimated)" icon={DollarSign}>
+                <DetailItem label="Per Term (With Boarding)" value={formatFee(item.feesPerTermWithBoarding, item.location)} />
+                <DetailItem label="Per Year (With Boarding)" value={formatFee(item.feesPerYearWithBoarding, item.location)} />
+                <DetailItem label="Per Term (Without Boarding)" value={formatFee(item.feesPerTermWithoutBoarding, item.location)} />
+                <DetailItem label="Per Year (Without Boarding)" value={formatFee(item.feesPerYearWithoutBoarding || item.fees, item.location)} />
+              </DetailSection>
+
+              <DetailSection title="About the School" icon={Users}>
+                <DetailItem label="Total Enrolled Students" value={item.totalEnrolledStudents} />
+                <DetailItem label="Student Nationalities (Top 5)" value={item.studentNationalitiesTop5} />
+                <DetailItem label="Student Diversity (Countries)" value={item.studentDiversityCountries} />
+                <DetailItem label="Staff Diversity" value={item.staffDiversity} />
+                <DetailItem label="Key Qualities" value={item.keyQualities} />
+                <DetailItem label="Teaching Approaches" value={item.teachingApproaches} />
+              </DetailSection>
+
+              <DetailSection title="Admission" icon={Calendar}>
+                <DetailItem label="Academic Calendar / Intakes" value={item.academicCalendarIntakes} />
+                <DetailItem label="Registration Deadline" value={item.registrationDeadline} />
+                <DetailItem label="Can join after start?" value={item.joinAfterStart} />
+              </DetailSection>
+
+              <DetailSection title="School Day" icon={Clock}>
+                <DetailItem label="Start Time" value={item.schoolStartTime} />
+                <DetailItem label="End Time" value={item.schoolEndTime} />
+                <DetailItem label="Supervised Care (Before/After)" value={item.supervisedCare} />
+                <DetailItem label="School Lunches" value={item.schoolLunches} />
+                <DetailItem label="Special Dietary Alternatives" value={item.specialDietaryNeeds} />
+                <DetailItem label="School Bus Service" value={item.schoolBusService} />
+                <DetailItem label="Uniform Required" value={item.uniformRequired} />
+              </DetailSection>
+
+              <DetailSection title="Accommodation & Boarding" icon={Home}>
+                <DetailItem label="Type of Hostel / Boarding" value={item.typeOfHostel} />
+                <DetailItem label="Type of Boarding" value={item.typeOfBoarding} />
+              </DetailSection>
+
+              <DetailSection title="Extracurricular Activities" icon={Activity} fullWidth>
+                <DetailItem label="Activities / Clubs" value={item.extracurricularActivities} />
+              </DetailSection>
+
+              <DetailSection title="Facilities & Infrastructure" icon={CheckCircle2} fullWidth>
+                <DetailItem label="Available Facilities" value={item.availableFacilities} />
+                <DetailItem label="Campus Facilities" value={item.campusFacilities} />
+                <DetailItem label="Sports Facilities" value={item.sportsFacilities} />
+              </DetailSection>
+
+              {item.highlights && item.highlights.length > 0 && (
+                <DetailSection title="Programme Highlights" icon={BookOpen} fullWidth>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {item.highlights.map((h: string, idx: number) => (
+                      <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                        <span style={{ color: 'var(--primary)', marginTop: '6px', fontSize: '10px' }}>■</span>
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </DetailSection>
+              )}
             </div>            {item.gallery && item.gallery.length > 0 && (
               <div style={{ marginBottom: '36px' }}>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '16px' }}>Campus & Facilities</h3>

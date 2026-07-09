@@ -34,7 +34,7 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
         {/* FAQ */}
         <div style={{ maxWidth: '760px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <div className="section-label" style={{ justifyContent: 'center' }}>
+            <div className="section-label" id='faq' style={{ justifyContent: 'center' }}>
               <CircleHelp size={14} /> FAQs
             </div>
             <h2 style={{ fontSize: '2rem', fontWeight: '800', letterSpacing: '-0.02em' }}>
