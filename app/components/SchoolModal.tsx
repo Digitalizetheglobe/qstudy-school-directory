@@ -399,11 +399,9 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                     }}
                     style={{ width: '100%', padding: '10px', background: '#0ea5e9', color: 'white', border: 'none', borderRadius: '4px', fontWeight: '700', cursor: 'pointer', marginBottom: '12px', fontSize: '0.85rem' }}
                   >
-                    Contact Consultant
+                    Contact Us
                   </button>
-                  <button style={{ width: '100%', padding: '10px', background: 'transparent', color: '#0ea5e9', border: '1px solid #0ea5e9', borderRadius: '4px', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}>
-                    Book a consultation
-                  </button>
+                
                 </div>
               </div>
             </div>
