@@ -145,24 +145,9 @@ export default function Footer() {
               The world&apos;s most comprehensive platform for international education - connecting students to their dream schools globally.
             </p>
             {/* Contact Info */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
-              {[
-                { icon: <Mail size={15} />, label: 'hello@qstudyworld.com', href: 'mailto:hello@qstudyworld.com' },
-                { icon: <Phone size={15} />, label: '+91 98765 43210', href: 'tel:+919876543210' },
-                { icon: <MessageCircle size={15} />, label: 'WhatsApp Us', href: 'https://wa.me/919876543210' },
-              ].map(c => (
-                <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--primary-light)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
-                  <span style={{ color: 'var(--primary-light)', flexShrink: 0 }}>{c.icon}</span>
-                  <span>{c.label}</span>
-                </a>
-              ))}
-            </div>
+         
             {/* Social Icons */}
-            <div style={{ display: 'flex', gap: '10px' }}>
-              {socialIcons.map((s, i) => (
-                <a key={i} href="#" className="social-icon">{s}</a>
-              ))}
-            </div>
+          
           </div>
 
           {/* Link Columns */}
