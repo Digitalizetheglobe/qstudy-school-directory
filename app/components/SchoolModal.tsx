@@ -209,7 +209,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
                 {/* Additional Detailed Sections that were requested */}
                 <DetailSection title="School Info" icon={Info}>
-                  <DetailItem label="Full Name" value={item.fullName || item.name} />
+                  <DetailItem label="Institution Name" value={item.fullName || item.name} />
                   <DetailItem label="Establishment Since" value={item.establishmentSince} />
                   <DetailItem label="Total Campuses" value={item.totalCampuses} />
                   <DetailItem label="Address / Location" value={item.fullAddress || item.location} />
