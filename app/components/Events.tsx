@@ -92,13 +92,15 @@ export default function Events({ onApplyNowClick: _onApplyNowClick }: EventsProp
                 <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{ev.location}</span>
               </div>
               <p style={{ fontSize: '0.87rem', color: 'var(--text-secondary)', lineHeight: '1.65', marginBottom: '24px' }}>{ev.desc}</p>
-              <button style={{
-                width: '100%', padding: '10px',
-                background: '#4F46E5',
-                border: 'none', borderRadius: '10px',
-                color: 'white', fontWeight: '700', fontSize: '0.85rem',
-                cursor: 'pointer',
-              }}>
+              <button 
+                onClick={_onApplyNowClick}
+                style={{
+                  width: '100%', padding: '10px',
+                  background: '#4F46E5',
+                  border: 'none', borderRadius: '10px',
+                  color: 'white', fontWeight: '700', fontSize: '0.85rem',
+                  cursor: 'pointer',
+                }}>
                 Register Now →
               </button>
             </div>

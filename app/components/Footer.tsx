@@ -16,10 +16,9 @@ const footerLinks = {
     { label: 'Travel & Tickets', href: '#services-detail' },
   ],
   Company: [
-    { label: 'About Us', href: '#' },
+    { label: 'Explore Schools', href: '#explorer' },
     { label: 'Events', href: '#events' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'Careers', href: '#' },
+    { label: 'FAQ', href: '#faq' },
   ],
 }
 
@@ -139,7 +138,7 @@ export default function Footer() {
                 fontSize: '20px', fontWeight: '800', color: 'white',
               }}>Q</div>
               <span style={{ fontSize: '1.2rem', fontWeight: '700' }}>
-                QStudy <span style={{ background: 'linear-gradient(135deg,#818CF8,#06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>World</span>
+                School <span style={{ background: 'linear-gradient(135deg,#818CF8,#06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Directory</span>
               </span>
             </div>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.7', maxWidth: '280px', marginBottom: '24px' }}>
@@ -148,14 +147,14 @@ export default function Footer() {
             {/* Contact Info */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
               {[
-                { icon: <Mail size={15} />, label: 'hello@qstudyworld.com' },
-                { icon: <Phone size={15} />, label: '+91 98765 43210' },
-                { icon: <MessageCircle size={15} />, label: 'WhatsApp Us' },
+                { icon: <Mail size={15} />, label: 'hello@qstudyworld.com', href: 'mailto:hello@qstudyworld.com' },
+                { icon: <Phone size={15} />, label: '+91 98765 43210', href: 'tel:+919876543210' },
+                { icon: <MessageCircle size={15} />, label: 'WhatsApp Us', href: 'https://wa.me/919876543210' },
               ].map(c => (
-                <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.85rem', color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--primary-light)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
                   <span style={{ color: 'var(--primary-light)', flexShrink: 0 }}>{c.icon}</span>
                   <span>{c.label}</span>
-                </div>
+                </a>
               ))}
             </div>
             {/* Social Icons */}
@@ -173,7 +172,21 @@ export default function Footer() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {links.map(l => (
                   <li key={l.label}>
-                    <Link href={l.href} className="footer-nav-link">{l.label}</Link>
+                    <Link 
+                      href={l.href} 
+                      className="footer-nav-link"
+                      onClick={(e) => {
+                        if (l.href.startsWith('#') && l.href !== '#') {
+                          e.preventDefault();
+                          const target = document.querySelector(l.href);
+                          if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }
+                      }}
+                    >
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -188,7 +201,7 @@ export default function Footer() {
           display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px',
         }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-            © 2025 QStudy World. All rights reserved.
+            © 2025 School Directory. All rights reserved.
           </p>
           <div className="ft-bottom-links" style={{ display: 'flex', gap: '24px' }}>
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(l => (

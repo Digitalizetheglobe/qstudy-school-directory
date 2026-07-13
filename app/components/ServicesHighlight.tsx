@@ -50,7 +50,7 @@ export default function ServicesHighlight({ onApplyNowClick: _onApplyNowClick }:
             <span className="text-blue-800-solid">Under One Roof</span>
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.75', marginBottom: '36px' }}>
-            From the moment you decide to study abroad to the day you land, QStudy World is with you every step of the way. Our end-to-end support ensures a smooth, stress-free journey.
+            From the moment you decide to study abroad to the day you land, School Directory is with you every step of the way. Our end-to-end support ensures a smooth, stress-free journey.
           </p>
           <div className="shl-chips" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '36px' }}>
             {serviceHighlights.map(s => (

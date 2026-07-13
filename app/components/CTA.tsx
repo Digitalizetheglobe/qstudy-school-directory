@@ -72,7 +72,7 @@ export default function CTA({ onApplyNowClick: _onApplyNowClick }: CTAProps) {
           <span className="text-blue-800-solid">Journey Today!</span>
         </h2>
         <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '560px', margin: '0 auto 20px', lineHeight: '1.75' }}>
-          Join over 50,000 students who&apos;ve found their dream school through QStudy World. Your future starts with a single click.
+          Join over 50,000 students who&apos;ve found their dream school through School Directory. Your future starts with a single click.
         </p>
 
         {/* 3 CTA Cards */}

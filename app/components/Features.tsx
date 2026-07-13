@@ -119,7 +119,7 @@ export default function Features({ onApplyNowClick: _onApplyNowClick }: Features
                 One Platform.<br />
                 <span className="text-blue-800-solid">Every Opportunity.</span>
               </h2>
-              <Link href="/explorer">
+              <Link href="#explorer">
                 <button className="btn-primary" style={{ fontSize: '0.85rem', padding: '10px 22px' }}>
                   <span>Explore Schools</span>
                   <ArrowUpRight size={15} />
@@ -191,9 +191,9 @@ export default function Features({ onApplyNowClick: _onApplyNowClick }: Features
                   marginBottom: '6px',
                 }}>
                   <span className="text-blue-800-blue">120+</span>
-                  <span style={{ color: 'var(--text-primary)', marginLeft: '6px' }}>Countries</span>
+                  <span style={{ color: 'white', marginLeft: '6px' }}>Countries</span>
                 </div>
-                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)' }}>
                   Schools & programmes spanning 6 continents
                 </p>
               </div>

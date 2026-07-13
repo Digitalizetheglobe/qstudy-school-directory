@@ -159,7 +159,7 @@ export default function AdminPage() {
       <div style={{ width: '100%', maxWidth: '420px', padding: '24px' }}>
         <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '40px 36px', textAlign: 'center' }}>
           <div style={{ width: 60, height: 60, background: 'linear-gradient(135deg,#4F46E5,#06B6D4)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', fontWeight: '800', color: '#fff', margin: '0 auto 20px' }}>Q</div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#F1F5F9', marginBottom: '6px' }}>QStudy Admin</h1>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#F1F5F9', marginBottom: '6px' }}>School Directory Admin</h1>
           <p style={{ color: '#64748B', fontSize: '0.88rem', marginBottom: '28px' }}>Content Management System</p>
           <input
             type="password"
@@ -194,7 +194,7 @@ export default function AdminPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg,#4F46E5,#06B6D4)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: '800', color: '#fff' }}>Q</div>
           <div>
-            <div style={{ fontWeight: '800', fontSize: '1rem' }}>QStudy World <span style={{ color: '#4F46E5' }}>CMS</span></div>
+            <div style={{ fontWeight: '800', fontSize: '1rem' }}>School Directory <span style={{ color: '#4F46E5' }}>CMS</span></div>
             <div style={{ fontSize: '0.72rem', color: '#64748B' }}>Content Management System</div>
           </div>
         </div>

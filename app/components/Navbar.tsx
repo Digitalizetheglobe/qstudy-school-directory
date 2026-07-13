@@ -184,7 +184,7 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 fontSize: '16px', fontWeight: '800', color: '#fff',
               }}>Q</div> */}
               <span style={{ fontSize: '1.05rem', fontWeight: '700', color: '#fff', letterSpacing: '-0.01em' }}>
-                QStudy <span className="qs-logo-accent">World</span>
+                School <span className="qs-logo-accent">Directory</span>
               </span>
             </a>
 

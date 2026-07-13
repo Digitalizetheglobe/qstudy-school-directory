@@ -286,10 +286,10 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                   {/* Icon */}
                   {item.image ? (
                     <div style={{
-                      width: view === 'list' ? '64px' : '80px',
-                      height: view === 'list' ? '64px' : '80px',
-                      minWidth: view === 'list' ? '64px' : '80px',
-                      marginBottom: view === 'grid' ? '16px' : 0,
+                      width: view === 'list' ? '64px' : '100%',
+                      height: view === 'list' ? '64px' : '120px',
+                      minWidth: view === 'list' ? '64px' : undefined,
+                      marginBottom: view === 'grid' ? '20px' : 0,
                       position: 'relative'
                     }}>
                       <Image 
@@ -301,9 +301,9 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                     </div>
                   ) : (
                     <div style={{
-                      width: view === 'list' ? '64px' : '80px',
-                      height: view === 'list' ? '64px' : '80px',
-                      minWidth: view === 'list' ? '64px' : '80px',
+                      width: view === 'list' ? '64px' : '100%',
+                      height: view === 'list' ? '64px' : '120px',
+                      minWidth: view === 'list' ? '64px' : undefined,
                       background: 'linear-gradient(135deg, rgba(79,70,229,0.2), rgba(6,182,212,0.2))',
                       borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: view === 'list' ? '32px' : '40px', marginBottom: view === 'grid' ? '16px' : 0,
@@ -331,7 +331,32 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                       </div>
                     )}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--gold)' }}>{item.fees}</span>
+                      <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--gold)' }}>
+                        {(() => {
+                          const val = item.fees || item.feesPerYearWithoutBoarding || item.feesPerTermWithBoarding;
+                          if (!val || val === '-' || val === '') return 'Contact for fees';
+                          const num = Number(val);
+                          if (!isNaN(num)) {
+                            let currencyCode = 'USD';
+                            const loc = (item.location || '').toLowerCase();
+                            if (loc.includes('malaysia')) currencyCode = 'MYR';
+                            else if (loc.includes('india')) currencyCode = 'INR';
+                            else if (loc.includes('uk') || loc.includes('united kingdom')) currencyCode = 'GBP';
+                            else if (loc.includes('canada')) currencyCode = 'CAD';
+                            else if (loc.includes('australia')) currencyCode = 'AUD';
+                            else if (loc.includes('switzerland')) currencyCode = 'CHF';
+
+                            const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 }).format(num);
+                            let currencySuffix = currencyCode;
+                            if (currencyCode === 'INR') currencySuffix = 'Rupees';
+                            else if (currencyCode === 'MYR') currencySuffix = 'RM';
+
+                            // Append " / year" if it's derived from perYear fees, or just standard display
+                            return `${formatted} ${currencySuffix}`;
+                          }
+                          return val;
+                        })()}
+                      </span>
                       <button 
                         onClick={() => setSelectedItem(item)}
                         style={{
