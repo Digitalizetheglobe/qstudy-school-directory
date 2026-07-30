@@ -40,7 +40,7 @@ const DetailItem = ({ label, value, justify, fullWidth }: { label: string, value
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', gridColumn: fullWidth ? '1 / -1' : undefined }}>
       <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '700' }}>{label}</span>
-      <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.4', textAlign: justify ? 'justify' : undefined }}>{displayValue}</span>
+      <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.4', textAlign: justify ? 'justify' : undefined }}>{displayValue}</div>
     </div>
   );
 };
@@ -126,6 +126,20 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
           }
         })}
       </div>
+    );
+  };
+
+  const formatBulletList = (text: any) => {
+    if (!text) return null;
+    const str = String(text);
+    const items = str.split(',').map(s => s.trim()).filter(s => s !== '');
+    if (items.length <= 1) return text;
+    return (
+      <ul style={{ margin: '4px 0 0', paddingLeft: '18px', listStyleType: 'disc', lineHeight: '1.6' }}>
+        {items.map((item, i) => (
+          <li key={i} style={{ marginBottom: '4px' }}>{item}</li>
+        ))}
+      </ul>
     );
   };
 
@@ -284,7 +298,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                   <DetailItem label="Total Campuses" value={item.schoolInfo?.totalCampuses ? String(item.schoolInfo?.totalCampuses).match(/^\d+/)?.[0] || item.schoolInfo?.totalCampuses : item.schoolInfo?.totalCampuses} />
                   <DetailItem label="Address / Location" value={formatAddressData(item.schoolInfo?.address || item.location)} fullWidth />
                   <DetailItem label="Type of School" value={item.schoolInfo?.typeOfSchools || item.type} />
-                  <DetailItem label="Levels Served" value={item.schoolInfo?.levelsServed || item.level} />
+                  <DetailItem label="Levels Served" value={formatBulletList(item.schoolInfo?.levelsServed || item.level)} />
                   <DetailItem label="Operational Model" value={item.schoolInfo?.operationalModel} />
                   <DetailItem label="Curriculum / Programme" value={item.schoolInfo?.curriculumOffered || item.stream} />
                   <DetailItem label="Language of Instruction" value={item.schoolInfo?.languageOfInstruction || item.language} />
