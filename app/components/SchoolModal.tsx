@@ -18,15 +18,44 @@ const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) 
 
   if (validChildren.length === 0) return null;
 
+  let currentGrid: React.ReactNode[] = [];
+  const renderBlocks: React.ReactNode[] = [];
+  
+  React.Children.forEach(validChildren, (child: any, index) => {
+    if (child.props?.fullWidth || fullWidth) {
+      if (currentGrid.length > 0) {
+        renderBlocks.push(
+          <div key={`col-${index}`} style={{ columnWidth: '240px', columnGap: '24px', marginBottom: '24px' }}>
+            {currentGrid}
+          </div>
+        );
+        currentGrid = [];
+      }
+      renderBlocks.push(
+        <div key={`full-${index}`} style={{ marginBottom: '24px' }}>
+          {child}
+        </div>
+      );
+    } else {
+      currentGrid.push(child);
+    }
+  });
+  
+  if (currentGrid.length > 0) {
+    renderBlocks.push(
+      <div key={`col-last`} style={{ columnWidth: '240px', columnGap: '24px' }}>
+        {currentGrid}
+      </div>
+    );
+  }
+
   return (
     <div style={{ marginBottom: '32px', background: 'rgba(6, 182, 212, 0.02)', padding: '24px', borderRadius: '12px', border: '1px solid rgba(6, 182, 212, 0.1)' }}>
       <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
         {Icon && <Icon size={18} color="#0ea5e9" />}
         {title}
       </h3>
-      <div style={{ columnWidth: fullWidth ? '100%' : '240px', columnGap: '24px' }}>
-        {validChildren}
-      </div>
+      {renderBlocks}
     </div>
   );
 };
@@ -47,7 +76,7 @@ const DetailItem = ({ label, value, justify, fullWidth }: { label: string, value
       marginBottom: '24px'
     }}>
       <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '700' }}>{label}</span>
-      <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.4', textAlign: justify ? 'justify' : undefined }}>{displayValue}</div>
+      <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 'normal', lineHeight: '1.4', textAlign: justify ? 'justify' : undefined }}>{displayValue}</div>
     </div>
   );
 };
