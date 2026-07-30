@@ -1,16 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowDown, ArrowUp, BookOpenText, Grid3X3, List, School, Search, SlidersHorizontal, TentTree } from 'lucide-react'
 
 /* ─────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────── */
-import schoolsData from '../data/schoolsData.json'
 import SchoolModal from './SchoolModal'
-
-const schools = schoolsData;
 
 const languageSchools = [
   { name: 'British Study Centres', location: '🇬🇧 Oxford, UK', language: 'English (ESL)', level: 'All Levels', fees: '£350/week', highlights: ['Central Oxford', 'Oxford Uni Affiliation', 'Cultural Trips'], emoji: '🎓' },
@@ -46,6 +43,29 @@ interface ExplorerProps {
    COMPONENT
 ───────────────────────────────────────────── */
 export default function Explorer({ onApplyNowClick: _onApplyNowClick }: ExplorerProps) {
+  const [schools, setSchools] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/schools')
+        if (!response.ok) {
+          throw new Error('Failed to fetch schools')
+        }
+        const data = await response.json()
+        setSchools(data.data || [])
+      } catch (err: any) {
+        setError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    
+    fetchSchools()
+  }, [])
+
   const [activeTab, setActiveTab] = useState<'schools' | 'language' | 'summer'>('schools')
   const [schoolType, setSchoolType] = useState('All Types')
   const [country, setCountry] = useState('All Countries')
@@ -276,7 +296,11 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                 gap: '14px',
               }}
             >
-              {visible.map((item: any) => (
+              {isLoading && activeTab === 'schools' ? (
+                <div style={{ padding: '20px', color: 'var(--text-secondary)' }}>Loading schools...</div>
+              ) : error && activeTab === 'schools' ? (
+                <div style={{ padding: '20px', color: '#ef4444' }}>Error: {error}</div>
+              ) : visible.map((item: any) => (
                 <div key={item.name} className="glass-card" style={{
                   padding: '18px',
                   display: view === 'list' ? 'flex' : 'block',
@@ -314,12 +338,13 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <h4 style={{ fontWeight: '700', fontSize: '0.9rem', marginBottom: '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</h4>
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: view === 'grid' ? '8px' : '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {item.location}
+                      {/* {item.location}
                       {item.type ? ` · ${item.type}` : ''}
                       {item.language ? ` · ${item.language}` : ''}
-                      {item.ageRange ? ` · ${item.ageRange}` : ''}
+                      {item.ageRange ? ` · ${item.ageRange}` : ''} */}
+                      Day and Boarding School
                     </p>
-                    {view === 'grid' && (
+                    {/* {view === 'grid' && (
                       <div style={{ marginBottom: '10px' }}>
                         {item.highlights?.slice(0, 2).map((h: string) => (
                           <span key={h} style={{
@@ -329,7 +354,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                           }}>{h}</span>
                         ))}
                       </div>
-                    )}
+                    )} */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--gold)' }}>
                         {(() => {

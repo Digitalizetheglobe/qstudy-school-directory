@@ -6,6 +6,18 @@ import { motion, AnimatePresence } from 'motion/react'
 import { X, MapPin, DollarSign, Calendar, Users, Home, GraduationCap, Plane, ChevronRight, CheckCircle2, BookOpen, Clock, Activity, Info } from 'lucide-react'
 
 const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) => {
+  const validChildren = React.Children.toArray(children).filter((child: any) => {
+    if (React.isValidElement(child) && child.props) {
+      const value = (child.props as any).value;
+      if (value === undefined || value === null || value === '' || value === '-' || value === 'N/A') {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  if (validChildren.length === 0) return null;
+
   return (
     <div style={{ marginBottom: '32px', background: 'rgba(6, 182, 212, 0.02)', padding: '24px', borderRadius: '12px', border: '1px solid rgba(6, 182, 212, 0.1)' }}>
       <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
@@ -13,18 +25,22 @@ const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) 
         {title}
       </h3>
       <div style={{ display: 'grid', gridTemplateColumns: fullWidth ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
-        {children}
+        {validChildren}
       </div>
     </div>
   );
 };
 
-const DetailItem = ({ label, value }: { label: string, value: any }) => {
-  const displayValue = (!value || value === '') ? '-' : value;
+const DetailItem = ({ label, value, justify, fullWidth }: { label: string, value: any, justify?: boolean, fullWidth?: boolean }) => {
+  if (value === undefined || value === null || value === '' || value === '-' || value === 'N/A') return null;
+  let displayValue = value;
+  if (Array.isArray(displayValue) && displayValue.length > 0 && typeof displayValue[0] === 'string') {
+    displayValue = displayValue.join(', ');
+  }
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', gridColumn: fullWidth ? '1 / -1' : undefined }}>
       <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '700' }}>{label}</span>
-      <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.4' }}>{displayValue}</span>
+      <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.4', textAlign: justify ? 'justify' : undefined }}>{displayValue}</span>
     </div>
   );
 };
@@ -71,11 +87,57 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
     return val;
   };
 
+  const formatAddressData = (rawAddress: any) => {
+    if (!rawAddress) return null;
+    const str = String(rawAddress);
+    
+    let s = str.replace(/Campus(?=[A-Za-z0-9])/gi, 'Campus\n');
+    s = s.replace(/([a-z])([A-Z])/g, (match, p1, p2) => p1 + '.\n' + p2);
+    s = s.replace(/\.([A-Z])/g, (match, p1) => '.\n' + p1);
+    
+    const blocks = s.split('\n').filter(b => b.trim() !== '');
+    
+    if (blocks.length <= 1) {
+      const parts = str.split(',').map(p => p.trim()).filter(p => p !== '');
+      return (
+        <div style={{ lineHeight: '1.6' }}>
+          {parts.join(', ')}
+        </div>
+      );
+    }
+    
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+        {blocks.map((block, index) => {
+          const isCampusName = block.toLowerCase().endsWith('campus');
+          if (isCampusName) {
+            return (
+              <div key={index} style={{ fontWeight: '700', color: '#0ea5e9', marginTop: index > 0 ? '8px' : '0' }}>
+                {block.trim()}
+              </div>
+            );
+          } else {
+            const parts = block.split(',').map(p => p.trim()).filter(p => p !== '');
+            return (
+              <div key={index} style={{ color: 'inherit', lineHeight: '1.5' }}>
+                {parts.join(', ')}
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  };
+
   return (
-    <AnimatePresence>
-      {item && (
-        <div 
-          key={item?.name || 'school-modal-overlay'}
+    <>
+      <AnimatePresence>
+        {item && (
+          <motion.div 
+            key={item?.name || 'school-modal-overlay'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           style={{
             position: 'fixed', inset: 0, zIndex: 99999, 
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -141,7 +203,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
               <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '32px' }}>
               {(item.logo || item.image) && (
                 <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '16px', overflow: 'hidden', flexShrink: 0, background: 'white', border: '1px solid var(--border)' }}>
-                  <Image src={item.logo || item.image} alt={`${item.name} logo`} fill style={{ objectFit: 'contain', padding: '8px' }} />
+                  <Image src={encodeURI(item.logo || item.image)} alt={`${item.name} logo`} fill style={{ objectFit: 'contain', padding: '8px' }} />
                 </div>
               )}
               <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
@@ -152,6 +214,14 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
             <div className="sm-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '48px' }}>
               {/* Left Column */}
               <div>
+                {item.introduction && (
+                  <div style={{ marginBottom: '32px' }}>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '12px' }}>Introduction</h3>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', textAlign: 'justify' }}>
+                      {item.introduction}
+                    </p>
+                  </div>
+                )}
                 <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '16px' }}>Details</h3>
                 <div className="sm-details-grid" style={{
                   background: 'rgba(6, 182, 212, 0.05)',
@@ -167,20 +237,20 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                     <GraduationCap size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Type of school</span>
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.genderCategory || 'N/A'} | {item.schoolType || 'N/A'}</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.schoolInfo?.genderCategories || 'N/A'} | {item.schoolInfo?.typeOfSchools || 'N/A'}</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <Users size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Number of pupils</span>
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.totalEnrolledStudents || 'N/A'}</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.aboutSchool?.totalEnrolled || 'N/A'}</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <Plane size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Nearest intl airport</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Nearest International Airport</span>
                       <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.nearestAirport || 'N/A'}</span>
                     </div>
                   </div>
@@ -195,85 +265,85 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                     <Calendar size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Age Range</span>
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.agesEnrolled || item.ageRange || 'N/A'}</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.schoolInfo?.studentAges || 'N/A'}</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                     <DollarSign size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Fees per term</span>
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{formatFee(item.feesPerTermWithBoarding || item.fees, item.location)}</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{formatFee(item.schoolInfo?.feesPerTermUSDWithBoarding || item.fees, item.location)}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Additional Detailed Sections that were requested */}
                 <DetailSection title="School Info" icon={Info}>
-                  <DetailItem label="Institution Name" value={item.fullName || item.name} />
-                  <DetailItem label="Establishment Since" value={item.establishmentSince} />
-                  <DetailItem label="Total Campuses" value={item.totalCampuses} />
-                  <DetailItem label="Address / Location" value={item.fullAddress || item.location} />
-                  <DetailItem label="Type of School" value={item.schoolType || item.type} />
-                  <DetailItem label="Levels Served" value={item.levelsServed || item.level} />
-                  <DetailItem label="Operational Model" value={item.operationalModel} />
-                  <DetailItem label="Curriculum / Programme" value={item.curriculum || item.stream} />
-                  <DetailItem label="Language of Instruction" value={item.languageOfInstruction || item.language} />
-                  <DetailItem label="Other Languages" value={item.otherLanguages} />
-                  <DetailItem label="Categories / Gender" value={item.genderCategory} />
+                  <DetailItem label="Institution Name" value={item.schoolInfo?.fullName || item.name} />
+                  <DetailItem label="Establishment Since" value={item.schoolInfo?.establishmentSince} />
+                  <DetailItem label="Total Campuses" value={item.schoolInfo?.totalCampuses ? String(item.schoolInfo?.totalCampuses).match(/^\d+/)?.[0] || item.schoolInfo?.totalCampuses : item.schoolInfo?.totalCampuses} />
+                  <DetailItem label="Address / Location" value={formatAddressData(item.schoolInfo?.address || item.location)} fullWidth />
+                  <DetailItem label="Type of School" value={item.schoolInfo?.typeOfSchools || item.type} />
+                  <DetailItem label="Levels Served" value={item.schoolInfo?.levelsServed || item.level} />
+                  <DetailItem label="Operational Model" value={item.schoolInfo?.operationalModel} />
+                  <DetailItem label="Curriculum / Programme" value={item.schoolInfo?.curriculumOffered || item.stream} />
+                  <DetailItem label="Language of Instruction" value={item.schoolInfo?.languageOfInstruction || item.language} />
+                  <DetailItem label="Other Languages" value={item.schoolInfo?.otherLanguages} />
+                  <DetailItem label="Categories / Gender" value={item.schoolInfo?.genderCategories} />
                 </DetailSection>
 
                 <DetailSection title="Fees (Estimated)" icon={DollarSign}>
-                  <DetailItem label="Per Term (With Boarding)" value={formatFee(item.feesPerTermWithBoarding, item.location)} />
-                  <DetailItem label="Per Year (With Boarding)" value={formatFee(item.feesPerYearWithBoarding, item.location)} />
-                  <DetailItem label="Per Term (Without Boarding)" value={formatFee(item.feesPerTermWithoutBoarding, item.location)} />
-                  <DetailItem label="Per Year (Without Boarding)" value={formatFee(item.feesPerYearWithoutBoarding || item.fees, item.location)} />
+                  <DetailItem label="Per Term (With Boarding)" value={formatFee(item.schoolInfo?.feesPerTermUSDWithBoarding, item.location)} />
+                  <DetailItem label="Per Year (With Boarding)" value={formatFee(item.schoolInfo?.feesPerYearUSDWithBoarding, item.location)} />
+                  <DetailItem label="Per Term (Without Boarding)" value={formatFee(item.schoolInfo?.feesPerTermUSDWithoutBoarding, item.location)} />
+                  <DetailItem label="Per Year (Without Boarding)" value={formatFee(item.schoolInfo?.feesPerYearUSDWithoutBoarding || item.fees, item.location)} />
                 </DetailSection>
 
                 <DetailSection title="About the School" icon={Users}>
-                  <DetailItem label="Total Enrolled Students" value={item.totalEnrolledStudents} />
-                  <DetailItem label="Student Nationalities (Top 5)" value={item.studentNationalitiesTop5} />
-                  <DetailItem label="Student Diversity (Countries)" value={item.studentDiversityCountries} />
-                  <DetailItem label="Staff Diversity" value={item.staffDiversity} />
-                  <DetailItem label="Key Qualities" value={item.keyQualities} />
-                  <DetailItem label="Teaching Approaches" value={item.teachingApproaches} />
+                  <DetailItem label="Total Enrolled Students" value={item.aboutSchool?.totalEnrolled} />
+                  <DetailItem label="Student Nationalities (Top 5)" value={item.aboutSchool?.studentNationalitiesTop5} />
+                  <DetailItem label="Student Diversity (Countries)" value={item.aboutSchool?.studentDiversityCountries} />
+                  <DetailItem label="Staff Diversity" value={item.aboutSchool?.staffDiversity} />
+                  <DetailItem label="Key Qualities" value={item.aboutSchool?.keyQualities} justify />
+                  <DetailItem label="Teaching Approaches" value={item.aboutSchool?.teachingApproaches} justify />
                 </DetailSection>
 
                 <DetailSection title="Admission" icon={Calendar}>
-                  <DetailItem label="Academic Calendar / Intakes" value={item.academicCalendarIntakes} />
-                  <DetailItem label="Registration Deadline" value={item.registrationDeadline} />
-                  <DetailItem label="Can join after start?" value={item.joinAfterStart} />
+                  <DetailItem label="Academic Calendar / Intakes" value={item.admission?.academicCalendar} />
+                  <DetailItem label="Registration Deadline" value={item.admission?.registrationDeadline} />
+                  <DetailItem label="Can join after start?" value={item.admission?.canJoinMidYear !== undefined ? (item.admission?.canJoinMidYear ? 'Yes' : 'No') : undefined} />
                 </DetailSection>
 
                 <DetailSection title="School Day" icon={Clock}>
-                  <DetailItem label="Start Time" value={item.schoolStartTime} />
-                  <DetailItem label="End Time" value={item.schoolEndTime} />
-                  <DetailItem label="Supervised Care (Before/After)" value={item.supervisedCare} />
-                  <DetailItem label="School Lunches" value={item.schoolLunches} />
-                  <DetailItem label="Special Dietary Alternatives" value={item.specialDietaryNeeds} />
-                  <DetailItem label="School Bus Service" value={item.schoolBusService} />
-                  <DetailItem label="Uniform Required" value={item.uniformRequired} />
+                  <DetailItem label="Start Time" value={item.schoolDay?.startTime} />
+                  <DetailItem label="End Time" value={item.schoolDay?.endTime} />
+                  <DetailItem label="Supervised Care (Before/After)" value={item.schoolDay?.supervisedCare !== undefined ? (item.schoolDay?.supervisedCare ? 'Yes' : 'No') : undefined} />
+                  <DetailItem label="School Lunches" value={item.schoolDay?.providedLunches !== undefined ? (item.schoolDay?.providedLunches ? 'Yes' : 'No') : undefined} />
+                  <DetailItem label="Special Dietary Alternatives" value={item.schoolDay?.specialDietaryNeeds !== undefined ? (item.schoolDay?.specialDietaryNeeds ? 'Yes' : 'No') : undefined} />
+                  <DetailItem label="School Bus Service" value={item.schoolDay?.busService !== undefined ? (item.schoolDay?.busService ? 'Yes' : 'No') : undefined} />
+                  <DetailItem label="Uniform Required" value={item.schoolDay?.uniformRequired !== undefined ? (item.schoolDay?.uniformRequired ? 'Yes' : 'No') : undefined} />
                 </DetailSection>
 
                 <DetailSection title="Accommodation & Boarding" icon={Home}>
-                  <DetailItem label="Type of Hostel / Boarding" value={item.typeOfHostel} />
-                  <DetailItem label="Type of Boarding" value={item.typeOfBoarding} />
+                  <DetailItem label="Type of Hostel / Boarding" value={item.accommodation?.hostelType} />
+                  <DetailItem label="Type of Boarding" value={item.accommodation?.boardingType} />
                 </DetailSection>
 
                 <DetailSection title="Extracurricular Activities" icon={Activity} fullWidth>
-                  <DetailItem label="Activities / Clubs" value={item.extracurricularActivities} />
+                  <DetailItem label="Activities / Clubs" value={item.extracurricular?.description} justify />
                 </DetailSection>
 
                 <DetailSection title="Facilities & Infrastructure" icon={CheckCircle2} fullWidth>
-                  <DetailItem label="Available Facilities" value={item.availableFacilities} />
-                  <DetailItem label="Campus Facilities" value={item.campusFacilities} />
-                  <DetailItem label="Sports Facilities" value={item.sportsFacilities} />
+                  <DetailItem label="Available Facilities" value={item.facilities?.generalDescription} justify />
+                  <DetailItem label="Campus Facilities" value={item.facilities?.campusFacilities} justify />
+                  <DetailItem label="Sports Facilities" value={item.facilities?.sportsFacilities} justify />
                 </DetailSection>
 
                 {item.scholarships && (
                   <>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '16px' }}>Scholarships And Bursaries</h3>
                     <div style={{ marginBottom: '40px' }}>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
+                      <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.7', textAlign: 'justify' }}>
                         {item.scholarships}
                       </p>
                     </div>
@@ -297,7 +367,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                     <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Address</span>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{item.fullAddress || item.location || 'N/A'}</span>
+                    <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{formatAddressData(item.schoolInfo?.address || item.location) || 'N/A'}</div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                     <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Phone</span>
@@ -336,7 +406,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                       {item.news.map((newsItem: any, i: number) => (
                         <div key={i} style={{ borderBottom: i < item.news.length - 1 ? '1px solid var(--border)' : 'none', paddingBottom: i < item.news.length - 1 ? '24px' : '0' }}>
                           <h4 style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '8px' }}>{newsItem.title}</h4>
-                          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '12px' }}>{newsItem.desc}</p>
+                          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '12px', textAlign: 'justify' }}>{newsItem.desc}</p>
                           <button style={{ background: 'var(--text-primary)', color: 'var(--surface)', border: 'none', borderRadius: '4px', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                             <ChevronRight size={14} />
                           </button>
@@ -389,7 +459,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
                 <div style={{ border: '1px solid var(--border)', borderRadius: '8px', padding: '24px', background: 'rgba(255,255,255,0.02)' }}>
                   <h4 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '12px' }}>Consultant</h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: '1.5' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: '1.5', textAlign: 'justify' }}>
                     Contact one of our English Speaking educational consultants and let us help you find the right school.
                   </p>
                   <button 
@@ -408,8 +478,9 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
             </div>
             
           </motion.div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* Lightbox for Full-size Image */}
       {selectedImageIndex !== null && item && item.gallery && (
@@ -455,6 +526,6 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
           </button>
         </div>
       )}
-    </AnimatePresence>
+    </>
   )
 }
