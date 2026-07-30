@@ -370,32 +370,28 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{formatAddressData(item.schoolInfo?.address || item.location) || 'N/A'}</div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                    <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Phone</span>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.phone || 'N/A'}</span>
+                    <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Contact</span>
+                    <button
+                      onClick={() => {
+                        if (onApplyNowClick) onApplyNowClick();
+                        onClose();
+                      }}
+                      style={{ 
+                        background: 'none', border: 'none', padding: 0, 
+                        fontSize: '0.85rem', color: '#0ea5e9', textDecoration: 'none', 
+                        cursor: 'pointer', textAlign: 'right', fontWeight: '500'
+                      }}
+                    >
+                      Enquire Now
+                    </button>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                     <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>City/Borough</span>
                     <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.city || item.location?.split(',')[0] || 'N/A'}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                    <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Email</span>
-                    {item.email ? (
-                      <a href={`mailto:${item.email}`} style={{ fontSize: '0.85rem', color: '#0ea5e9', textDecoration: 'none' }}>{item.email}</a>
-                    ) : (
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>N/A</span>
-                    )}
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                     <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Zip/Postal Code</span>
                     <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.zipCode || 'N/A'}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                    <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Website</span>
-                    {item.website ? (
-                      <a href={item.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#0ea5e9', textDecoration: 'none' }}>Visit Website</a>
-                    ) : (
-                      <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>N/A</span>
-                    )}
                   </div>
                 </div>
 
