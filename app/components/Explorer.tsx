@@ -342,7 +342,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                       {item.type ? ` · ${item.type}` : ''}
                       {item.language ? ` · ${item.language}` : ''}
                       {item.ageRange ? ` · ${item.ageRange}` : ''} */}
-                      Day and Boarding School
+                      {item.schoolInfo?.operationalModel || item.operationalModel}
                     </p>
                     {/* {view === 'grid' && (
                       <div style={{ marginBottom: '10px' }}>

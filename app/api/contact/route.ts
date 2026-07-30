@@ -1,43 +1,25 @@
 import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
 
 export async function POST(req: Request) {
   try {
     const data = await req.json()
-    
-    // Create a transporter using the provided credentials
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'qstudyworld28@gmail.com',
-        pass: 'rqjv nrmz wceq yywi',
+
+    // Submit to CMS API
+    const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/forms/forms/6a6b565da7b9dd810944fca1/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ data }),
     })
 
-    // Construct the email content
-    const htmlContent = `
-      <h2>New Application / Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
-      <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
-      <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
-      <p><strong>Message:</strong></p>
-      <p>${data.message || 'No message provided.'}</p>
-    `
-
-    // Setup email data
-    const mailOptions = {
-      from: 'qstudyworld28@gmail.com', // sender address
-      to: 'qstudyworld28@gmail.com', // list of receivers (send to yourself)
-      subject: `New Submission from ${data.name || 'Website Visitor'}`, // Subject line
-      html: htmlContent, // html body
+    if (!response.ok) {
+      throw new Error(`CMS API responded with status: ${response.status}`)
     }
 
-    // Send mail
-    await transporter.sendMail(mailOptions)
-
-    return NextResponse.json({ success: true, message: 'Email sent successfully!' }, { status: 200 })
+    return NextResponse.json({ success: true, message: 'Form submitted successfully!' }, { status: 200 })
   } catch (error: any) {
-    console.error('Error sending email:', error)
-    return NextResponse.json({ success: false, message: 'Failed to send email.', error: error.message }, { status: 500 })
+    console.error('Error in contact route:', error)
+    return NextResponse.json({ success: false, message: 'Failed to submit form.', error: error.message }, { status: 500 })
   }
 }
