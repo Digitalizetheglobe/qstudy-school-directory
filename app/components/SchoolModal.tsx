@@ -24,7 +24,7 @@ const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) 
         {Icon && <Icon size={18} color="#0ea5e9" />}
         {title}
       </h3>
-      <div style={{ display: 'grid', gridTemplateColumns: fullWidth ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+      <div style={{ columnWidth: fullWidth ? '100%' : '240px', columnGap: '24px' }}>
         {validChildren}
       </div>
     </div>
@@ -38,7 +38,14 @@ const DetailItem = ({ label, value, justify, fullWidth }: { label: string, value
     displayValue = displayValue.join(', ');
   }
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', gridColumn: fullWidth ? '1 / -1' : undefined }}>
+    <div style={{ 
+      display: 'flex', flexDirection: 'column', gap: '6px', 
+      WebkitColumnSpan: fullWidth ? 'all' : 'none',
+      columnSpan: fullWidth ? 'all' : 'none',
+      breakInside: 'avoid',
+      pageBreakInside: 'avoid',
+      marginBottom: '24px'
+    }}>
       <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '700' }}>{label}</span>
       <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.4', textAlign: justify ? 'justify' : undefined }}>{displayValue}</div>
     </div>
@@ -101,7 +108,16 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
       const parts = str.split(',').map(p => p.trim()).filter(p => p !== '');
       return (
         <div style={{ lineHeight: '1.6' }}>
-          {parts.join(', ')}
+          {parts.map((p, i) => {
+            const isLast = i === parts.length - 1;
+            const isSecondToLast = i === parts.length - 2;
+            return (
+              <span key={i} style={{ display: isLast || isSecondToLast ? 'inline' : 'block' }}>
+                {p}{!isLast && ','}
+                {isSecondToLast && ' '}
+              </span>
+            );
+          })}
         </div>
       );
     }
