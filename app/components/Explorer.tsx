@@ -50,7 +50,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/schools')
+        const response = await fetch('http://localhost:5000/api/schools')
         if (!response.ok) {
           throw new Error('Failed to fetch schools')
         }
@@ -62,7 +62,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
         setIsLoading(false)
       }
     }
-    
+
     fetchSchools()
   }, [])
 
@@ -90,7 +90,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     // Remove emojis if present to get clean country name for filtering
     return lastPart.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').trim()
   }
-  
+
   const dynamicCountries = Array.from(new Set(schools.map((s: any) => getCountry(s.location)).filter(Boolean))).sort() as string[]
   const schoolCountries = ['All Countries', ...dynamicCountries]
 
@@ -316,11 +316,11 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                       marginBottom: view === 'grid' ? '20px' : 0,
                       position: 'relative'
                     }}>
-                      <Image 
-                        src={encodeURI(item.image)} 
-                        alt={item.name} 
+                      <Image
+                        src={encodeURI(item.image)}
+                        alt={item.name}
                         fill
-                        style={{ objectFit: 'contain', borderRadius: '12px', background: 'white', padding: '6px' }} 
+                        style={{ objectFit: 'contain', borderRadius: '12px', background: 'white', padding: '6px' }}
                       />
                     </div>
                   ) : (
@@ -382,7 +382,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                           return val;
                         })()}
                       </span>
-                      <button 
+                      <button
                         onClick={() => setSelectedItem(item)}
                         style={{
                           background: '#4f46E5',
@@ -421,7 +421,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
           </div>
         </div>
       </div>
-      
+
       {/* School Details Modal */}
       <SchoolModal item={selectedItem} onClose={() => setSelectedItem(null)} onApplyNowClick={_onApplyNowClick} />
     </section>
