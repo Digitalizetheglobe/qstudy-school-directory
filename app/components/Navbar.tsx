@@ -12,7 +12,6 @@ const navLinks = [
   { label: 'Dashboard', href: '#dashboard' },
   { label: 'Events', href: '#events' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Contact', href: '#contact' },
 ]
 
 const LANGUAGES = [
@@ -244,10 +243,10 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 )}
               </div> */}
 
-              {/* Apply Now - desktop */}
-              <button className="qs-cta qs-cta-desktop" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Apply Now">
+              {/* Contact Us - desktop */}
+              <button className="qs-cta qs-cta-desktop" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Contact Us">
                 <span className="qs-cta-ripple" />
-                <span className="qs-cta-label">Apply Now</span>
+                <span className="qs-cta-label">Contact Us</span>
                 <span className="qs-cta-icon-wrap">
                   <span className="arrow-default"><ArrowUpRight size={14} strokeWidth={3} /></span>
                   <span className="arrow-hover"><ArrowRight size={14} strokeWidth={3} /></span>
@@ -300,11 +299,11 @@ export default function Navbar({ onApplyNowClick }: NavbarProps) {
                 ))}
               </div>
 
-              {/* Apply Now - mobile */}
+              {/* Contact Us - mobile */}
               <div style={{ paddingTop: '14px', borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: '6px' }}>
-                <button className="qs-cta qs-cta-mobile" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Apply Now">
+                <button className="qs-cta qs-cta-mobile" onMouseMove={handleMouseMove} onClick={onApplyNowClick} aria-label="Contact Us">
                   <span className="qs-cta-ripple" />
-                  <span className="qs-cta-label">Apply Now</span>
+                  <span className="qs-cta-label">Contact Us</span>
                   <span className="qs-cta-icon-wrap">
                     <span className="arrow-default"><ArrowUpRight size={14} strokeWidth={3} /></span>
                     <span className="arrow-hover"><ArrowRight size={14} strokeWidth={3} /></span>

@@ -7,7 +7,7 @@ const ctaCards = [
   {
     icon: '✈️',
     lucideIcon: Send,
-    title: 'Apply Now',
+    title: 'Contact Us',
     desc: "Submit your application to your dream school today - it's quick, free, and paperless.",
     cta: 'Start Application',
     href: '#explorer',

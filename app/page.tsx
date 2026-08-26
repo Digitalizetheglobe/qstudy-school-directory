@@ -39,7 +39,7 @@ export default function Page() {
         <Dashboard onApplyNowClick={() => setIsContactFormOpen(true)} />
         <Events onApplyNowClick={() => setIsContactFormOpen(true)} />
         <Blog onApplyNowClick={() => setIsContactFormOpen(true)} />
-        <CTA onApplyNowClick={() => setIsContactFormOpen(true)} />
+        {/* <CTA onApplyNowClick={() => setIsContactFormOpen(true)} /> */}
       </main>
       <Footer />
       <ContactForm 

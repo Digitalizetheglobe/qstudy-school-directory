@@ -159,7 +159,7 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
             style={{ fontSize: '1rem', padding: '7px 8px 7px 18px' }}
           >
             <span className="qs-cta-ripple" />
-            <span className="qs-cta-label">Apply Now</span>
+            <span className="qs-cta-label">Contact Us</span>
             <span className="qs-cta-icon-wrap">
               <span className="arrow-default">
                 <ArrowUpRight size={14} strokeWidth={3} />
