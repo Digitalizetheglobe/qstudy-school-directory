@@ -35,7 +35,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body><ThemeProvider>{children}</ThemeProvider></body>
+      <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
     </html>
   );
 }
