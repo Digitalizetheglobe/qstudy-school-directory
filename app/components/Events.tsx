@@ -7,7 +7,7 @@ const events = [
     title: 'Global School Fair 2025',
     date: 'April 12-14, 2025',
     location: '🇮🇳 New Delhi & Mumbai',
-    desc: 'Meet representatives from 200+ universities across Canada, UK, Australia, and more. Get on-spot offers and scholarship guidance.',
+    desc: 'Meet representatives from 200+ schools across Canada, UK, Australia, and more. Get on-spot admissions and scholarship guidance.',
     badge: 'In-Person',
     badgeColor: '#4F46E5',
   },
@@ -17,7 +17,7 @@ const events = [
     title: 'Study in Canada: 2025 Guide',
     date: 'March 28, 2025 · 6 PM IST',
     location: '🌐 Online (Zoom)',
-    desc: 'Join our expert panel for a live deep-dive into Canadian universities, visa updates, PR pathways, and scholarship opportunities.',
+    desc: 'Join our expert panel for a live deep-dive into Canadian schools, school admissions, visa updates, scholarships, and opportunities for international students.',
     badge: 'Live Soon',
     badgeColor: '#10B981',
   },
@@ -89,7 +89,7 @@ export default function Events({ onApplyNowClick: _onApplyNowClick }: EventsProp
                   <CalendarDays size={14} />
                   {ev.date}
                 </span>
-                <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{ev.location}</span>
+                {/* <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{ev.location}</span> */}
               </div>
               <p style={{ fontSize: '0.87rem', color: 'var(--text-secondary)', lineHeight: '1.65', marginBottom: '24px' }}>{ev.desc}</p>
               <button 

@@ -103,10 +103,12 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     (country === 'All Countries' || getCountry(s.location) === country)
   )
   const filteredLang = languageSchools.filter(s =>
-    language === 'All Languages' || s.language === language
+    (language === 'All Languages' || s.language === language) &&
+    (country === 'All Countries' || getCountry(s.location) === country)
   )
   const filteredCamps = summerCamps.filter(s =>
-    campType === 'All Types' || s.type === campType
+    (campType === 'All Types' || s.type === campType) &&
+    (country === 'All Countries' || getCountry(s.location) === country)
   )
 
   const allData = activeTab === 'schools' ? filteredSchools : activeTab === 'language' ? filteredLang : filteredCamps
@@ -179,15 +181,21 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
           </p>
         </div>
 
-        {/* ── Category Tabs ── */}
-        <div className="explorer-tabs" style={{
-          display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap',
-          marginBottom: '48px', padding: '6px',
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          borderRadius: '16px',
-          maxWidth: '640px', margin: '0 auto 48px',
+        {/* ── Category Tabs & Global Filters ── */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          gap: '12px', 
+          marginBottom: '64px', 
+          flexWrap: 'wrap'
         }}>
+          <div className="explorer-tabs" style={{
+            display: 'flex', gap: '8px', padding: '6px',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: '16px',
+          }}>
           {tabs.map(tab => (
             <button
               key={tab.id}
@@ -222,13 +230,38 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
           ))}
         </div>
 
+        <div style={{
+          display: 'flex', padding: '6px',
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid rgba(255,255,255,0.06)',
+          borderRadius: '16px',
+        }}>
+          <select 
+            value={country} 
+            onChange={e => { setCountry(e.target.value); setShowAll(false) }} 
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-primary)',
+              padding: '11px 20px',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              outline: 'none',
+            }}
+          >
+            {schoolCountries.map(c => <option key={c} value={c} style={{ background: '#1e1b4b', color: 'white' }}>{c}</option>)}
+          </select>
+        </div>
+      </div>
+
         {/* ── Main Layout ── */}
         <div className="explorer-layout" style={{ display: 'grid', gridTemplateColumns: '2fr 4fr', gap: '32px', alignItems: 'start' }}>
 
           {/* Left: Image + Filters */}
           <div className="explorer-sidebar" style={{ position: 'sticky', top: '100px', alignSelf: 'start' }}>
             <div className="explorer-image" style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: 'var(--shadow-card)' }}>
-              <Image src="/student-search.png" alt="Student searching for schools" width={500} height={320} style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <Image src="/student-search.jpg" alt="Student searching for schools" width={500} height={320} style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
 
             {/* Filters */}
@@ -239,14 +272,9 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {activeTab === 'schools' && (
-                  <>
-                    <select value={schoolType} onChange={e => { setSchoolType(e.target.value); setShowAll(false) }} style={selectStyle}>
-                      {schoolTypes.map(t => <option key={t} value={t} style={{ background: '#1e1b4b', color: 'white' }}>{t}</option>)}
-                    </select>
-                    <select value={country} onChange={e => { setCountry(e.target.value); setShowAll(false) }} style={selectStyle}>
-                      {schoolCountries.map(c => <option key={c} value={c} style={{ background: '#1e1b4b', color: 'white' }}>{c}</option>)}
-                    </select>
-                  </>
+                  <select value={schoolType} onChange={e => { setSchoolType(e.target.value); setShowAll(false) }} style={selectStyle}>
+                    {schoolTypes.map(t => <option key={t} value={t} style={{ background: '#1e1b4b', color: 'white' }}>{t}</option>)}
+                  </select>
                 )}
                 {activeTab === 'language' && (
                   <select value={language} onChange={e => { setLanguage(e.target.value); setShowAll(false) }} style={selectStyle}>
