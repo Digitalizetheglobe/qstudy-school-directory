@@ -338,14 +338,14 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
                 {/* Additional Detailed Sections that were requested */}
                 <DetailSection title="School Info" icon={Info}>
-                  <DetailItem label="Institution Name" value={item.schoolInfo?.fullName || item.name} />
+                  <DetailItem label="School Name" value={item.schoolInfo?.fullName || item.name} />
                   <DetailItem label="Establishment Since" value={item.schoolInfo?.establishmentSince} />
-                  <DetailItem label="Total Campuses" value={item.schoolInfo?.totalCampuses ? String(item.schoolInfo?.totalCampuses).match(/^\d+/)?.[0] || item.schoolInfo?.totalCampuses : item.schoolInfo?.totalCampuses} />
+                  <DetailItem label="Total Branches" value={item.schoolInfo?.totalCampuses ? String(item.schoolInfo?.totalCampuses).match(/^\d+/)?.[0] || item.schoolInfo?.totalCampuses : item.schoolInfo?.totalCampuses} />
                   <DetailItem label="Address / Location" value={formatAddressData(item.schoolInfo?.address || item.location)} fullWidth />
                   <DetailItem label="Type of School" value={item.schoolInfo?.typeOfSchools || item.type} />
                   <DetailItem label="Levels Served" value={formatBulletList(item.schoolInfo?.levelsServed || item.level)} />
                   <DetailItem label="Operational Model" value={item.schoolInfo?.operationalModel} />
-                  <DetailItem label="Curriculum / Programme" value={item.schoolInfo?.curriculumOffered || item.stream} />
+                  <DetailItem label="Curriculum" value={item.schoolInfo?.curriculumOffered || item.stream} />
                   <DetailItem label="Language of Instruction" value={item.schoolInfo?.languageOfInstruction || item.language} />
                   <DetailItem label="Other Languages" value={item.schoolInfo?.otherLanguages} />
                   <DetailItem label="Categories / Gender" value={item.schoolInfo?.genderCategories} />
@@ -368,7 +368,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                 </DetailSection>
 
                 <DetailSection title="Admission" icon={Calendar}>
-                  <DetailItem label="Academic Calendar / Intakes" value={item.admission?.academicCalendar} />
+                  <DetailItem label="Academic Calendar" value={item.admission?.academicCalendar} />
                   <DetailItem label="Registration Deadline" value={item.admission?.registrationDeadline} />
                   <DetailItem label="Can join after start?" value={item.admission?.canJoinMidYear !== undefined ? (item.admission?.canJoinMidYear ? 'Yes' : 'No') : undefined} />
                 </DetailSection>
@@ -394,7 +394,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
                 <DetailSection title="Facilities & Infrastructure" icon={CheckCircle2} fullWidth>
                   <DetailItem label="Available Facilities" value={item.facilities?.generalDescription} justify />
-                  <DetailItem label="Campus Facilities" value={item.facilities?.campusFacilities} justify />
+                  <DetailItem label="School Facilities" value={item.facilities?.campusFacilities} justify />
                   <DetailItem label="Sports Facilities" value={item.facilities?.sportsFacilities} justify />
                 </DetailSection>
 

@@ -59,7 +59,7 @@ const emptyCamp     = (): SummerCamp => ({ id: uid(), name: '', type: 'Academic'
 
 /* ─────────────── Seed data ─────────────── */
 const SEED_SCHOOLS: School[] = [
-  { id: uid(), name: 'Eton College', type: 'Boarding School', country: 'UK', city: 'Windsor', fees: '£48,501/yr', curriculum: 'A-Levels', ageRange: '13–18', highlights: 'World-Famous Alumni, Boarding', description: 'One of the most prestigious schools in the world.', emoji: '🎩' },
+  { id: uid(), name: 'Eton School', type: 'Boarding School', country: 'UK', city: 'Windsor', fees: '£48,501/yr', curriculum: 'A-Levels', ageRange: '13–18', highlights: 'World-Famous Alumni, Boarding', description: 'One of the most prestigious schools in the world.', emoji: '🎩' },
   { id: uid(), name: 'TASIS England', type: 'International School', country: 'UK', city: 'Surrey', fees: '£42,000/yr', curriculum: 'IB Diploma', ageRange: '4–18', highlights: 'IB World School, US Curriculum', description: 'Leading international school in the UK.', emoji: '🌍' },
   { id: uid(), name: 'St Paul\'s School', type: 'Grammar School', country: 'UK', city: 'London', fees: '£29,400/yr', curriculum: 'A-Levels', ageRange: '13–18', highlights: 'Oxbridge, STEM', description: 'Top UK grammar school with exceptional results.', emoji: '📐' },
 ]
@@ -68,7 +68,7 @@ const SEED_LANG: LangSchool[] = [
   { id: uid(), name: 'Institut Cervantes', language: 'Spanish', country: 'Spain', city: 'Madrid', fees: '€320/week', level: 'All Levels', highlights: 'DELE Exams, Spanish Govt', description: 'Official Spanish language school.', emoji: '🇪🇸' },
 ]
 const SEED_CAMPS: SummerCamp[] = [
-  { id: uid(), name: 'Oxford Summer Courses', type: 'Academic', country: 'UK', city: 'Oxford', fees: '£1,950/week', ageRange: '9–24', duration: '2–6 weeks', highlights: 'Oxford Colleges, 60+ Subjects', description: 'Academic enrichment at Oxford University colleges.', emoji: '📖' },
+  { id: uid(), name: 'Oxford Summer Courses', type: 'Academic', country: 'UK', city: 'Oxford', fees: '£1,950/week', ageRange: '9–18', duration: '2–6 weeks', highlights: 'Oxford Schools, 60+ Subjects', description: 'Academic enrichment at Oxford schools.', emoji: '📖' },
   { id: uid(), name: 'EF Summer School', type: 'Language + Fun', country: 'UK', city: 'London', fees: '£999/week', ageRange: '8–18', duration: '1–8 weeks', highlights: 'English + Activities', description: 'Fun English programme with sports and arts.', emoji: '⚽' },
 ]
 
@@ -422,7 +422,7 @@ function SchoolForm({ initial, onSave, onCancel }: { initial: School; onSave: (s
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-        <Field label="School Name"><input style={inputStyle} value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Eton College" /></Field>
+        <Field label="School Name"><input style={inputStyle} value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Eton School" /></Field>
         <Field label="Emoji"><input style={{ ...inputStyle, width: '100px' }} value={form.emoji} onChange={e => set('emoji', e.target.value)} placeholder="🏫" /></Field>
         <Field label="Type">
           <Select value={form.type} onChange={v => set('type', v)} options={['International School', 'Boarding School', 'Grammar School']} />
@@ -490,7 +490,7 @@ function CampForm({ initial, onSave, onCancel }: { initial: SummerCamp; onSave: 
         <Field label="Duration"><input style={inputStyle} value={form.duration} onChange={e => set('duration', e.target.value)} placeholder="e.g. 2–6 weeks" /></Field>
         <Field label="Fees"><input style={inputStyle} value={form.fees} onChange={e => set('fees', e.target.value)} placeholder="e.g. £1,950/week" /></Field>
       </div>
-      <Field label="Highlights (comma-separated)"><input style={inputStyle} value={form.highlights} onChange={e => set('highlights', e.target.value)} placeholder="e.g. Oxford Colleges, 60+ Subjects" /></Field>
+      <Field label="Highlights (comma-separated)"><input style={inputStyle} value={form.highlights} onChange={e => set('highlights', e.target.value)} placeholder="e.g. Oxford Schools, 60+ Subjects" /></Field>
       <Field label="Description"><textarea style={{ ...inputStyle, resize: 'vertical', minHeight: '80px' }} value={form.description} onChange={e => set('description', e.target.value)} placeholder="Brief description…" /></Field>
       <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', paddingTop: '8px' }}>
         <button onClick={onCancel} style={{ padding: '10px 20px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#94A3B8', fontWeight: '600', cursor: 'pointer' }}>Cancel</button>

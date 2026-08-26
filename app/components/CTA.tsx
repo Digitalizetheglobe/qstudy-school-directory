@@ -18,8 +18,8 @@ const ctaCards = [
   {
     icon: '🎙️',
     lucideIcon: CalendarCheck,
-    title: 'Book Free Counselling',
-    desc: 'Schedule a 1-on-1 session with a certified education counsellor at zero cost.',
+    title: 'Book Free Advisory',
+    desc: 'Schedule a 1-on-1 session with a certified education advisor at zero cost.',
     cta: 'Book a Session',
     href: '#cta',
     gradient: 'linear-gradient(135deg,#06B6D4,#0891B2)',

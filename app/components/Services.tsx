@@ -25,8 +25,8 @@ const services = [
   {
     icon: House,
     title: 'Accommodation',
-    desc: 'Find verified, affordable housing near your school - from university dorms to private apartments in the best neighborhoods.',
-    features: ['On-campus housing', 'Private rentals', 'Verified listings', 'Move-in support'],
+    desc: 'Find verified, affordable housing near your school - from homestays to private apartments in the best neighborhoods.',
+    features: ['Boarding facilities', 'Private rentals', 'Verified listings', 'Move-in support'],
     color: '#10B981',
   },
   {

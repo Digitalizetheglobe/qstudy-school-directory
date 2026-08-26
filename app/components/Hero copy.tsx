@@ -154,7 +154,7 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
             <span style={{ fontSize: '24px' }}>🎓</span>
             <div>
               <div style={{ fontSize: '0.85rem', fontWeight: '700' }}>Application Approved!</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>University of Melbourne</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Melbourne High School</div>
             </div>
           </div> */}
 

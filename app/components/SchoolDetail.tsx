@@ -9,9 +9,9 @@ const tabs = [
     label: 'Overview',
     icon: ClipboardList,
     content: {
-      title: 'University Overview',
-      desc: 'Get a comprehensive snapshot of the institution - its history, campus life, rankings, accreditations, and global reputation. Compare schools across 50+ metrics to make confident decisions.',
-      bullets: ['World rankings & accreditations', 'Campus size & facilities', 'Student diversity ratio', 'Alumni network strength'],
+      title: 'School Overview',
+      desc: 'Get a comprehensive snapshot of the school - its history, school life, rankings, accreditations, and global reputation. Compare schools across 50+ metrics to make confident decisions.',
+      bullets: ['World rankings & accreditations', 'School size & facilities', 'Student diversity ratio', 'Alumni network strength'],
     },
   },
   {
@@ -19,9 +19,9 @@ const tabs = [
     label: 'Courses & Fees',
     icon: GraduationCap,
     content: {
-      title: 'Courses & Fee Structure',
-      desc: 'Browse the full catalogue of undergraduate, postgraduate, and doctoral programs. Explore detailed fee breakdowns, duration, and intake windows for each course.',
-      bullets: ['Full course catalogue', 'Semester & annual fee breakdowns', 'Part-time & online options', 'Intake dates & deadlines'],
+      title: 'Curriculum & Fee Structure',
+      desc: 'Browse the full catalogue of academic curricula and extracurricular programs. Explore detailed fee breakdowns, duration, and term windows for each program.',
+      bullets: ['Full curriculum catalogue', 'Term & annual fee breakdowns', 'Extracurricular options', 'Term dates & deadlines'],
     },
   },
   {
@@ -30,8 +30,8 @@ const tabs = [
     icon: ShieldCheck,
     content: {
       title: 'Admission Requirements',
-      desc: 'Understand exactly what each institution expects. From academic grades to language scores, we break down every requirement so you\'re prepared to apply with confidence.',
-      bullets: ['Minimum GPA & grade requirements', 'IELTS / TOEFL / Duolingo scores', 'SOP & reference letter guidelines', 'Portfolio & work experience criteria'],
+      desc: 'Understand exactly what each school expects. From academic grades to language scores, we break down every requirement so you\'re prepared to apply with confidence.',
+      bullets: ['Minimum grade requirements', 'Language proficiency scores', 'Application guidelines', 'Interview criteria'],
     },
   },
   {
@@ -40,8 +40,8 @@ const tabs = [
     icon: CircleDollarSign,
     content: {
       title: 'Scholarship Opportunities',
-      desc: 'Discover merit and need-based scholarships offered by the institution and external bodies. Filter by eligibility and apply directly through our platform.',
-      bullets: ['Merit & need-based scholarships', 'Country-specific funding', 'Government grants & loans', 'Automatic scholarship matching'],
+      desc: 'Discover merit and need-based scholarships offered by the school and external bodies. Filter by eligibility and apply directly through our platform.',
+      bullets: ['Merit & need-based scholarships', 'Country-specific funding', 'Financial aid programs', 'Automatic scholarship matching'],
     },
   },
   {
@@ -50,8 +50,8 @@ const tabs = [
     icon: UserRoundCog,
     content: {
       title: 'Student Support Services',
-      desc: 'Beyond academics - explore the full range of student support services including housing, career placement, on-campus health, sports, and counselling.',
-      bullets: ['On-campus housing options', 'Career placement & internships', 'Health & mental wellness', 'Student clubs & activities'],
+      desc: 'Beyond academics - explore the full range of student support services including boarding, on-site health, sports, and well-being programs.',
+      bullets: ['Boarding options', 'Health & mental wellness', 'Student clubs & activities'],
     },
   },
 ]

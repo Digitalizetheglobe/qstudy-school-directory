@@ -10,27 +10,27 @@ import { ArrowDown, ArrowUp, BookOpenText, Grid3X3, List, School, Search, Slider
 import SchoolModal from './SchoolModal'
 
 const languageSchools = [
-  { name: 'British Study Centres', location: '🇬🇧 Oxford, UK', language: 'English (ESL)', level: 'All Levels', fees: '£350/week', highlights: ['Central Oxford', 'Oxford Uni Affiliation', 'Cultural Trips'], emoji: '🎓' },
+  { name: 'British Study Centres', location: '🇬🇧 Oxford, UK', language: 'English (ESL)', level: 'All Levels', fees: '£350/week', highlights: ['Central Oxford', 'Oxford School Affiliation', 'Cultural Trips'], emoji: '🎓' },
   { name: 'EC Language Schools', location: '🇬🇧 London, UK', language: 'English (ESL)', level: 'Beginner-Advanced', fees: '£280/week', highlights: ['30+ Locations', 'Online Option', 'Accredited ALTA'], emoji: '🌐' },
-  { name: 'Inlingua Geneva', location: '🇨🇭 Geneva, Switzerland', language: 'French', level: 'All Levels', fees: 'CHF 620/week', highlights: ['Native Trainers', 'Business French', 'Diplomatic City'], emoji: '🇫🇷' },
-  { name: 'Goethe Institut Berlin', location: '🇩🇪 Berlin, Germany', language: 'German', level: 'A1-C2', fees: '€450/week', highlights: ['Official German Cert', 'Cultural Programme', 'CEFR Aligned'], emoji: '🇩🇪' },
+  { name: 'Inlingua Geneva', location: '🇨🇭 Geneva, Switzerland', language: 'French', level: 'All Levels', fees: 'CHF 620/week', highlights: ['Native Trainers', 'Interactive French', 'Diplomatic City'], emoji: '🇫🇷' },
+  { name: 'Goethe Institut Berlin', location: '🇩🇪 Berlin, Germany', language: 'German', level: 'A1-C2', fees: '€450/week', highlights: ['Language Cert', 'Cultural Programme', 'CEFR Aligned'], emoji: '🇩🇪' },
   { name: 'Instituto Cervantes', location: '🇪🇸 Madrid, Spain', language: 'Spanish', level: 'All Levels', fees: '€320/week', highlights: ['DELE Exams', 'Spanish Govt Backed', 'Immersive'], emoji: '🇪🇸' },
   { name: 'Alliance Française Paris', location: '🇫🇷 Paris, France', language: 'French', level: 'All Levels', fees: '€380/week', highlights: ['DELF/DALF Prep', 'Cultural Events', 'Heart of Paris'], emoji: '🗼' },
-  { name: 'Mandarin House', location: '🇨🇳 Shanghai, China', language: 'Mandarin', level: 'Beginner-Advanced', fees: '$420/week', highlights: ['HSK Preparation', 'Business Chinese', 'Cultural Immersion'], emoji: '🏮' },
-  { name: 'Japan Language School', location: '🇯🇵 Tokyo, Japan', language: 'Japanese', level: 'All Levels', fees: '¥85,000/month', highlights: ['JLPT Prep', 'Visa Support', 'Anime Culture'], emoji: '⛩️' },
-  { name: 'ILSC Language Schools', location: '🇨🇦 Toronto, Canada', language: 'English (ESL)', level: 'All Levels', fees: 'CAD 400/week', highlights: ['Post-Study Work', 'Multicultural City', 'PR Pathway'], emoji: '🍁' },
-  { name: 'Kaplan International', location: '🇦🇺 Sydney, Australia', language: 'English (ESL)', level: 'Beginner-Advanced', fees: 'AUD 380/week', highlights: ['IELTS Preparation', 'Work Rights', 'Beach City'], emoji: '🌊' },
+  { name: 'Mandarin House', location: '🇨🇳 Shanghai, China', language: 'Mandarin', level: 'Beginner-Advanced', fees: '$420/week', highlights: ['HSK Preparation', 'Conversational Chinese', 'Cultural Immersion'], emoji: '🏮' },
+  { name: 'Japan Language School', location: '🇯🇵 Tokyo, Japan', language: 'Japanese', level: 'All Levels', fees: '¥85,000/month', highlights: ['JLPT Prep', 'Safe Environment', 'Anime Culture'], emoji: '⛩️' },
+  { name: 'ILSC Language Schools', location: '🇨🇦 Toronto, Canada', language: 'English (ESL)', level: 'All Levels', fees: 'CAD 400/week', highlights: ['After-School Care', 'Multicultural City', 'Interactive Learning'], emoji: '🍁' },
+  { name: 'Kaplan International', location: '🇦🇺 Sydney, Australia', language: 'English (ESL)', level: 'Beginner-Advanced', fees: 'AUD 380/week', highlights: ['ESL Support', 'Safe Environment', 'Beach City'], emoji: '🌊' },
 ]
 
 const summerCamps = [
-  { name: 'Oxford Summer Courses', location: '🇬🇧 Oxford, UK', type: 'Academic', ageRange: '9-24 yrs', duration: '2-6 weeks', fees: '£1,950/week', highlights: ['Oxford Colleges', 'Academic Enrichment', '60+ Subjects'], emoji: '📖' },
-  { name: 'Cambridge Immerse', location: '🇬🇧 Cambridge, UK', type: 'Academic', ageRange: '13-18 yrs', duration: '2 weeks', fees: '£4,295/programme', highlights: ['Cambridge Uni Setting', 'Research Projects', '90+ Nationalities'], emoji: '🔭' },
-  { name: 'Camp America', location: '🇺🇸 USA', type: 'Summer Camp', ageRange: '18-30 yrs (staff)', duration: '8-12 weeks', fees: 'Paid Placement', highlights: ['USA J-1 Visa', 'Paid + Travel', 'Lifelong Friends'], emoji: '🏕️' },
+  { name: 'Oxford Summer Courses', location: '🇬🇧 Oxford, UK', type: 'Academic', ageRange: '9-18 yrs', duration: '2-6 weeks', fees: '£1,950/week', highlights: ['Oxford Schools', 'Academic Enrichment', '60+ Subjects'], emoji: '📖' },
+  { name: 'Cambridge Immerse', location: '🇬🇧 Cambridge, UK', type: 'Academic', ageRange: '13-18 yrs', duration: '2 weeks', fees: '£4,295/programme', highlights: ['Cambridge School Setting', 'Research Projects', '90+ Nationalities'], emoji: '🔭' },
+  { name: 'Camp America', location: '🇺🇸 USA', type: 'Summer Camp', ageRange: '8-16 yrs', duration: '4-8 weeks', fees: '$1,500/week', highlights: ['Outdoor Activities', 'Safe Environment', 'Lifelong Friends'], emoji: '🏕️' },
   { name: 'EF Summer School', location: '🇬🇧 London, UK', type: 'Language + Fun', ageRange: '8-18 yrs', duration: '1-8 weeks', fees: '£999/week', highlights: ['English + Activities', 'Sports & Arts', '70+ Countries'], emoji: '⚽' },
-  { name: 'IMG Academy Summer', location: '🇺🇸 Florida, USA', type: 'Sports Camp', ageRange: '9-18 yrs', duration: '1-4 weeks', fees: '$2,995/week', highlights: ['Elite Sports Training', 'NFL/NBA Alumni', 'Multi-Sport'], emoji: '🏆' },
+  { name: 'IMG Academy Summer', location: '🇺🇸 Florida, USA', type: 'Sports Camp', ageRange: '9-18 yrs', duration: '1-4 weeks', fees: '$2,995/week', highlights: ['Elite Sports Training', 'Professional Coaches', 'Multi-Sport'], emoji: '🏆' },
   { name: 'Alps Science Camp', location: '🇨🇭 Swiss Alps', type: 'STEM Camp', ageRange: '12-17 yrs', duration: '2-3 weeks', fees: 'CHF 4,200/program', highlights: ['Robotics & AI', 'Swiss Precision', 'Mountain Setting'], emoji: '🤖' },
   { name: 'Nacel Cultural Exchange', location: '🇫🇷 Paris, France', type: 'Cultural Exchange', ageRange: '13-18 yrs', duration: '3-4 weeks', fees: '€2,100/programme', highlights: ['Host Family', 'French Classes', 'Eiffel Tower'], emoji: '🗼' },
-  { name: 'Raleigh International', location: '🌍 Multiple Countries', type: 'Adventure', ageRange: '17-24 yrs', duration: '5-10 weeks', fees: '£3,200-£4,000', highlights: ['Community Projects', 'Jungle Expeditions', 'Global Volunteering'], emoji: '🌿' },
+  { name: 'Raleigh International', location: '🌍 Multiple Countries', type: 'Adventure', ageRange: '14-18 yrs', duration: '2-4 weeks', fees: '£1,200-£2,000', highlights: ['Community Projects', 'Jungle Expeditions', 'Global Volunteering'], emoji: '🌿' },
 ]
 
 const INITIAL_LIMIT = 6
@@ -50,7 +50,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/schools')
+        const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/schools')
         if (!response.ok) {
           throw new Error('Failed to fetch schools')
         }

@@ -27,7 +27,7 @@ const events = [
     title: 'International Education Expo',
     date: 'May 5, 2025',
     location: '🇦🇪 Dubai, UAE',
-    desc: 'The largest education expo in the Middle East - featuring 300+ institutions, cultural exchanges, and exclusive application sessions.',
+    desc: 'The largest education expo in the Middle East - featuring 300+ schools, cultural exchanges, and exclusive application sessions.',
     badge: 'Registration Open',
     badgeColor: '#F59E0B',
   },

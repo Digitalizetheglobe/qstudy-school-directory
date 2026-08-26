@@ -5,7 +5,7 @@ const serviceHighlights = [
   { icon: ShieldCheck, label: 'Visa Assistance' },
   { icon: House, label: 'Accommodation' },
   { icon: Plane, label: 'Travel Support' },
-  { icon: MessageCircle, label: 'Counselling' },
+
   { icon: FileText, label: 'Document Help' },
   { icon: CreditCard, label: 'Fee Guidance' },
 ]

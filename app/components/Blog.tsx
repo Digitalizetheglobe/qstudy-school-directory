@@ -11,8 +11,8 @@ const blogs = [
 ]
 
 const faqs = [
-  { q: 'How do I create an account on School Directory?', a: 'Sign up with your email or Google account. It takes under 2 minutes and gives you instant access to school listings, applications, and counsellor support.' },
-  { q: 'Is there a fee to use School Directory?', a: 'Browsing schools and using basic features is completely free. Premium counselling packages are available for students who want dedicated one-on-one support.' },
+  { q: 'How do I create an account on School Directory?', a: 'Sign up with your email or Google account. It takes under 2 minutes and gives you instant access to school listings and applications.' },
+  { q: 'Is there a fee to use School Directory?', a: 'Browsing schools and using basic features is completely free. Premium advisory packages are available for students who want dedicated one-on-one support.' },
   { q: 'How long does the visa assistance process take?', a: 'It depends on the destination country. Most student visa applications take 4-8 weeks. Our team ensures your documents are perfectly prepared to avoid delays.' },
   { q: 'Can I apply to multiple schools at once?', a: 'Absolutely! Our platform allows unlimited applications. You can track each one\'s status from your personal dashboard in real time.' },
   { q: 'What support do you provide after I get admitted?', a: 'Post-admission we assist with accommodation, travel booking, pre-departure orientation, and airport reception services at select destinations.' },
