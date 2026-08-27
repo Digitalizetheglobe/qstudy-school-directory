@@ -266,7 +266,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                 </div>
               )}
               <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
-                {item.name}
+                {item.schoolInfo?.fullName || item.name}
               </h1>
             </div>
 
@@ -505,11 +505,8 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
               {/* Right Column (Sidebar) */}
               <div className="sm-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '20px', alignSelf: 'flex-start' }}>
                 <div style={{ width: '100%', height: '140px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
-                  {/* Mock map image using an existing asset */}
-                  <div style={{ position: 'absolute', inset: 0, opacity: 0.8, backgroundImage: "url('/student-search.png')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
-                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                     <MapPin size={40} color="#ef4444" fill="white" />
-                  </div>
+                  {/* Dynamic image based on school name */}
+                  <div style={{ position: 'absolute', inset: 0, opacity: 0.8, backgroundImage: `url('/school_image_${[1, 2, 3, 4, 5, 7, 8, 9][(item?.name?.split('').reduce((acc: number, char: string) => acc + char.charCodeAt(0), 0) || 0) % 8]}.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 </div>
 
                 <div style={{ border: '1px solid var(--border)', borderRadius: '8px', padding: '24px', background: 'rgba(255,255,255,0.02)' }}>

@@ -80,7 +80,7 @@ export default function ServicesHighlight({ onApplyNowClick: _onApplyNowClick }:
             border: '1px solid rgba(255,255,255,0.08)',
             boxShadow: 'var(--shadow-card), 0 0 60px rgba(6,182,212,0.1)',
           }}>
-            <Image src="/counselor-realistic.jpg" alt="Education counselor in consultation with student" width={600} height={480} style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <Image src="/school.png" alt="Education counselor in consultation with student" width={600} height={480} style={{ width: '100%', height: 'auto', display: 'block' }} />
           </div>
         </div>
       </div>

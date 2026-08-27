@@ -66,7 +66,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     fetchSchools()
   }, [])
 
-  const [activeTab, setActiveTab] = useState<'schools' | 'language' | 'summer'>('schools')
+  const [activeTab, setActiveTab] = useState<'schools' | 'language' | 'summer' | 'wa-curriculum'>('schools')
   const [schoolType, setSchoolType] = useState('All Types')
   const [country, setCountry] = useState('All Countries')
   const [language, setLanguage] = useState('All Languages')
@@ -111,7 +111,20 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     (country === 'All Countries' || getCountry(s.location) === country)
   )
 
-  const allData = activeTab === 'schools' ? filteredSchools : activeTab === 'language' ? filteredLang : filteredCamps
+  const isWACurriculum = (s: any) => {
+    const curr = s.schoolInfo?.curriculumOffered?.toLowerCase() || s.curriculumOffered?.toLowerCase() || '';
+    return curr.includes('western australia') || curr.includes('wace');
+  }
+
+  const filteredWACurriculum = schools.filter((s: any) =>
+    isWACurriculum(s) && (country === 'All Countries' || getCountry(s.location) === country)
+  )
+
+  const allData = activeTab === 'schools' ? filteredSchools : 
+                  activeTab === 'language' ? filteredLang : 
+                  activeTab === 'summer' ? filteredCamps : 
+                  filteredWACurriculum
+                  
   const visible = showAll ? allData : allData.slice(0, INITIAL_LIMIT)
   const hasMore = allData.length > INITIAL_LIMIT
 
@@ -131,6 +144,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     { id: 'schools' as const, label: 'Schools', icon: School, count: schools.length },
     { id: 'language' as const, label: 'Language Schools', icon: BookOpenText, count: languageSchools.length },
     { id: 'summer' as const, label: 'Summer Camps', icon: TentTree, count: summerCamps.length },
+    { id: 'wa-curriculum' as const, label: 'WA Curriculum', icon: BookOpenText, count: schools.filter(isWACurriculum).length },
   ]
 
   return (
@@ -265,7 +279,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
             </div>
 
             {/* Filters */}
-            <div className="glass-card" style={{ padding: '20px' }}>
+            {/* <div className="glass-card" style={{ padding: '20px' }}>
               <h3 style={{ fontWeight: '700', marginBottom: '14px', fontSize: '0.9rem', color: 'var(--primary-light)', display: 'flex', gap: '6px', alignItems: 'center' }}>
                 <SlidersHorizontal size={14} />
                 Smart Filters
@@ -287,7 +301,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                   </select>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right: Cards */}
@@ -364,7 +378,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                     </div>
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <h4 style={{ fontWeight: '700', fontSize: '0.9rem', marginBottom: '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</h4>
+                    <h4 style={{ fontWeight: '700', fontSize: '0.9rem', marginBottom: '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.schoolInfo?.fullName || item.name}</h4>
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: view === 'grid' ? '8px' : '3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {/* {item.location}
                       {item.type ? ` · ${item.type}` : ''}
