@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CircleHelp, Plus } from 'lucide-react'
 
 const blogs = [
@@ -24,6 +24,24 @@ interface BlogProps {
 
 export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const [dynamicFaqs, setDynamicFaqs] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/faqs?activeOnly=true')
+        const data = await res.json()
+        if (data.success && data.data && data.data.length > 0) {
+          setDynamicFaqs(data.data)
+        }
+      } catch (error) {
+        console.error('Failed to fetch FAQs', error)
+      }
+    }
+    fetchFaqs()
+  }, [])
+
+  const displayFaqs = dynamicFaqs.length > 0 ? dynamicFaqs : faqs
 
   return (
     <section id="blog" style={{ padding: '40px 24px', background: 'var(--surface-2)' }}>
@@ -33,8 +51,8 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
 
         {/* FAQ */}
         <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <div className="section-label" id='faq' style={{ justifyContent: 'center' }}>
+          <div style={{ textAlign: 'center', margin: '60px 0 20px' }}>
+            <div className="section-label flex justify-center mx-auto mb-4" id='faq'>
               <CircleHelp size={14} /> FAQs
             </div>
             <h2 style={{ fontSize: '2rem', fontWeight: '800', letterSpacing: '-0.02em' }}>
@@ -42,7 +60,7 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
             </h2>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {faqs.map((faq, i) => (
+            {displayFaqs.map((faq, i) => (
               <div
                 key={i}
                 style={{
@@ -62,7 +80,7 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
                     gap: '12px', textAlign: 'left',
                   }}
                 >
-                  <span style={{ fontWeight: '600', fontSize: '0.95rem', color: 'var(--text-primary)' }}>{faq.q}</span>
+                  <span style={{ fontWeight: '600', fontSize: '0.95rem', color: 'var(--text-primary)' }}>{faq.question || faq.q}</span>
                   <span style={{
                     minWidth: '24px', height: '24px',
                     background: openFaq === i ? 'linear-gradient(135deg,#4F46E5,#06B6D4)' : 'rgba(255,255,255,0.08)',
@@ -75,7 +93,7 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
                 </button>
                 {openFaq === i && (
                   <div style={{ padding: '0 24px 20px', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
-                    {faq.a}
+                    {faq.answer || faq.a}
                   </div>
                 )}
               </div>

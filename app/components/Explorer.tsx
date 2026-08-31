@@ -50,7 +50,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/schools')
+        const response = await fetch('http://localhost:5000/api/schools')
         if (!response.ok) {
           throw new Error('Failed to fetch schools')
         }
@@ -82,7 +82,8 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   const dynamicSchoolTypes = Array.from(new Set(schools.map((s: any) => s.type).filter(Boolean))).sort() as string[]
   const schoolTypes = ['All Types', ...dynamicSchoolTypes]
 
-  const getCountry = (loc: string) => {
+  const getCountry = (loc: string, s?: any) => {
+    if (s?.contact?.country) return s.contact.country;
     if (!loc) return ''
     // Handle flags if any are in the string, or just split by comma
     const parts = loc.split(',')
@@ -91,7 +92,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     return lastPart.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '').trim()
   }
 
-  const dynamicCountries = Array.from(new Set(schools.map((s: any) => getCountry(s.location)).filter(Boolean))).sort() as string[]
+  const dynamicCountries = Array.from(new Set(schools.map((s: any) => getCountry(s.location, s)).filter(Boolean))).sort() as string[]
   const schoolCountries = ['All Countries', ...dynamicCountries]
 
   const languages = ['All Languages', 'English (ESL)', 'French', 'German', 'Spanish', 'Mandarin', 'Japanese']
@@ -100,15 +101,15 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   // Filtering
   const filteredSchools = schools.filter((s: any) =>
     (schoolType === 'All Types' || s.type === schoolType) &&
-    (country === 'All Countries' || getCountry(s.location) === country)
+    (country === 'All Countries' || getCountry(s.location, s) === country)
   )
   const filteredLang = languageSchools.filter(s =>
     (language === 'All Languages' || s.language === language) &&
-    (country === 'All Countries' || getCountry(s.location) === country)
+    (country === 'All Countries' || getCountry(s.location, s) === country)
   )
   const filteredCamps = summerCamps.filter(s =>
     (campType === 'All Types' || s.type === campType) &&
-    (country === 'All Countries' || getCountry(s.location) === country)
+    (country === 'All Countries' || getCountry(s.location, s) === country)
   )
 
   const isWACurriculum = (s: any) => {
@@ -117,14 +118,14 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   }
 
   const filteredWACurriculum = schools.filter((s: any) =>
-    isWACurriculum(s) && (country === 'All Countries' || getCountry(s.location) === country)
+    isWACurriculum(s) && (country === 'All Countries' || getCountry(s.location, s) === country)
   )
 
-  const allData = activeTab === 'schools' ? filteredSchools : 
-                  activeTab === 'language' ? filteredLang : 
-                  activeTab === 'summer' ? filteredCamps : 
-                  filteredWACurriculum
-                  
+  const allData = activeTab === 'schools' ? filteredSchools :
+    activeTab === 'language' ? filteredLang :
+      activeTab === 'summer' ? filteredCamps :
+        filteredWACurriculum
+
   const visible = showAll ? allData : allData.slice(0, INITIAL_LIMIT)
   const hasMore = allData.length > INITIAL_LIMIT
 
@@ -144,7 +145,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     { id: 'schools' as const, label: 'Schools', icon: School, count: schools.length },
     { id: 'language' as const, label: 'Language Schools', icon: BookOpenText, count: languageSchools.length },
     { id: 'summer' as const, label: 'Summer Camps', icon: TentTree, count: summerCamps.length },
-    { id: 'wa-curriculum' as const, label: 'WA Curriculum', icon: BookOpenText, count: schools.filter(isWACurriculum).length },
+    // { id: 'wa-curriculum' as const, label: 'WA Curriculum', icon: BookOpenText, count: schools.filter(isWACurriculum).length },
   ]
 
   return (
@@ -196,12 +197,12 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
         </div>
 
         {/* ── Category Tabs & Global Filters ── */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
           alignItems: 'center',
-          gap: '12px', 
-          marginBottom: '64px', 
+          gap: '12px',
+          marginBottom: '64px',
           flexWrap: 'wrap'
         }}>
           <div className="explorer-tabs" style={{
@@ -210,64 +211,64 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
             border: '1px solid rgba(255,255,255,0.06)',
             borderRadius: '16px',
           }}>
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => handleTab(tab.id)}
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => handleTab(tab.id)}
+                style={{
+                  flex: 1,
+                  padding: '11px 20px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '800',
+                  transition: 'all 0.25s ease',
+                  background: activeTab === tab.id ? '#4f46E5' : 'transparent',
+                  color: activeTab === tab.id ? 'white' : 'var(--text-secondary)',
+                  whiteSpace: 'nowrap',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                }}
+              >
+                <tab.icon size={14} />
+                {tab.label}
+                <span style={{
+                  fontSize: '0.72rem',
+                  background: activeTab === tab.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.07)',
+                  borderRadius: '50px', padding: '1px 7px',
+                  lineHeight: 1.6,
+                }}>{tab.count}</span>
+              </button>
+            ))}
+          </div>
+
+          <div style={{
+            display: 'flex', padding: '6px',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: '16px',
+          }}>
+            <select
+              value={country}
+              onChange={e => { setCountry(e.target.value); setShowAll(false) }}
               style={{
-                flex: 1,
-                padding: '11px 20px',
-                borderRadius: '12px',
+                background: 'transparent',
                 border: 'none',
-                cursor: 'pointer',
+                color: 'var(--text-primary)',
+                padding: '11px 20px',
                 fontSize: '0.85rem',
-                fontWeight: '800',
-                transition: 'all 0.25s ease',
-                background: activeTab === tab.id ? '#4f46E5' : 'transparent',
-                color: activeTab === tab.id ? 'white' : 'var(--text-secondary)',
-                whiteSpace: 'nowrap',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                outline: 'none',
               }}
             >
-              <tab.icon size={14} />
-              {tab.label}
-              <span style={{
-                fontSize: '0.72rem',
-                background: activeTab === tab.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.07)',
-                borderRadius: '50px', padding: '1px 7px',
-                lineHeight: 1.6,
-              }}>{tab.count}</span>
-            </button>
-          ))}
+              {schoolCountries.map(c => <option key={c} value={c} style={{ background: '#1e1b4b', color: 'white' }}>{c}</option>)}
+            </select>
+          </div>
         </div>
-
-        <div style={{
-          display: 'flex', padding: '6px',
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          borderRadius: '16px',
-        }}>
-          <select 
-            value={country} 
-            onChange={e => { setCountry(e.target.value); setShowAll(false) }} 
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--text-primary)',
-              padding: '11px 20px',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              outline: 'none',
-            }}
-          >
-            {schoolCountries.map(c => <option key={c} value={c} style={{ background: '#1e1b4b', color: 'white' }}>{c}</option>)}
-          </select>
-        </div>
-      </div>
 
         {/* ── Main Layout ── */}
         <div className="explorer-layout" style={{ display: 'grid', gridTemplateColumns: '2fr 4fr', gap: '32px', alignItems: 'start' }}>

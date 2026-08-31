@@ -60,8 +60,25 @@ const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) 
   );
 };
 
-const DetailItem = ({ label, value, justify, fullWidth }: { label: string, value: any, justify?: boolean, fullWidth?: boolean }) => {
+const DetailItem = ({ label, value, justify, fullWidth, isHtml }: { label: string, value: any, justify?: boolean, fullWidth?: boolean, isHtml?: boolean }) => {
   if (value === undefined || value === null || value === '' || value === '-' || value === 'N/A') return null;
+  
+  if (isHtml) {
+    return (
+      <div style={{ 
+        display: 'flex', flexDirection: 'column', gap: '6px', 
+        WebkitColumnSpan: fullWidth ? 'all' : 'none',
+        columnSpan: fullWidth ? 'all' : 'none',
+        breakInside: 'avoid',
+        pageBreakInside: 'avoid',
+        marginBottom: '24px'
+      }}>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '700' }}>{label}</span>
+        <div className="prose prose-sm prose-invert max-w-none" style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 'normal', lineHeight: '1.6', textAlign: justify ? 'justify' : undefined }} dangerouslySetInnerHTML={{ __html: value }}></div>
+      </div>
+    );
+  }
+
   let displayValue = value;
   if (Array.isArray(displayValue) && displayValue.length > 0 && typeof displayValue[0] === 'string') {
     displayValue = displayValue.join(', ');
@@ -276,9 +293,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                 {item.introduction && (
                   <div style={{ marginBottom: '32px' }}>
                     <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '12px' }}>Introduction</h3>
-                    <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', textAlign: 'justify' }}>
-                      {item.introduction}
-                    </p>
+                    <div className="prose prose-sm prose-invert max-w-none" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: item.introduction }}></div>
                   </div>
                 )}
                 <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '16px' }}>Details</h3>
@@ -363,8 +378,8 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                   <DetailItem label="Student Nationalities (Top 5)" value={item.aboutSchool?.studentNationalitiesTop5} />
                   <DetailItem label="Student Diversity (Countries)" value={item.aboutSchool?.studentDiversityCountries} />
                   <DetailItem label="Staff Diversity" value={item.aboutSchool?.staffDiversity} />
-                  <DetailItem label="Key Qualities" value={item.aboutSchool?.keyQualities} justify />
-                  <DetailItem label="Teaching Approaches" value={item.aboutSchool?.teachingApproaches} justify />
+                  <DetailItem label="Key Qualities" value={item.aboutSchool?.keyQualities} justify isHtml />
+                  <DetailItem label="Teaching Approaches" value={item.aboutSchool?.teachingApproaches} justify isHtml />
                 </DetailSection>
 
                 <DetailSection title="Admission" icon={Calendar}>
@@ -389,13 +404,13 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                 </DetailSection>
 
                 <DetailSection title="Extracurricular Activities" icon={Activity} fullWidth>
-                  <DetailItem label="Activities / Clubs" value={item.extracurricular?.description} justify />
+                  <DetailItem label="Activities / Clubs" value={item.extracurricular?.description} justify isHtml />
                 </DetailSection>
 
                 <DetailSection title="Facilities & Infrastructure" icon={CheckCircle2} fullWidth>
-                  <DetailItem label="Available Facilities" value={item.facilities?.generalDescription} justify />
-                  <DetailItem label="School Facilities" value={item.facilities?.campusFacilities} justify />
-                  <DetailItem label="Sports Facilities" value={item.facilities?.sportsFacilities} justify />
+                  <DetailItem label="Available Facilities" value={item.facilities?.generalDescription} justify isHtml />
+                  <DetailItem label="School Facilities" value={item.facilities?.campusFacilities} justify isHtml />
+                  <DetailItem label="Sports Facilities" value={item.facilities?.sportsFacilities} justify isHtml />
                 </DetailSection>
 
                 {item.scholarships && (
@@ -446,11 +461,15 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                     <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>City/Borough</span>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.city || item.location?.split(',')[0] || 'N/A'}</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.city || item.city || item.location?.split(',')[0] || 'N/A'}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
+                    <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Country</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.country || 'N/A'}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                     <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Zip/Postal Code</span>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.zipCode || 'N/A'}</span>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.zipCode || item.zipCode || 'N/A'}</span>
                   </div>
                 </div>
 

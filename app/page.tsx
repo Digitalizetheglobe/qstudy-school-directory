@@ -33,7 +33,7 @@ export default function Page() {
         <Features onApplyNowClick={() => setIsContactFormOpen(true)} />
         <FeaturesMob onApplyNowClick={() => setIsContactFormOpen(true)} />
         <Explorer onApplyNowClick={() => setIsContactFormOpen(true)} />
-        <SchoolDetail onApplyNowClick={() => setIsContactFormOpen(true)} />
+        {/* <SchoolDetail onApplyNowClick={() => setIsContactFormOpen(true)} /> */}
         <ServicesHighlight onApplyNowClick={() => setIsContactFormOpen(true)} />
         <Services onApplyNowClick={() => setIsContactFormOpen(true)} />
         <Dashboard onApplyNowClick={() => setIsContactFormOpen(true)} />

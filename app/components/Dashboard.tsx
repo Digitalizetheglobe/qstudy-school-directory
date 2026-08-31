@@ -5,7 +5,7 @@ const features = [
   { icon: ChartColumn, title: 'Application Tracking', desc: 'Monitor every application in real-time with status updates, deadlines, and next steps.' },
   { icon: FileUp, title: 'Document Uploads', desc: 'Securely upload and manage all your documents - transcripts, passports, SOPs, and more.' },
   { icon: Bell, title: 'Counsellor Notifications', desc: 'Stay in sync with your assigned counsellor via instant notifications and chat.' },
-  { icon: LayoutDashboard, title: 'Progress Analytics', desc: 'Visualize your application journey with intuitive dashboards and completion scores.' },
+  // { icon: LayoutDashboard, title: 'Progress Analytics', desc: 'Visualize your application journey with intuitive dashboards and completion scores.' },
 ]
 
 interface DashboardProps {
@@ -67,40 +67,18 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
               borderRadius: '24px', overflow: 'hidden',
               border: '1px solid rgba(79,70,229,0.2)',
               boxShadow: '0 32px 80px rgba(0,0,0,0.5), var(--shadow-glow)',
+              maxWidth: '80%',
+              margin: '0 auto'
             }}>
               <Image
                 src="/dashboard.png"
                 alt="Student dashboard showing application tracking and analytics"
-                width={700}
-                height={500}
+                width={500}
+                height={300}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />
             </div>
             {/* Floating stat - top right */}
-            <div className="db-badge-top" style={{
-              position: 'absolute', top: '-16px', right: '-16px',
-              background: 'rgba(15,15,26,0.95)', backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(79,70,229,0.3)',
-              borderRadius: '14px', padding: '14px 18px',
-              boxShadow: 'var(--shadow-card)',
-            }}>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px' }}>Applications Sent</div>
-              <div style={{ fontSize: '1.8rem', fontWeight: '800', lineHeight: 1 }} className="text-blue-800-blue">12</div>
-            </div>
-            {/* Floating stat - bottom left */}
-            <div className="db-badge-bottom" style={{
-              position: 'absolute', bottom: '-16px', left: '20px',
-              background: 'rgba(15,15,26,0.95)', backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(16,185,129,0.3)',
-              borderRadius: '14px', padding: '14px 18px',
-              boxShadow: 'var(--shadow-card)',
-            }}>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'flex', gap: '6px', alignItems: 'center' }}>
-                <span>Offers Received</span>
-                <Trophy size={14} color="#10B981" />
-              </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#10B981', lineHeight: 1 }}>3</div>
-            </div>
           </div>
 
           {/* Right: Feature Bullets */}

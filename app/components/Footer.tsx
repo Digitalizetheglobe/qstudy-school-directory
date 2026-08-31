@@ -4,19 +4,15 @@ import { Mail, Phone, MessageCircle } from 'lucide-react'
 
 const footerLinks = {
   Explore: [
-    { label: 'Browse Schools', href: '#explorer' },
-    { label: 'Scholarships', href: '#school-detail' },
-    { label: 'Country Guides', href: '#blog' },
-    { label: 'Admission Tips', href: '#blog' },
+    { label: 'Home', href: '#home' },
+    { label: 'Features', href: '#features' },
+    { label: 'Explore Schools', href: '#explorer' },
   ],
   Services: [
-    { label: 'Admission Support', href: '#services-detail' },
-    { label: 'Visa Assistance', href: '#services-detail' },
-    { label: 'Accommodation', href: '#services-detail' },
-    { label: 'Travel & Tickets', href: '#services-detail' },
+    { label: 'Our Services', href: '#services' },
+    { label: 'Dashboard Overview', href: '#dashboard' },
   ],
   Company: [
-    { label: 'Explore Schools', href: '#explorer' },
     { label: 'Events', href: '#events' },
     { label: 'FAQ', href: '#faq' },
   ],
