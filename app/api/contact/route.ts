@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     const data = await req.json()
 
     // Submit to CMS API
-    const response = await fetch('http://localhost:5000/api/forms/forms/6a6b565da7b9dd810944fca1/submit', {
+    const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/forms/forms/6a6b565da7b9dd810944fca1/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

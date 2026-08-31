@@ -50,7 +50,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/schools')
+        const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/schools')
         if (!response.ok) {
           throw new Error('Failed to fetch schools')
         }

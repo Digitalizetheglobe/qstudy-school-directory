@@ -29,7 +29,7 @@ export default function Blog({ onApplyNowClick: _onApplyNowClick }: BlogProps) {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/faqs?activeOnly=true')
+        const res = await fetch('https://schooldirectorycms.qstudyworld.com/api/faqs?activeOnly=true')
         const data = await res.json()
         if (data.success && data.data && data.data.length > 0) {
           setDynamicFaqs(data.data)
