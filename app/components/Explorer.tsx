@@ -276,7 +276,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
           {/* Left: Image + Filters */}
           <div className="explorer-sidebar" style={{ position: 'sticky', top: '100px', alignSelf: 'start' }}>
             <div className="explorer-image" style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '20px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: 'var(--shadow-card)' }}>
-              <Image src="/student-search.jpg" alt="Student searching for schools" width={500} height={320} style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <Image src="/schooldetailsmain.png" alt="Student searching for schools" width={500} height={320} style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
 
             {/* Filters */}
@@ -359,11 +359,11 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                       marginBottom: view === 'grid' ? '20px' : 0,
                       position: 'relative'
                     }}>
-                      <Image
-                        src={encodeURI(item.image)}
+                      <img
+                        src={item.image.startsWith('/uploads') ? `https://schooldirectorycms.qstudyworld.com${encodeURI(item.image)}` : encodeURI(item.image)}
                         alt={item.name}
-                        fill
-                        style={{ objectFit: 'contain', borderRadius: '12px', background: 'white', padding: '6px' }}
+                        style={{ objectFit: 'contain', width: '100%', height: '100%', borderRadius: '12px', background: 'white', padding: '6px' }}
+                        onError={(e) => { e.currentTarget.src = encodeURI(item.image) }}
                       />
                     </div>
                   ) : (

@@ -136,7 +136,8 @@
     "extracurricularActivities": "St. John’s Academy offers a wide range of extracurricular activities, including sports teams, arts and music programs, STEM and robotics clubs, leadership opportunities, and outdoor education experiences. With over 40 clubs and activities available, students are encouraged to explore their interests, develop new skills, and build confidence beyond the classroom.",
     "availableFacilities": "Administration & Teaching Building\nLibrary\nScience Laboratories\nDesign Studio\nFitness Centre & Gymnasium\nOutdoor Theatre\nBoat Dock\nOutdoor Sports Fields\nDining Hall & Student Common Room\nStudent Residence (Dormitory)",
     "campusFacilities": "Science Laboratories, ICT / Computer Labs, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay",
-    "sportsFacilities": "Outdoor sports fields for soccer and other field sports\nIndoor gymnasium for basketball, volleyball, and fitness activities\nFitness centre / training facilities\nMulti-purpose courts for recreational sports\nLakefront access at Shawnigan Lake Campus\nBoat dock for water-based activities\nOutdoor spaces for recreation and physical education\nFacilities supporting both competitive sports and recreational activities"
+    "sportsFacilities": "Outdoor sports fields for soccer and other field sports\nIndoor gymnasium for basketball, volleyball, and fitness activities\nFitness centre / training facilities\nMulti-purpose courts for recreational sports\nLakefront access at Shawnigan Lake Campus\nBoat dock for water-based activities\nOutdoor spaces for recreation and physical education\nFacilities supporting both competitive sports and recreational activities",
+    "coverImage": ""
   },
   {
     "name": "Toronto Catholic District School Board",
@@ -207,7 +208,8 @@
     "extracurricularActivities": "Difference Extracurricular activities are offered at different schools.",
     "availableFacilities": "With more than 195 schools throughout Toronto, TCDSB offer multiple facilities in different school locations.",
     "campusFacilities": "Science Laboratories, ICT / Computer Labs, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall",
-    "sportsFacilities": "Different schools offer different sport facilities. Gymnasium is available at all school. "
+    "sportsFacilities": "Different schools offer different sport facilities. Gymnasium is available at all school. ",
+    "coverImage": ""
   },
   {
     "name": "Mahsa International School",
@@ -257,7 +259,8 @@
       "/images/Malaysia/Mahsa International School/Sports Facilities Pictures (Please upload the pictures) (File responses)/SportHall.jpg",
       "/images/Malaysia/Mahsa International School/Sports Facilities Pictures (Please upload the pictures) (File responses)/SquashCourt.jpg"
     ],
-    "emoji": "🏫"
+    "emoji": "🏫",
+    "coverImage": ""
   },
   {
     "name": "Marlborough College Malaysia",
@@ -328,7 +331,8 @@
     "extracurricularActivities": "A broad co-curricular programme including Sport, Art, Design, Drama, Music, and Outdoor Education, plus educational visits, clubs/societies (e.g., debating and public speaking), leadership opportunities, and service/outreach activities (including Community, Action and Service linked to the IB).",
     "availableFacilities": "Located on a purpose-built 92-acre campus near the Straits of Johor and about 15 minutes from the Singapore border, Marlborough College Malaysia offers pupils the space and facilities to explore their interests and develop their talents fully. Sporting includes 400m athletics track, full size rugby and football pitches, cricket ground, full-size hockey astro, covered tennis courts, basketball courts, netball courts, gymnasium, 50m swimming pool, junior swimming pool, indoor climbing wall, badminton court, table tennis spaces and a golf driving range. Other areas includes music rooms, drama theatre, multipurpose hall, dedicated Art & Design Technology building, science labs, libraries, cooking room, and play area for younger pupils. Outdoor spaces includes an organic farm, a lake for kayaking, forest school and goat enclosure.",
     "campusFacilities": "Science Laboratories, ICT / Computer Labs, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Swimming Pool, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay",
-    "sportsFacilities": "Sporting includes 400m athletics track, full size rugby and football pitches, cricket ground, full-size hockey astro, covered tennis courts, basketball courts, netball courts, gymnasium, 50m swimming pool, junior swimming pool, indoor climbing wall, badminton court, table tennis spaces and a golf driving range."
+    "sportsFacilities": "Sporting includes 400m athletics track, full size rugby and football pitches, cricket ground, full-size hockey astro, covered tennis courts, basketball courts, netball courts, gymnasium, 50m swimming pool, junior swimming pool, indoor climbing wall, badminton court, table tennis spaces and a golf driving range.",
+    "coverImage": ""
   },
   {
     "name": "PINE HILLS INTERNATIONAL SCHOOL",
@@ -451,10 +455,10 @@
     "extracurricularActivities": "Swimming, music, taekwondo, pickleball, volleyball, badminton",
     "availableFacilities": "Brief Description of Available Facilities\nInteractive Classrooms – Technology-enabled classrooms that promote engaging, collaborative, and interactive learning experiences.\nLibrary – A well-stocked library providing books, digital resources, and quiet study spaces to encourage reading and independent learning.\nScience and Computer Laboratories – Modern laboratories that support practical, hands-on learning in science and information technology.\nArt Room – A dedicated creative space where students can develop artistic skills through drawing, painting, and other visual arts.\nState-of-the-Art Gym – A fully equipped gymnasium that encourages physical fitness, health, and wellness.\nDance Studio – A dedicated space for dance classes, performances, and creative expression.\n",
     "campusFacilities": "Science Laboratories, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Swimming Pool, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay",
-    "sportsFacilities": "Swimming Pool – Used for swimming lessons, recreational activities, and competitive events.\nSynthetic Ice Skating Rink – A unique facility that allows students to experience ice skating and develop coordination and confidence.\nWall Climbing Facility – An adventure-based activity area that promotes resilience, teamwork, and physical endurance.\nBadminton and Basketball Courts – Sports facilities that support physical education, inter-house competitions, and extracurricular sports programmes."
+    "sportsFacilities": "Swimming Pool – Used for swimming lessons, recreational activities, and competitive events.\nSynthetic Ice Skating Rink – A unique facility that allows students to experience ice skating and develop coordination and confidence.\nWall Climbing Facility – An adventure-based activity area that promotes resilience, teamwork, and physical endurance.\nBadminton and Basketball Courts – Sports facilities that support physical education, inter-house competitions, and extracurricular sports programmes.",
+    "coverImage": ""
   },
   {
-    
     "name": "Sunway International Schools KL ",
     "location": "Malaysia",
     "type": "Boarding School",
@@ -524,7 +528,8 @@
     "extracurricularActivities": "Students are challenged in the classroom and beyond. SISKL offers over 50 extracurricular activities which allow students to explore their interests in athletics, the Arts, community involvement, and academic enrichment.",
     "availableFacilities": "Sunway International School (SIS) enjoys a prime location close to the heart of the Sunway City integrated resort town in Kuala Lumpur. SIS's infrastructure and campus facilities are situated within the Sunway University campus, accommodating approximately 3,000 students and providing a vibrant learning environment for diverse learners to reach their full potential.",
     "campusFacilities": "Science Laboratories, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Swimming Pool, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay, Football field",
-    "sportsFacilities": "Students have access to an Olympic-sized swimming pool, a FIFA-certified football turf, a fully equipped gym, and multiple courts for tennis, basketball, and volleyball. These facilities allow students to engage in a wide variety of competitive sports and recreational activities through the ⁠Sunway International Schools athletic programs"
+    "sportsFacilities": "Students have access to an Olympic-sized swimming pool, a FIFA-certified football turf, a fully equipped gym, and multiple courts for tennis, basketball, and volleyball. These facilities allow students to engage in a wide variety of competitive sports and recreational activities through the ⁠Sunway International Schools athletic programs",
+    "coverImage": ""
   },
   {
     "name": "IMPACT Tonbridge School",
@@ -539,7 +544,8 @@
     ],
     "image": null,
     "gallery": [],
-    "emoji": "🏫"
+    "emoji": "🏫",
+    "coverImage": ""
   },
   {
     "name": "Mount Kelly",
@@ -621,7 +627,8 @@
     "extracurricularActivities": "Academic Enrichment - Plum Society, Head Master's Round Table, Politics Society, Literary Society, Science & Biomedical Society, Debating Club.\n\nCocurricular Activities - Choir, Concerts and recitals, School productions, LAMDA, Performance Swimming, Girls' Performance Football, Rugby, hockey, netball, cricket, tennis, athletics, triathlon, Learning Outside the Classroom (LOTC), Simply Outdoors adventure centre, Combined Cadet force (CCF), Ten Tors, Devizes to Westminster Canoe Race, Duke of Edinburgh, Tall Ships expeditions, Rosslyn Park Rugby 7s, Fives, Swim camps. A range of clubs including arts and crafts, gardening, beekeeping, dance, chess, Lego, baking, coding and STEM.",
     "availableFacilities": "Dedicated science labs, Design Technology and Art workshops, performing arts centre, library and sixth form centre, Business School boardroom and workrooms, 50m Olympic legacy pool, 25m indoor pool, heated outdoor pool, strength and conditioning gym, 700m2 indoor sports hall, Three all-weather pitches (including a full-size floodlit pitch), 2 Fives courts, four squash courts, tennis and badminton courts, netball courts. 150 acre campus with direct access to Dartmoor National Park, on-site lake, woodland learning areas, Simply Outdoor adventure centre, River access for outdoor education and environmental learning. Four boarding houses, two day houses, communal spaces for pupils, College and Prep dining halls, Health and Wellbeing Centre and an on-site Chapel.",
     "campusFacilities": "Science Laboratories, ICT / Computer Labs, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Swimming Pool, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay",
-    "sportsFacilities": "Mount Kelly's outstanding sports facilities provide an exceptional environment for both participation and performance. The School boasts an Olympic legacy 50m indoor swimming pool, a 25m training pool, a heated outdoor pool, a modern strength and conditioning gym, a large Sports Hall, all-weather pitches, grass playing fields, tennis and netball courts, squash and fives courts, cricket nets, and access to an athletics track. Combined with the School's beautiful 150-acre campus and proximity to Dartmoor National Park, these facilities support a broad and ambitious sports programme for pupils of all abilities."
+    "sportsFacilities": "Mount Kelly's outstanding sports facilities provide an exceptional environment for both participation and performance. The School boasts an Olympic legacy 50m indoor swimming pool, a 25m training pool, a heated outdoor pool, a modern strength and conditioning gym, a large Sports Hall, all-weather pitches, grass playing fields, tennis and netball courts, squash and fives courts, cricket nets, and access to an athletics track. Combined with the School's beautiful 150-acre campus and proximity to Dartmoor National Park, these facilities support a broad and ambitious sports programme for pupils of all abilities.",
+    "coverImage": ""
   },
   {
     "name": "South Kent School",
@@ -691,7 +698,8 @@
     "extracurricularActivities": "Soccer, Basketball, Cross Country, Ice Hockey, Mountain Biking, Crew, Golf, Lacrosse, Outdoor Club, Robotics, Advanced Media Group, Podcasting, Digital Media, Broadcasting",
     "availableFacilities": "8 dorms, Health Center, Academic Buildings, Two Fitness Centers, Dining Hall, Ice Hockey Rink, Basketball Gym, Tennis Courts, Mountain Biking Course, Hiking Trails, Two Athletic Fields, Golf Course, Student Rec Center",
     "campusFacilities": "Science Laboratories, ICT / Computer Labs, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay",
-    "sportsFacilities": "Ice Hockey Rink, Two Soccer Fields (Turf and Grass) Basketball Gym, Tennis Courts, Golf Course, Boat House, Two Fitness Centers"
+    "sportsFacilities": "Ice Hockey Rink, Two Soccer Fields (Turf and Grass) Basketball Gym, Tennis Courts, Golf Course, Boat House, Two Fitness Centers",
+    "coverImage": ""
   },
   {
     "name": "The Woodstock Academy ",
@@ -760,6 +768,7 @@
     "extracurricularActivities": "The Woodstock Academy offers a vibrant and diverse selection of clubs, activities, honor societies, leadership opportunities, and competitive teams that allow students to explore their interests, develop new skills, and build meaningful connections. Whether students are passionate about the arts, music, science, technology, athletics, leadership, community service, global affairs, or academic competition, there are opportunities for every student to get involved. From Student Council, Model United Nations, Robotics, and Science Olympiad to Jazz Band, Technical Theater, Unified Sports, and numerous honor societies, students are encouraged to pursue their passions, discover new interests, and make a positive impact both on campus and in the broader community.",
     "availableFacilities": "The Woodstock Academy features a modern, multi-campus environment designed to support academic excellence, student life, athletics, and the arts. Students benefit from state-of-the-art learning spaces, including a dedicated STEAM Center with advanced science labs, makerspaces, and technology resources. The campus also includes extensive athletic facilities, such as the Bentley Athletic Complex, Alumni Field House, tennis courts, track and field venues, and specialized facilities for sports including gymnastics, hockey, and golf. The Academy’s renowned Loos Center for the Arts features a 1,016-seat professional theater, art gallery, lecture hall, and performance spaces that support a wide range of visual and performing arts programs. Boarding students reside in one of three residence halls on South Campus, with access to dining, recreation, and residential life programming. Together, these facilities provide students with exceptional opportunities for learning, creativity, leadership, and personal growth.",
     "campusFacilities": "Science Laboratories, ICT / Computer Labs, Library / Resource Centre, Indoor Sports Hall / Gymnasium, Outdoor Sports Field / Track, Performing Arts / Music Studio, Cafeteria / Dining Hall, Medical Clinic / Sick Bay",
-    "sportsFacilities": "The Woodstock Academy offers exceptional athletic facilities that support a wide range of competitive and recreational sports. The centerpiece of the athletic program is the Bentley Athletic Complex, which features facilities for soccer, football, baseball, softball, lacrosse, tennis, and track and field. Additional athletic venues include the Alumni Field House for basketball and volleyball, the Deary Gymnastics Center, the Jahn Hockey Rink, and access to Quinnatisset Country Club for golf. Students also benefit from indoor and outdoor training spaces across the Academy’s North and South Campuses. These facilities support over 50 athletic offerings and help student-athletes develop their skills while competing at high levels throughout the year."
+    "sportsFacilities": "The Woodstock Academy offers exceptional athletic facilities that support a wide range of competitive and recreational sports. The centerpiece of the athletic program is the Bentley Athletic Complex, which features facilities for soccer, football, baseball, softball, lacrosse, tennis, and track and field. Additional athletic venues include the Alumni Field House for basketball and volleyball, the Deary Gymnastics Center, the Jahn Hockey Rink, and access to Quinnatisset Country Club for golf. Students also benefit from indoor and outdoor training spaces across the Academy’s North and South Campuses. These facilities support over 50 athletic offerings and help student-athletes develop their skills while competing at high levels throughout the year.",
+    "coverImage": ""
   }
 ]
