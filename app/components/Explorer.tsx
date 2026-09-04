@@ -141,6 +141,19 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     width: '100%',
   }
 
+  const getImageUrl = (url: string) => {
+    if (!url) return '';
+    let formattedUrl = url;
+    if (formattedUrl.startsWith('/uploads') || formattedUrl.startsWith('/blogimages')) {
+      formattedUrl = `https://schooldirectorycms.qstudyworld.com${formattedUrl}`;
+    } else if (formattedUrl.startsWith('http://localhost:5000')) {
+      formattedUrl = formattedUrl.replace('http://localhost:5000', 'https://schooldirectorycms.qstudyworld.com');
+    } else if (formattedUrl.startsWith('https://localhost:5000')) {
+      formattedUrl = formattedUrl.replace('https://localhost:5000', 'https://schooldirectorycms.qstudyworld.com');
+    }
+    return encodeURI(formattedUrl);
+  };
+
   const tabs = [
     { id: 'schools' as const, label: 'Schools', icon: School, count: schools.length },
     { id: 'language' as const, label: 'Language Schools', icon: BookOpenText, count: languageSchools.length },
@@ -360,10 +373,14 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                       position: 'relative'
                     }}>
                       <img
-                        src={item.image.startsWith('/uploads') ? `https://schooldirectorycms.qstudyworld.com${encodeURI(item.image)}` : encodeURI(item.image)}
+                        src={getImageUrl(item.image)}
                         alt={item.name}
                         style={{ objectFit: 'contain', width: '100%', height: '100%', borderRadius: '12px', background: 'white', padding: '6px' }}
-                        onError={(e) => { e.currentTarget.src = encodeURI(item.image) }}
+                        onError={(e) => { 
+                          if (e.currentTarget.getAttribute('data-error')) return;
+                          e.currentTarget.setAttribute('data-error', 'true');
+                          e.currentTarget.src = encodeURI(item.image);
+                        }}
                       />
                     </div>
                   ) : (

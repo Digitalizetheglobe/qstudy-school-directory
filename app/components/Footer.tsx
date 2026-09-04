@@ -185,8 +185,11 @@ export default function Footer() {
             © 2025 School Directory. All rights reserved.
           </p>
           <div className="ft-bottom-links" style={{ display: 'flex', gap: '24px' }}>
-            {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(l => (
-              <Link key={l} href="#" className="footer-nav-link">{l}</Link>
+            {[
+              { label: 'Privacy Policy', path: '/privacy' },
+              { label: 'Terms of Service', path: '/terms' }
+            ].map(l => (
+              <Link key={l.label} href={l.path} className="footer-nav-link">{l.label}</Link>
             ))}
           </div>
         </div>

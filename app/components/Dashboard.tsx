@@ -108,10 +108,17 @@ export default function Dashboard({ onApplyNowClick: _onApplyNowClick }: Dashboa
                 </div>
               </div>
             ))}
-            <a href="#cta" className="btn-primary db-cta" style={{ alignSelf: 'flex-start', marginTop: '8px' }}>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                if (_onApplyNowClick) _onApplyNowClick();
+              }}
+              className="btn-primary db-cta" 
+              style={{ alignSelf: 'flex-start', marginTop: '8px', cursor: 'pointer', border: 'none' }}
+            >
               <Rocket size={16} />
               <span>Start Your Dashboard</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>

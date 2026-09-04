@@ -118,6 +118,19 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
     return () => { document.body.style.overflow = 'unset' }
   }, [item])
 
+  const getImageUrl = (url: string) => {
+    if (!url) return '';
+    let formattedUrl = url;
+    if (formattedUrl.startsWith('/uploads') || formattedUrl.startsWith('/blogimages')) {
+      formattedUrl = `https://schooldirectorycms.qstudyworld.com${formattedUrl}`;
+    } else if (formattedUrl.startsWith('http://localhost:5000')) {
+      formattedUrl = formattedUrl.replace('http://localhost:5000', 'https://schooldirectorycms.qstudyworld.com');
+    } else if (formattedUrl.startsWith('https://localhost:5000')) {
+      formattedUrl = formattedUrl.replace('https://localhost:5000', 'https://schooldirectorycms.qstudyworld.com');
+    }
+    return encodeURI(formattedUrl);
+  };
+
   const formatFee = (val: any, location: string) => {
     if (!val || val === '-' || val === '') return val;
     const num = Number(val);
@@ -159,7 +172,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
     if (addressList.length === 0) return null;
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '4px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '4px', textAlign: 'left' }}>
         {addressList.map((address, index) => {
           const parts = address.split(',').map(p => p.trim()).filter(p => p !== '');
 
@@ -262,6 +275,8 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                 .sm-details-grid { grid-template-columns: 1fr !important; }
                 .sm-address-grid { grid-template-columns: 1fr !important; }
                 .sm-sidebar { position: static !important; }
+                .sm-address-row-address { flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+                .sm-address-value-address { text-align: left !important; width: 100% !important; }
               }
             `}</style>
 
@@ -284,10 +299,14 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                   {(item.logo || item.image) && (
                     <div style={{ position: 'relative', width: '100px', height: '100px', borderRadius: '16px', overflow: 'hidden', flexShrink: 0, background: 'white', border: '1px solid var(--border)' }}>
                       <img
-                        src={(item.logo || item.image).startsWith('/uploads') ? `https://schooldirectorycms.qstudyworld.com${encodeURI(item.logo || item.image)}` : encodeURI(item.logo || item.image)}
+                        src={getImageUrl(item.logo || item.image)}
                         alt={`${item.name} logo`}
                         style={{ objectFit: 'contain', width: '100%', height: '100%', padding: '8px' }}
-                        onError={(e) => { e.currentTarget.src = encodeURI(item.logo || item.image) }}
+                        onError={(e) => { 
+                          if (e.currentTarget.getAttribute('data-error')) return;
+                          e.currentTarget.setAttribute('data-error', 'true');
+                          e.currentTarget.src = encodeURI(item.logo || item.image);
+                        }}
                       />
                     </div>
                   )}
@@ -448,9 +467,9 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                       borderBottom: '1px solid var(--border)',
                       padding: '24px 0'
                     }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
+                      <div className="sm-address-row-address" style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                         <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Address</span>
-                        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{formatAddressData(item.schoolInfo?.address || item.location) || 'N/A'}</div>
+                        <div className="sm-address-value-address" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{formatAddressData(item.schoolInfo?.address || item.location) || 'N/A'}</div>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                         <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Contact</span>
@@ -509,7 +528,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                               onClick={() => setSelectedImageIndex(idx)}
                               style={{ position: 'relative', width: '100%', aspectRatio: '4/3', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer' }}
                             >
-                              <Image src={encodeURI(img)} alt={`${item.name} gallery ${idx + 1}`} fill style={{ objectFit: 'cover', transition: 'transform 0.3s ease' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'} />
+                              <Image src={getImageUrl(img)} alt={`${item.name} gallery ${idx + 1}`} fill style={{ objectFit: 'cover', transition: 'transform 0.3s ease' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'} />
                             </div>
                           ))}
                         </div>
@@ -535,10 +554,14 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                     <div style={{ width: '100%', height: '140px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
                       {item?.coverImage ? (
                         <img
-                          src={item.coverImage.startsWith('/uploads') ? `https://schooldirectorycms.qstudyworld.com${encodeURI(item.coverImage)}` : encodeURI(item.coverImage)}
+                          src={getImageUrl(item.coverImage)}
                           alt="Cover Image"
                           style={{ objectFit: 'cover', width: '100%', height: '100%', opacity: 0.8 }}
-                          onError={(e) => { e.currentTarget.src = encodeURI(item.coverImage) }}
+                          onError={(e) => { 
+                            if (e.currentTarget.getAttribute('data-error')) return;
+                            e.currentTarget.setAttribute('data-error', 'true');
+                            e.currentTarget.src = encodeURI(item.coverImage);
+                          }}
                         />
                       ) : (
                         <div style={{ position: 'absolute', inset: 0, opacity: 0.8, backgroundImage: `url('/school_image_${[1, 2, 3, 4, 5, 7, 8, 9][(item?.name?.split('').reduce((acc: number, char: string) => acc + char.charCodeAt(0), 0) || 0) % 8]}.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />

@@ -155,7 +155,10 @@ export default function Hero({ onApplyNowClick }: HeroProps) {
               e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
               e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`)
             }}
-            onClick={() => (window.location.href = '#cta')}
+            onClick={(e) => {
+              e.preventDefault();
+              if (onApplyNowClick) onApplyNowClick();
+            }}
             style={{ fontSize: '1rem', padding: '7px 8px 7px 18px' }}
           >
             <span className="qs-cta-ripple" />

@@ -72,6 +72,15 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target
+    
+    if (name === 'mobile') {
+      // Allow only digits
+      const numericValue = value.replace(/\D/g, '')
+      if (numericValue.length > 10) return // Prevent more than 10 digits
+      setFormData(prev => ({ ...prev, [name]: numericValue }))
+      return
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
@@ -192,6 +201,8 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
               value={formData.email}
               onChange={handleChange}
               required
+              pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+              title="Please enter a valid email address (e.g. name@domain.com)"
               className="qs-modal-input"
               style={inputStyle}
               onFocus={e => (e.target.style.borderColor = '#818CF8')}
@@ -207,10 +218,13 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
             <input
               type="tel"
               name="mobile"
-              placeholder="+91 98765 43210"
+              placeholder="9876543210"
               value={formData.mobile}
               onChange={handleChange}
               required
+              pattern="[0-9]{10}"
+              maxLength={10}
+              title="Please enter exactly 10 digits"
               className="qs-modal-input"
               style={inputStyle}
               onFocus={e => (e.target.style.borderColor = '#818CF8')}
@@ -244,9 +258,12 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
               name="callbackConsent"
               checked={formData.callbackConsent}
               onChange={handleChange}
+              required
               style={{ marginTop: '2px', accentColor: '#4F46E5', width: '15px', height: '15px', flexShrink: 0 }}
             />
-            Please check to confirm your interest in a callback for your inquiry.
+            <span>
+              I agree to the <a href="/privacy" target="_blank" style={{ color: '#818CF8', textDecoration: 'underline' }}>Privacy Policy</a> and <a href="/terms" target="_blank" style={{ color: '#818CF8', textDecoration: 'underline' }}>Terms of Service</a>, and confirm my interest in a callback for my inquiry.
+            </span>
           </label>
 
           {/* Submit */}
