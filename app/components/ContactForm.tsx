@@ -252,20 +252,8 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
           </div>
 
           {/* Checkbox */}
-          <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.82rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
-            <input
-              type="checkbox"
-              name="callbackConsent"
-              checked={formData.callbackConsent}
-              onChange={handleChange}
-              required
-              style={{ marginTop: '2px', accentColor: '#4F46E5', width: '15px', height: '15px', flexShrink: 0 }}
-            />
-            <span>
-              I agree to the <a href="/privacy" target="_blank" style={{ color: '#818CF8', textDecoration: 'underline' }}>Privacy Policy</a> and <a href="/terms" target="_blank" style={{ color: '#818CF8', textDecoration: 'underline' }}>Terms of Service</a>, and confirm my interest in a callback for my inquiry.
-            </span>
-          </label>
-
+        
+        
           {/* Submit */}
           <button
             type="submit"

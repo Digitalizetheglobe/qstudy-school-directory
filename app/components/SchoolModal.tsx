@@ -60,8 +60,14 @@ const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) 
   );
 };
 
+const hasValue = (val: any) => {
+  if (val === undefined || val === null || val === '' || val === '-' || val === 'N/A') return false;
+  if (typeof val === 'string' && val.trim() === '') return false;
+  return true;
+};
+
 const DetailItem = ({ label, value, justify, fullWidth, isHtml }: { label: string, value: any, justify?: boolean, fullWidth?: boolean, isHtml?: boolean }) => {
-  if (value === undefined || value === null || value === '' || value === '-' || value === 'N/A') return null;
+  if (!hasValue(value)) return null;
 
   if (isHtml) {
     return (
@@ -158,13 +164,22 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
     let addressList: string[] = [];
     if (Array.isArray(rawAddress)) {
-      addressList = rawAddress.flatMap(a => String(a).split('\n'));
+      addressList = rawAddress.flatMap(a => {
+        const str = String(a);
+        const isHtml = /<[a-z][\s\S]*>/i.test(str);
+        return isHtml ? [str] : str.split('\n');
+      });
     } else {
       const str = String(rawAddress);
-      let s = str.replace(/Campus(?=[A-Za-z0-9])/gi, 'Campus\n');
-      s = s.replace(/([a-z])([A-Z])/g, (match, p1, p2) => p1 + '.\n' + p2);
-      s = s.replace(/\.([A-Z])/g, (match, p1) => '.\n' + p1);
-      addressList = s.split('\n');
+      const isHtml = /<[a-z][\s\S]*>/i.test(str);
+      if (isHtml) {
+        addressList = [str];
+      } else {
+        let s = str.replace(/Campus(?=[A-Za-z0-9])/gi, 'Campus\n');
+        s = s.replace(/([a-z])([A-Z])/g, (match, p1, p2) => p1 + '.\n' + p2);
+        s = s.replace(/\.([A-Z])/g, (match, p1) => '.\n' + p1);
+        addressList = s.split('\n');
+      }
     }
 
     addressList = addressList.filter(b => b.trim() !== '');
@@ -174,6 +189,22 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '4px', textAlign: 'left' }}>
         {addressList.map((address, index) => {
+          const isHtml = /<[a-z][\s\S]*>/i.test(address);
+
+          if (isHtml) {
+            return (
+              <div key={index} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                paddingLeft: addressList.length > 1 ? '12px' : '0',
+                borderLeft: addressList.length > 1 ? '2px solid rgba(6, 182, 212, 0.4)' : 'none',
+                lineHeight: '1.6'
+              }}>
+                <div style={{ color: 'inherit' }} className="prose prose-sm prose-invert max-w-none address-html-content" dangerouslySetInnerHTML={{ __html: address }}></div>
+              </div>
+            );
+          }
+
           const parts = address.split(',').map(p => p.trim()).filter(p => p !== '');
 
           return (
@@ -184,11 +215,6 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
               borderLeft: addressList.length > 1 ? '2px solid rgba(6, 182, 212, 0.4)' : 'none',
               lineHeight: '1.6'
             }}>
-              {addressList.length > 1 && (
-                <div style={{ fontSize: '0.75rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  Campus {index + 1}
-                </div>
-              )}
               <div style={{ color: 'inherit' }}>
                 {parts.map((p, i) => {
                   const isLast = i === parts.length - 1;
@@ -324,60 +350,76 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                         <div className="prose prose-sm prose-invert max-w-none" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: item.introduction }}></div>
                       </div>
                     )}
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '16px' }}>Details</h3>
-                    <div className="sm-details-grid" style={{
-                      background: 'rgba(6, 182, 212, 0.05)',
-                      border: '1px solid rgba(6, 182, 212, 0.2)',
-                      borderRadius: '8px',
-                      padding: '24px',
-                      display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
-                      gap: '24px 32px',
-                      marginBottom: '40px'
-                    }}>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <GraduationCap size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Type of school</span>
-                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.schoolInfo?.genderCategories || 'N/A'} | {item.schoolInfo?.typeOfSchools || 'N/A'}</span>
+                    {(hasValue(item.schoolInfo?.genderCategories) || hasValue(item.schoolInfo?.typeOfSchools) || hasValue(item.aboutSchool?.totalEnrolled) || hasValue(item.nearestAirport) || hasValue(item.numberOfBoarders) || hasValue(item.schoolInfo?.studentAges) || hasValue(item.schoolInfo?.feesPerTermUSDWithBoarding) || hasValue(item.fees)) && (
+                      <>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '16px' }}>Details</h3>
+                        <div className="sm-details-grid" style={{
+                          background: 'rgba(6, 182, 212, 0.05)',
+                          border: '1px solid rgba(6, 182, 212, 0.2)',
+                          borderRadius: '8px',
+                          padding: '24px',
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1fr',
+                          gap: '24px 32px',
+                          marginBottom: '40px'
+                        }}>
+                          {(hasValue(item.schoolInfo?.genderCategories) || hasValue(item.schoolInfo?.typeOfSchools)) && (
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <GraduationCap size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Type of school</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{[hasValue(item.schoolInfo?.genderCategories) ? item.schoolInfo?.genderCategories : null, hasValue(item.schoolInfo?.typeOfSchools) ? item.schoolInfo?.typeOfSchools : null].filter(Boolean).join(' | ')}</span>
+                              </div>
+                            </div>
+                          )}
+                          {hasValue(item.aboutSchool?.totalEnrolled) && (
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <Users size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Number of pupils</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.aboutSchool?.totalEnrolled}</span>
+                              </div>
+                            </div>
+                          )}
+                          {hasValue(item.nearestAirport) && (
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <Plane size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Nearest International Airport</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.nearestAirport}</span>
+                              </div>
+                            </div>
+                          )}
+                          {hasValue(item.numberOfBoarders) && (
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <Home size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Number of boarders</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.numberOfBoarders}</span>
+                              </div>
+                            </div>
+                          )}
+                          {hasValue(item.schoolInfo?.studentAges) && (
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <Calendar size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Age Range</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.schoolInfo?.studentAges}</span>
+                              </div>
+                            </div>
+                          )}
+                          {(hasValue(item.schoolInfo?.feesPerTermUSDWithBoarding) || hasValue(item.fees)) && (
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                              <DollarSign size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Fees per term</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{formatFee(item.schoolInfo?.feesPerTermUSDWithBoarding || item.fees, item.location)}</span>
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <Users size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Number of pupils</span>
-                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.aboutSchool?.totalEnrolled || 'N/A'}</span>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <Plane size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Nearest International Airport</span>
-                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.nearestAirport || 'N/A'}</span>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <Home size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Number of boarders</span>
-                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.numberOfBoarders || 'N/A'}</span>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <Calendar size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Age Range</span>
-                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{item.schoolInfo?.studentAges || 'N/A'}</span>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <DollarSign size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Fees per term</span>
-                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{formatFee(item.schoolInfo?.feesPerTermUSDWithBoarding || item.fees, item.location)}</span>
-                        </div>
-                      </div>
-                    </div>
+                      </>
+                    )}
 
                     {/* Additional Detailed Sections that were requested */}
                     <DetailSection title="School Info" icon={Info}>
@@ -452,12 +494,12 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                       </>
                     )}
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                       <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', margin: 0 }}>Address</h3>
                       <button style={{ background: '#0052cc', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <MapPin size={12} /> open on google maps
                       </button>
-                    </div>
+                    </div> */}
                     <div className="sm-address-grid" style={{
                       display: 'grid',
                       gridTemplateColumns: '1fr 1fr',
@@ -467,10 +509,12 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                       borderBottom: '1px solid var(--border)',
                       padding: '24px 0'
                     }}>
-                      <div className="sm-address-row-address" style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                        <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Address</span>
-                        <div className="sm-address-value-address" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{formatAddressData(item.schoolInfo?.address || item.location) || 'N/A'}</div>
-                      </div>
+                      {formatAddressData(item.schoolInfo?.address || item.location) && (
+                        <div className="sm-address-row-address" style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
+                          <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Address</span>
+                          <div className="sm-address-value-address" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'right', flex: 1 }}>{formatAddressData(item.schoolInfo?.address || item.location)}</div>
+                        </div>
+                      )}
                       <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
                         <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Contact</span>
                         <button
@@ -487,18 +531,24 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                           Enquire Now
                         </button>
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                        <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>City/Borough</span>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.city || item.city || item.location?.split(',')[0] || 'N/A'}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                        <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Country</span>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.country || 'N/A'}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
-                        <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Zip/Postal Code</span>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.zipCode || item.zipCode || 'N/A'}</span>
-                      </div>
+                      {hasValue(item.contact?.city || item.city || item.location?.split(',')[0]) && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
+                          <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>City/Borough</span>
+                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.city || item.city || item.location?.split(',')[0]}</span>
+                        </div>
+                      )}
+                      {hasValue(item.contact?.country) && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
+                          <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Country</span>
+                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.country}</span>
+                        </div>
+                      )}
+                      {hasValue(item.contact?.zipCode || item.zipCode) && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}>
+                          <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>Zip/Postal Code</span>
+                          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{item.contact?.zipCode || item.zipCode}</span>
+                        </div>
+                      )}
                     </div>
 
                     {item.news && item.news.length > 0 && (
@@ -551,12 +601,12 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
                   {/* Right Column (Sidebar) */}
                   <div className="sm-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '20px', alignSelf: 'flex-start' }}>
-                    <div style={{ width: '100%', height: '140px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+                    <div style={{ width: '100%', minHeight: '140px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', overflow: 'hidden', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {item?.coverImage ? (
                         <img
                           src={getImageUrl(item.coverImage)}
                           alt="Cover Image"
-                          style={{ objectFit: 'cover', width: '100%', height: '100%', opacity: 0.8 }}
+                          style={{ objectFit: 'contain', width: '100%', height: 'auto', opacity: 0.8 }}
                           onError={(e) => { 
                             if (e.currentTarget.getAttribute('data-error')) return;
                             e.currentTarget.setAttribute('data-error', 'true');
