@@ -9,15 +9,15 @@ interface ContactFormProps {
 }
 
 const initialFormData = {
-  firstName: '',
-  lastName: '',
+  name: '',
+  last_name: '',
   email: '',
   countryCode: '+60',
-  mobile: '',
-  programType: '',
-  destination: '',
-  targetGrade: '',
-  studentGrade: '',
+  mobile_number: '',
+  program__school_type: '',
+  preferred_country_: '',
+  target_admission: '',
+  student_grade__level: '',
   message: '',
   callbackConsent: true,
 }
@@ -43,30 +43,35 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!/^\d{10}$/.test(formData.mobile_number)) {
+      alert('Please enter a valid 10-digit mobile number.')
+      return
+    }
+
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
-    const fullPhone = `${formData.countryCode} ${formData.mobile}`.trim()
+    const cleanCountryCode = formData.countryCode.replace('_CA', '')
+    const fullPhone = `${cleanCountryCode} ${formData.mobile_number}`.trim()
+
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      mobile_number: fullPhone,
+      message: formData.message,
+      last_name: formData.last_name,
+      program__school_type: formData.program__school_type,
+      target_admission: formData.target_admission,
+      preferred_country_: formData.preferred_country_,
+      student_grade__level: formData.student_grade__level,
+    }
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          name: `${formData.firstName} ${formData.lastName}`.trim(),
-          email: formData.email,
-          countryCode: formData.countryCode,
-          mobile: formData.mobile,
-          phone: fullPhone,
-          programType: formData.programType,
-          destination: formData.destination,
-          targetGrade: formData.targetGrade,
-          studentGrade: formData.studentGrade,
-          message: formData.message,
-          callbackConsent: formData.callbackConsent,
-        })
+        body: JSON.stringify({ data: payload })
       })
 
       const data = await response.json()
@@ -94,10 +99,10 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
   ) => {
     const { name, value, type } = e.target
 
-    if (name === 'mobile') {
-      // Allow only digits up to 15
+    if (name === 'mobile_number') {
+      // Allow only digits up to 10
       const numericValue = value.replace(/\D/g, '')
-      if (numericValue.length > 15) return
+      if (numericValue.length > 10) return
       setFormData(prev => ({ ...prev, [name]: numericValue }))
       return
     }
@@ -279,9 +284,9 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
               <label style={labelStyle}>First Name *</label>
               <input
                 type="text"
-                name="firstName"
+                name="name"
                 placeholder="e.g. Aanya"
-                value={formData.firstName}
+                value={formData.name}
                 onChange={handleChange}
                 required
                 className="qs-modal-input"
@@ -295,9 +300,9 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
               <label style={labelStyle}>Last Name *</label>
               <input
                 type="text"
-                name="lastName"
+                name="last_name"
                 placeholder="e.g. Sharma"
-                value={formData.lastName}
+                value={formData.last_name}
                 onChange={handleChange}
                 required
                 className="qs-modal-input"
@@ -369,14 +374,16 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 </select>
                 <input
                   type="tel"
-                  name="mobile"
+                  name="mobile_number"
                   placeholder="9876543210"
-                  value={formData.mobile}
+                  value={formData.mobile_number}
                   onChange={handleChange}
                   required
-                  pattern="[0-9]{7,15}"
-                  maxLength={15}
-                  title="Please enter a valid phone number"
+                  inputMode="numeric"
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  minLength={10}
+                  title="Please enter a valid 10-digit mobile number"
                   className="qs-modal-input"
                   style={{ ...inputStyle, flex: 1 }}
                   onFocus={e => (e.target.style.borderColor = '#818CF8')}
@@ -388,8 +395,8 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
             <div>
               <label style={labelStyle}>Program / School Type *</label>
               <select
-                name="programType"
-                value={formData.programType}
+                name="program__school_type"
+                value={formData.program__school_type}
                 onChange={handleChange}
                 required
                 className="qs-modal-input"
@@ -409,8 +416,8 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
             <div>
               <label style={labelStyle}>Preferred Country *</label>
               <select
-                name="destination"
-                value={formData.destination}
+                name="preferred_country_"
+                value={formData.preferred_country_}
                 onChange={handleChange}
                 required
                 className="qs-modal-input"
@@ -436,8 +443,8 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
             <div>
               <label style={labelStyle}>Target Admission *</label>
               <select
-                name="targetGrade"
-                value={formData.targetGrade}
+                name="target_admission"
+                value={formData.target_admission}
                 onChange={handleChange}
                 required
                 className="qs-modal-input"
@@ -446,18 +453,19 @@ export default function ContactForm({ isOpen, onClose }: ContactFormProps) {
                 onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.2)')}
               >
                 <option value="">Select Timeline</option>
-                <option value="2025 - 2026 Academic Year">2025 – 2026 Academic Year</option>
-                <option value="2026 - 2027 Academic Year">2026 – 2027 Academic Year</option>
-                <option value="Summer 2025/2026">Summer 2025 / 2026</option>
                 <option value="Immediate Intake">Immediate Intake</option>
+                <option value="2026 - 2027 Academic Year">2026 – 2027 Academic Year</option>
+                <option value="2027 - 2028 Academic Year">2027 – 2028 Academic Year</option>
+                <option value="2028 - 2029 Academic Year">2028 – 2029 Academic Year</option>
+                <option value="Summer 2026 / 2027">Summer 2026 / 2027</option>
               </select>
             </div>
 
             <div>
               <label style={labelStyle}>Student Grade / Level *</label>
               <select
-                name="studentGrade"
-                value={formData.studentGrade}
+                name="student_grade__level"
+                value={formData.student_grade__level}
                 onChange={handleChange}
                 required
                 className="qs-modal-input"

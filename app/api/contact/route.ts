@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   try {
-    const data = await req.json()
+    const body = await req.json()
+    // Support both { data: { ... } } and direct payload { ... }
+    const payload = body?.data ? body.data : body
 
     // Submit to CMS API
     const response = await fetch('https://schooldirectorycms.qstudyworld.com/api/forms/forms/6a6b565da7b9dd810944fca1/submit', {
@@ -10,11 +12,12 @@ export async function POST(req: Request) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ data: payload }),
     })
 
     if (!response.ok) {
-      throw new Error(`CMS API responded with status: ${response.status}`)
+      const errText = await response.text().catch(() => '')
+      throw new Error(`CMS API responded with status: ${response.status} ${errText}`)
     }
 
     return NextResponse.json({ success: true, message: 'Form submitted successfully!' }, { status: 200 })
