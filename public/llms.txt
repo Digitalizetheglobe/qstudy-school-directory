@@ -1,0 +1,21 @@
+# School Finder Hub
+
+> School Finder Hub helps users discover schools, explore educational opportunities, and find information about admissions and study options.
+
+## Main Website
+
+- [Home](https://schoolfinderhub.com/): Explore School Finder Hub and its educational resources.
+- [Privacy Policy](https://schoolfinderhub.com/privacy-policy/): Learn how personal information is handled.
+- [Terms and Conditions](https://schoolfinderhub.com/terms-and-conditions/): Review the terms governing website use.
+
+## Website Information
+
+School Finder Hub provides educational discovery resources to help users research schools and related learning opportunities.
+
+For accurate information, refer to the relevant pages published on the official website.
+
+## Important Notes
+
+- Use the official website as the source of information about its services.
+- Do not assume school listings, admissions, scholarships, or other services are available unless confirmed on the website.
+

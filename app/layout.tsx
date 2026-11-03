@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from './components/ThemeProvider';
 
@@ -14,13 +15,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "School Directory - Find & Apply to Schools Worldwide",
+  metadataBase: new URL("https://schoolfinderhub.com"),
+  title: "Find Schools Worldwide and Study Abroad | School Finder Hub",
   description:
-    "Explore 5,000+ schools across 120+ countries. Apply for courses, find scholarships, and get end-to-end student support - all on School Directory.",
-  keywords: "study abroad, international schools, scholarships, student visa, education platform",
+    "Explore international schools, boarding schools, language courses and scholarships worldwide. Find the right school and get expert admission and visa support.",
+  keywords: [
+    "International School Directory",
+    "Find Schools Worldwide",
+    "International School Admissions",
+    "Study Abroad Scholarships",
+    "Boarding Schools Worldwide"
+  ],
+  verification: {
+    google: "Tj_Fyy6DJIifhYYrneseEirt02Jg2W_rZ-Qf85IsL0w",
+  },
   openGraph: {
-    title: "School Directory - Global School Directory",
-    description: "Your one-stop platform to find, apply, and succeed at schools worldwide.",
+    title: "Find Schools Worldwide and Study Abroad | School Finder Hub",
+    description:
+      "Explore international schools, boarding schools, language courses and scholarships worldwide. Find the right school and get expert admission and visa support.",
+    url: "https://schoolfinderhub.com",
+    siteName: "School Finder Hub",
     type: "website",
   },
 };
@@ -35,7 +49,23 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body suppressHydrationWarning><ThemeProvider>{children}</ThemeProvider></body>
+      <body suppressHydrationWarning>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-DGQRGFRZCN"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-DGQRGFRZCN');
+          `}
+        </Script>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

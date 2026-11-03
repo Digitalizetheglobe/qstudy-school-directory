@@ -186,8 +186,8 @@ export default function Footer() {
           </p>
           <div className="ft-bottom-links" style={{ display: 'flex', gap: '24px' }}>
             {[
-              { label: 'Privacy Policy', path: '/privacy' },
-              { label: 'Terms of Service', path: '/terms' }
+              { label: 'Privacy Policy', path: '/privacy-policy' },
+              { label: 'Terms & Conditions', path: '/terms-and-conditions' }
             ].map(l => (
               <Link key={l.label} href={l.path} className="footer-nav-link">{l.label}</Link>
             ))}

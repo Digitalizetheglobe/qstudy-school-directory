@@ -1,0 +1,8 @@
+# AI Crawler Information
+# Website: https://schoolfinderhub.com/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://schoolfinderhub.com/sitemap.xml
+
