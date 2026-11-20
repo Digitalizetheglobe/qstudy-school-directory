@@ -758,3 +758,48 @@ body {
   background: linear-gradient(135deg, #4F46E5, #06B6D4) !important;
   color: white !important;
 }
+
+/* ── Rich Text / Prose HTML Content (from CMS RichTextEditor) ── */
+.prose ul {
+  list-style-type: disc;
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose ul ul {
+  list-style-type: circle;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  display: list-item;
+  margin: 0.25rem 0;
+}
+
+.prose h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.75rem 0 0.4rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid #0ea5e9;
+  padding-left: 0.85rem;
+  margin: 0.65rem 0;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.prose p {
+  margin: 0.4rem 0;
+}
+
+.prose a {
+  color: #0ea5e9;
+  text-decoration: underline;
+}
