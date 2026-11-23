@@ -253,7 +253,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
       <AnimatePresence>
         {item && (
           <motion.div
-            key={item?.name || 'school-modal-overlay'}
+            key={item?._id || item?.schoolInfo?.fullName || item?.name || 'school-modal-overlay'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

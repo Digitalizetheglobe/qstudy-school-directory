@@ -356,8 +356,8 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                 <div style={{ padding: '20px', color: 'var(--text-secondary)' }}>Loading schools...</div>
               ) : error && activeTab === 'schools' ? (
                 <div style={{ padding: '20px', color: '#ef4444' }}>Error: {error}</div>
-              ) : visible.map((item: any) => (
-                <div key={item.name} className="glass-card" style={{
+              ) : visible.map((item: any, idx: number) => (
+                <div key={item._id || item.schoolInfo?.fullName || item.name || idx} className="glass-card" style={{
                   padding: '18px',
                   display: view === 'list' ? 'flex' : 'block',
                   alignItems: view === 'list' ? 'center' : undefined,
@@ -374,7 +374,7 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                     }}>
                       <img
                         src={getImageUrl(item.image)}
-                        alt={item.name}
+                        alt={item.schoolInfo?.fullName || item.name || 'School'}
                         style={{ objectFit: 'contain', width: '100%', height: '100%', borderRadius: '12px', background: 'white', padding: '6px' }}
                         onError={(e) => { 
                           if (e.currentTarget.getAttribute('data-error')) return;
@@ -418,12 +418,16 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--gold)' }}>
                         {(() => {
-                          const val = item.fees || item.feesPerYearWithoutBoarding || item.feesPerTermWithBoarding;
+                          const rawVal =
+                            item.schoolInfo?.feesPerYearUSDWithoutBoarding !== undefined
+                              ? item.schoolInfo.feesPerYearUSDWithoutBoarding
+                              : (item.feesPerYearWithoutBoarding || item.fees);
+                          const val = typeof rawVal === 'string' ? rawVal.trim() : rawVal;
                           if (!val || val === '-' || val === '') return 'Contact for fees';
                           const num = Number(val);
                           if (!isNaN(num)) {
                             let currencyCode = 'USD';
-                            const loc = (item.location || '').toLowerCase();
+                            const loc = (item.contact?.country || item.location || '').toLowerCase();
                             if (loc.includes('malaysia')) currencyCode = 'MYR';
                             else if (loc.includes('india')) currencyCode = 'INR';
                             else if (loc.includes('uk') || loc.includes('united kingdom')) currencyCode = 'GBP';
