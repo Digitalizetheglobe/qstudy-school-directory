@@ -5,11 +5,33 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'motion/react'
 import { X, MapPin, DollarSign, Calendar, Users, Home, GraduationCap, Plane, ChevronRight, CheckCircle2, BookOpen, Clock, Activity, Info } from 'lucide-react'
 
+const hasValue = (val: any) => {
+  if (val === undefined || val === null || val === '') return false;
+  if (typeof val === 'string') {
+    const trimmed = val.trim().toLowerCase();
+    if (trimmed === '' || trimmed === '-' || trimmed === 'n/a' || trimmed === 'na' || trimmed === 'none') {
+      return false;
+    }
+  }
+  return true;
+};
+
+const getRegistrationDeadline = (val: any) => {
+  if (!hasValue(val)) return undefined;
+  if (typeof val === 'string') {
+    const normalized = val.trim().toLowerCase();
+    if (['no deadline', 'not applicable', 'not provided'].includes(normalized)) {
+      return undefined;
+    }
+  }
+  return val;
+};
+
 const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) => {
   const validChildren = React.Children.toArray(children).filter((child: any) => {
     if (React.isValidElement(child) && child.props) {
       const value = (child.props as any).value;
-      if (value === undefined || value === null || value === '' || value === '-' || value === 'N/A') {
+      if (!hasValue(value)) {
         return false;
       }
     }
@@ -58,12 +80,6 @@ const DetailSection = ({ title, icon: Icon, children, fullWidth = false }: any) 
       {renderBlocks}
     </div>
   );
-};
-
-const hasValue = (val: any) => {
-  if (val === undefined || val === null || val === '' || val === '-' || val === 'N/A') return false;
-  if (typeof val === 'string' && val.trim() === '') return false;
-  return true;
 };
 
 const DetailItem = ({ label, value, justify, fullWidth, isHtml }: { label: string, value: any, justify?: boolean, fullWidth?: boolean, isHtml?: boolean }) => {
@@ -350,7 +366,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                         <div className="prose prose-sm prose-invert max-w-none" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.6', textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: item.introduction }}></div>
                       </div>
                     )}
-                    {(hasValue(item.schoolInfo?.genderCategories) || hasValue(item.schoolInfo?.typeOfSchools) || hasValue(item.aboutSchool?.totalEnrolled) || hasValue(item.nearestAirport) || hasValue(item.numberOfBoarders) || hasValue(item.schoolInfo?.studentAges) || hasValue(item.schoolInfo?.feesPerTermUSDWithBoarding) || hasValue(item.fees)) && (
+                    {(hasValue(item.schoolInfo?.genderCategories) || hasValue(item.schoolInfo?.typeOfSchools) || hasValue(item.aboutSchool?.totalEnrolled) || hasValue(item.nearestAirport) || hasValue(item.numberOfBoarders) || hasValue(item.schoolInfo?.studentAges) || hasValue(item.schoolInfo?.feesPerYearUSDWithoutBoarding !== undefined ? item.schoolInfo.feesPerYearUSDWithoutBoarding : item.fees)) && (
                       <>
                         <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0ea5e9', marginBottom: '16px' }}>Details</h3>
                         <div className="sm-details-grid" style={{
@@ -408,12 +424,12 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
                               </div>
                             </div>
                           )}
-                          {(hasValue(item.schoolInfo?.feesPerTermUSDWithBoarding) || hasValue(item.fees)) && (
+                          {hasValue(item.schoolInfo?.feesPerYearUSDWithoutBoarding !== undefined ? item.schoolInfo.feesPerYearUSDWithoutBoarding : item.fees) && (
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                               <DollarSign size={18} color="var(--text-primary)" style={{ marginTop: '2px', flexShrink: 0 }} />
                               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Fees per term</span>
-                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{formatFee(item.schoolInfo?.feesPerTermUSDWithBoarding || item.fees, item.location)}</span>
+                                <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Annual Fees</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{formatFee(item.schoolInfo?.feesPerYearUSDWithoutBoarding !== undefined ? item.schoolInfo.feesPerYearUSDWithoutBoarding : item.fees, item.contact?.country || item.location)}</span>
                               </div>
                             </div>
                           )}
@@ -454,7 +470,7 @@ export default function SchoolModal({ item, onClose, onApplyNowClick }: SchoolMo
 
                     <DetailSection title="Admission" icon={Calendar}>
                       <DetailItem label="Academic Calendar" value={item.admission?.academicCalendar} />
-                      <DetailItem label="Registration Deadline" value={item.admission?.registrationDeadline} />
+                      <DetailItem label="Registration Deadline" value={getRegistrationDeadline(item.admission?.registrationDeadline)} />
                       <DetailItem label="Can join after start?" value={item.admission?.canJoinMidYear !== undefined ? (item.admission?.canJoinMidYear ? 'Yes' : 'No') : undefined} />
                     </DetailSection>
 

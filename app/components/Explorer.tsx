@@ -121,10 +121,14 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
     isWACurriculum(s) && (country === 'All Countries' || getCountry(s.location, s) === country)
   )
 
-  const allData = activeTab === 'schools' ? filteredSchools :
+  const getDisplayName = (item: any) => (item.schoolInfo?.fullName || item.name || '').trim()
+
+  const allData = [...(activeTab === 'schools' ? filteredSchools :
     activeTab === 'language' ? filteredLang :
       activeTab === 'summer' ? filteredCamps :
-        filteredWACurriculum
+        filteredWACurriculum)].sort((a, b) =>
+    getDisplayName(a).localeCompare(getDisplayName(b), undefined, { sensitivity: 'base' })
+  )
 
   const visible = showAll ? allData : allData.slice(0, INITIAL_LIMIT)
   const hasMore = allData.length > INITIAL_LIMIT

@@ -760,6 +760,11 @@ body {
 }
 
 /* ── Rich Text / Prose HTML Content (from CMS RichTextEditor) ── */
+.prose *:not(pre):not(code) {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 .prose ul {
   list-style-type: disc;
   margin: 0.5rem 0;
