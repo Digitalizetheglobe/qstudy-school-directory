@@ -160,8 +160,6 @@ export default function Explorer({ onApplyNowClick: _onApplyNowClick }: Explorer
 
   const tabs = [
     { id: 'schools' as const, label: 'Schools', icon: School, count: schools.length },
-    { id: 'language' as const, label: 'Language Schools', icon: BookOpenText, count: languageSchools.length },
-    { id: 'summer' as const, label: 'Summer Camps', icon: TentTree, count: summerCamps.length },
     // { id: 'wa-curriculum' as const, label: 'WA Curriculum', icon: BookOpenText, count: schools.filter(isWACurriculum).length },
   ]
 
